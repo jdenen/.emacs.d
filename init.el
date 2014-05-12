@@ -14,21 +14,6 @@
 (require 'init-pkg)
 
 ;;---------------------------------------------------------------------------
-;; Require external packages
-;;---------------------------------------------------------------------------
-(require 'graphene)
-(require 'fullscreen-mode)
-(require 'magit)
-(require 'projectile)
-(require 'inf-ruby)
-(require 'coffee-mode)
-(require 'flx-ido)
-(require 'ace-jump-mode)
-(require 'recentf)
-(require 'multiple-cursors)
-(require 'ibuffer-vc)
-
-;;---------------------------------------------------------------------------
 ;; Toggle into modes
 ;;---------------------------------------------------------------------------
 (fullscreen-mode 1)
@@ -58,6 +43,7 @@
 (global-set-key (kbd "C-x m") 'smex)
 (global-set-key (kbd "C-c t") 'eshell)
 (global-set-key (kbd "C-x k") 'bury-buffer)
+(global-set-key (kbd "C-SPC") 'god-mode-all)
 (global-set-key (kbd "C-<backspace>") (lambda ()
                                         (interactive)
                                         (kill-line 0)
