@@ -17,6 +17,7 @@
 (require 'init-ruby)
 (require 'init-buffer)
 (require 'init-fuzzy)
+(require 'init-guide)
 
 ;;---------------------------------------------------------------------------
 ;; Toggle into modes

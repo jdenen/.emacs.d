@@ -37,6 +37,7 @@
 (inst-pkg 'multiple-cursors)
 (inst-pkg 'ibuffer-vc)
 (inst-pkg 'god-mode)
+(inst-pkg 'guide-key)
 
 ;;---------------------------------------------------------------------------
 ;; Require external packages lacking init-package.el
