@@ -1,4 +1,4 @@
-;;; init-buffer-list.el --- buffer management
+;;; init-buffer.el --- buffer management
 ;;
 ;;; Commentary:
 ;;
@@ -19,5 +19,5 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-x k") 'bury-buffer)
 
-(provide 'init-buffer-list)
-;;; init-buffer-list.el ends here
+(provide 'init-buffer)
+;;; init-buffer.el ends here

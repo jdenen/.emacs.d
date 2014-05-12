@@ -15,7 +15,7 @@
 (require 'init-pkg)
 (require 'init-god)
 (require 'init-ruby)
-(require 'init-buffer-list)
+(require 'init-buffer)
 (require 'init-fuzzy)
 
 ;;---------------------------------------------------------------------------
