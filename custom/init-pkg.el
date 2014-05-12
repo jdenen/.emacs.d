@@ -49,7 +49,6 @@
 (require 'ace-jump-mode)
 (require 'recentf)
 (require 'multiple-cursors)
-(require 'ibuffer-vc)
 
 (provide 'init-pkg)
 ;;; init-pkg.el ends here
