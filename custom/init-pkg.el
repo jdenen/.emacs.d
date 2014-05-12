@@ -1,4 +1,4 @@
-;;; init-pkg.el --- Package management and setup
+;;; init-pkg.el --- package management
 ;;
 ;;; Commentary:
 ;;
@@ -26,29 +26,30 @@
 ;; Install external packages
 ;;---------------------------------------------------------------------------
 (inst-pkg 'graphene)
-(require 'graphene)
 (inst-pkg 'fullscreen-mode)
-(require 'fullscreen-mode)
 (inst-pkg 'magit)
-(require 'magit)
 (inst-pkg 'projectile)
-(require 'projectile)
 (inst-pkg 'inf-ruby)
-(require 'inf-ruby)
 (inst-pkg 'coffee-mode)
-(require 'coffee-mode)
 (inst-pkg 'flx-ido)
-(require 'flx-ido)
 (inst-pkg 'ace-jump-mode)
-(require 'ace-jump-mode)
 (inst-pkg 'recentf)
-(require 'recentf)
 (inst-pkg 'multiple-cursors)
-(require 'multiple-cursors)
 (inst-pkg 'ibuffer-vc)
-(require 'ibuffer)
 (inst-pkg 'god-mode)
-(require 'god-mode)
+
+;;---------------------------------------------------------------------------
+;; Require external packages lacking init-package.el
+;;---------------------------------------------------------------------------
+(require 'graphene)
+(require 'fullscreen-mode)
+(require 'magit)
+(require 'projectile)
+(require 'coffee-mode)
+(require 'ace-jump-mode)
+(require 'recentf)
+(require 'multiple-cursors)
+(require 'ibuffer-vc)
 
 (provide 'init-pkg)
 ;;; init-pkg.el ends here
