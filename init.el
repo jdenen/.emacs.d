@@ -18,6 +18,7 @@
 (require 'init-buffer)
 (require 'init-fuzzy)
 (require 'init-guide)
+(require 'init-manta)
 
 ;;---------------------------------------------------------------------------
 ;; Toggle into modes
