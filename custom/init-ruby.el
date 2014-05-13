@@ -22,12 +22,12 @@
 (setq inf-ruby-prompt-pattern "^\\[[0-9]+\\] pry\\((.*)\\)[>*\"'] *")
 
 ;;---------------------------------------------------------------------------
-;; Set BROWSER_TYPE and execute current buffer
+;; Set environment arguments and execute current buffer
 ;;---------------------------------------------------------------------------
-(defun rspec-with-browser-type (browser)
-  "Run current spec on BROWSER."
+(defun run-prompt-spec (environment_args)
+  "Run current spec with ENVIRONMENT_ARGS."
   (interactive "sBROWSER_TYPE: ")
-  (let ((command (format "BROWSER_TYPE=%s bundle exec rspec %s" browser (ruby-test-find-file))))
+  (let ((command (format "BROWSER_TYPE=%s bundle exec rspec %s" environment_args (ruby-test-find-file))))
         (setq default-directory (rspec-project-root))
         (compilation-start command)))
 
@@ -37,7 +37,7 @@
 (defun run-desktop-spec ()
   "Use Chrome to test current spec."
   (interactive)
-  (rspec-with-browser-type "chrome"))
+  (run-prompt-spec "chrome"))
 
 ;;---------------------------------------------------------------------------
 ;; Execute current buffer with iPhone
@@ -45,7 +45,16 @@
 (defun run-mobile-spec ()
   "Use iPhone to test current spec."
   (interactive)
-  (rspec-with-browser-type "iphone"))
+  (run-prompt-spec "iphone"))
+
+;;---------------------------------------------------------------------------
+;; Diff environments
+;;---------------------------------------------------------------------------
+(defun dtool-diff (environment)
+  "Display differences between ENVIRONMENT and the next stage of the pipeline. Attach a repository to generate Git diff stats."
+  (interactive "sDIFF: ")
+  (let ((command (format "dtool diff %s" environment)))
+    (compilation-start command)))
 
 ;;---------------------------------------------------------------------------
 ;; Keybindings
@@ -53,7 +62,8 @@
 (global-set-key (kbd "C-c C-p") 'inf-ruby)
 (global-set-key (kbd "C-c r d") 'run-desktop-spec)
 (global-set-key (kbd "C-c r m") 'run-mobile-spec)
-(global-set-key (kbd "C-c r i") 'rspec-with-browser-type)
+(global-set-key (kbd "C-c r i") 'run-prompt-spec)
+(global-set-key (kbd "C-c d") 'dtool-diff)
 
 (provide 'init-ruby)
 ;;; init-ruby.el ends here
