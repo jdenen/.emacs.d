@@ -6,12 +6,22 @@
 
 (require 'inf-ruby)
 (require 'ruby-test-mode)
+(require 'yari)
 
 ;;---------------------------------------------------------------------------
 ;; Add ruby-mode hooks
 ;;---------------------------------------------------------------------------
 (add-hook 'ruby-mode-hook 'ruby-test-mode)
 (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
+
+;;---------------------------------------------------------------------------
+;; Bind yari to 'ruby-mode'
+;;---------------------------------------------------------------------------
+(defun ri-bind ()
+  "Hook to bind yari to 'ruby-mode'."
+  (local-set-key (kbd "C-c y") 'yari))
+
+(add-hook 'ruby-mode-hook 'ri-bind)
 
 ;;---------------------------------------------------------------------------
 ;; Use pry in inf-ruby

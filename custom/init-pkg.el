@@ -38,6 +38,7 @@
 (inst-pkg 'ibuffer-vc)
 (inst-pkg 'god-mode)
 (inst-pkg 'guide-key)
+(inst-pkg 'yari)
 
 ;;---------------------------------------------------------------------------
 ;; Require external packages lacking init-package.el
