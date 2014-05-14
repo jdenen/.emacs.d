@@ -55,6 +55,7 @@
 ;;---------------------------------------------------------------------------
 (custom-set-variables '(coffee-tab-width 2))
 (fset 'yes-or-no-p 'y-or-n-p)
+(setq backup-directory-alist '(("." . "~/tmp")))
 
 (provide 'init)
 ;;; init.el ends here
