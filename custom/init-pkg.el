@@ -51,6 +51,7 @@
 (require 'ace-jump-mode)
 (require 'recentf)
 (require 'multiple-cursors)
+(require 'expand-region)
 
 (provide 'init-pkg)
 ;;; init-pkg.el ends here

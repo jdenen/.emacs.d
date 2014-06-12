@@ -45,6 +45,7 @@
 (global-set-key (kbd "C-c f m") 'mc/mark-all-like-this-dwim)
 (global-set-key (kbd "C-c e") 'mc/edit-lines)
 (global-set-key (kbd "C-c t") 'eshell)
+(global-set-key (kbd "C-=") 'er/expand-region)
 (global-set-key (kbd "C-<backspace>") (lambda ()
                                         (interactive)
                                         (kill-line 0)
