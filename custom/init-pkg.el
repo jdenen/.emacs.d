@@ -39,6 +39,8 @@
 (inst-pkg 'god-mode)
 (inst-pkg 'guide-key)
 (inst-pkg 'yari)
+(inst-pkg 'expand-region)
+(inst-pkg 'ruby-test-mode)
 
 ;;---------------------------------------------------------------------------
 ;; Require external packages lacking init-package.el
