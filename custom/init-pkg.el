@@ -41,6 +41,7 @@
 (inst-pkg 'yari)
 (inst-pkg 'expand-region)
 (inst-pkg 'ruby-test-mode)
+(inst-pkg 'rspec-mode)
 
 ;;---------------------------------------------------------------------------
 ;; Require external packages lacking init-package.el

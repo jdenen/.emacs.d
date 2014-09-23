@@ -7,12 +7,14 @@
 (require 'inf-ruby)
 (require 'ruby-test-mode)
 (require 'yari)
+(require 'rspec-mode)
 
 ;;---------------------------------------------------------------------------
 ;; Add ruby-mode hooks
 ;;---------------------------------------------------------------------------
 (add-hook 'ruby-mode-hook 'ruby-test-mode)
 (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
+(add-hook 'ruby-mode-hook 'rspec-mode)
 
 ;;---------------------------------------------------------------------------
 ;; Bind yari to ruby-mode
