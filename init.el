@@ -50,6 +50,8 @@
                                         (interactive)
                                         (kill-line 0)
                                         (indent-according-to-mode)))
+(global-set-key (kbd "C-x n f") 'new-frame)
+(global-set-key (kbd "C-x n k") 'delete-frame)
 
 ;;---------------------------------------------------------------------------
 ;; General settings
