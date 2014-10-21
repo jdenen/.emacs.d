@@ -53,6 +53,7 @@
 (global-set-key (kbd "C-x n f") 'new-frame)
 (global-set-key (kbd "C-x n k") 'delete-frame)
 (global-set-key (kbd "C-c g") 'goto-line)
+(global-set-key (kbd "C-c t") 'ansi-term)
 
 ;;---------------------------------------------------------------------------
 ;; General settings
