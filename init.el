@@ -92,6 +92,8 @@
 (powerline-default-theme)
 (add-to-list 'default-frame-alist '(font .  "Droid Sans Mono-10" ))
 (set-face-attribute 'default t :font  "Droid Sans Mono-10" )
+(setq inhibit-startup-screen t)
+(setq initial-major-mode 'ruby-mode)
 (load-theme 'ample t)
 
 (provide 'init)
