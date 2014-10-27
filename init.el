@@ -130,6 +130,7 @@
 ;;; misc
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq backup-directory-alist '(("." . "~/tmp")))
+(global-set-key (kbd "C-c C-q") 'indent-region)
 
 (provide 'init)
 ;;; init.el ends here
