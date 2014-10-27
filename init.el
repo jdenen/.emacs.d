@@ -100,6 +100,17 @@
 (use-pkg 'ample-theme)
 (load-theme 'ample t)
 
+;;; buffer management
+(use-pkg 'ibuffer-vc)
+(add-hook 'ibuffer-hook
+	  (lambda ()
+	    (ibuffer-vc-generate-filter-groups-by-vc-root)))
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-x k") 'bury-buffer)
+(global-set-key (kbd "C-c n") 'new-frame)
+(global-set-key (kbd "C-c k") 'delete-frame)
+(global-set-key (kbd "C-x C-k") 'kill-this-buffer)
+
 ;;; visual
 (tool-bar-mode 0)
 (menu-bar-mode 0)
@@ -112,7 +123,7 @@
 (setq initial-major-mode 'ruby-mode)
 (setq initial-scratch-message "\
 # This buffer is for notes you don't want to save
-# and Ruby code you'll throw away. Go Cavs.")
+# and Ruby code you'll throw away.")
 (setq initial-buffer-choice "~/Code/notes.org")
 
 ;;; misc
