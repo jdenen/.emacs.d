@@ -41,12 +41,15 @@
       helm-ff-file-name-history-use-recentf t)
 (global-set-key (kbd "C-x m") 'helm-M-x)
 (global-set-key (kbd "C-c h") 'helm-command-prefix)
-(global-set-key (kbd "C-c p") 'helm-browse-project)
 (global-set-key (kbd "C-x f") 'helm-for-files)
 
-;;; `perspective'
-(use-pkg 'perspective)
-(persp-mode 1)
+;;; `projectile'
+(use-pkg 'projectile)
+(projectile-global-mode 1)
+
+;;; `helm-projectile'
+(use-pkg 'helm-projectile)
+(helm-projectile-on)
 
 ;;; `smartparens'
 (use-pkg 'smartparens)
