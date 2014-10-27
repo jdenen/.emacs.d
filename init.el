@@ -53,8 +53,9 @@
 
 ;;; `smartparens'
 (use-pkg 'smartparens)
-(smartparens-global-mode 1)
 (require 'smartparens-config)
+(smartparens-global-mode 1)
+(show-smartparens-global-mode 1)
 
 ;;; `guide-key-mode'
 (use-pkg 'guide-key)
