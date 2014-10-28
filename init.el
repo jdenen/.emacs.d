@@ -85,6 +85,12 @@
   (setq guide-key/idle-delay 2.0)
   (setq guide-key/recursive-key-sequence-flag t))
 
+;; `inf-ruby'
+(johnson/package-install 'inf-ruby)
+(use-package inf-ruby
+  :init
+  (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
+
 ;; `yari'
 (johnson/package-install 'yari)
 (use-package yari
