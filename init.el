@@ -5,132 +5,160 @@
 ;;;
 ;;; Code:
 
-;;; MELPA
+;; User
+(setq user-full-name "Johnson Denen"
+      user-mail-address "jdenen@manta.com")
+
+;; MELPA
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
 
-;;; use-pkg
-(defun use-pkg  (package)
-  "Install and/or require PACKAGE."
-  (if (package-installed-p package)
-      (require package)
-    t
-    (progn
-      (package-refresh-contents)
-      (package-install package)
-      (require package))))
+;; johnson/package-install
+(defun johnson/package-install (package)
+  "Install PACKAGE if it has not already been installed."
+  (unless (package-installed-p package)
+    (package-install package)))
 
-;;; `helm'
-(use-pkg 'helm)
-(use-pkg 'helm-ls-git)
-(helm-mode 1)
-(require 'helm-config)
-(global-unset-key (kbd "C-x c"))
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
-(define-key helm-map (kbd "C-z")  'helm-select-action)
-(when (executable-find "curl")
-  (setq helm-google-suggest-use-curl-p t))
-(setq helm-quick-update                     t
-      helm-split-window-in-side-p           t
-      helm-buffers-fuzzy-matching           t
-      helm-move-to-line-cycle-in-source     t
-      helm-ff-search-library-in-sexp        t
-      helm-scroll-amount                    8
-      helm-ff-file-name-history-use-recentf t)
-(global-set-key (kbd "C-x m") 'helm-M-x)
-(global-set-key (kbd "C-c h") 'helm-command-prefix)
-(global-set-key (kbd "C-x f") 'helm-for-files)
+;; `use-package'
+(johnson/package-install 'use-package)
+(require 'use-package)
 
-;;; `projectile'
-(use-pkg 'projectile)
-(projectile-global-mode 1)
+;; `helm'
+(johnson/package-install 'helm)
+(use-package helm
+  :init
+  (progn
+    (helm-mode 1)
+    (require 'helm-config)
+    (global-unset-key (kbd "C-x c"))
+    (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+    (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+    (define-key helm-map (kbd "C-z")  'helm-select-action)
+    (when (executable-find "curl")
+      (setq helm-google-suggest-use-curl-p t))
+    (setq helm-quick-update                     t
+	  helm-split-window-in-side-p           t
+	  helm-buffers-fuzzy-matching           t
+	  helm-move-to-line-cycle-in-source     t
+	  helm-ff-search-library-in-sexp        t
+	  helm-scroll-amount                    8
+	  helm-ff-file-name-history-use-recentf t))
+  :bind
+  ("C-x m" . helm-M-x)
+  ("C-c h" . helm-mini)
+  ("C-x h" . helm-command-prefix))
 
-;;; `helm-projectile'
-(use-pkg 'helm-projectile)
-(helm-projectile-on)
+;; `helm-swoop'
+(johnson/package-install 'helm-swoop)
+(use-package helm-swoop
+  :bind
+  ("C-S-s" . helm-swoop))
 
-;;; `smartparens'
-(use-pkg 'smartparens)
-(require 'smartparens-config)
-(smartparens-global-mode 1)
-(show-smartparens-global-mode 1)
+;; `projectile'
+(johnson/package-install 'projectile)
+(use-package projectile
+  :init
+  (projectile-global-mode 1))
 
-;;; `guide-key-mode'
-(use-pkg 'guide-key)
-(guide-key-mode 1)
-(setq guide-key/guide-key-sequence '("C-x" "C-c"))
-(setq guide-key/idle-delay 2.0)
-(setq guide-key/recursive-key-sequence-flag t)
+;; `helm-projectile'
+(johnson/package-install 'helm-projectile)
+(use-package helm-projectile
+  :init
+  (helm-projectile-on))
 
-;;; `ruby-mode'
-(use-pkg 'inf-ruby)
-(use-pkg 'yari)
-(defun ri-bind()
-  "Bind yari to 'ruby-mode'."
-  (local-set-key (kbd "C-c y") 'yari-helm))
-(add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
-(add-hook 'ruby-mode-hook 'ri-bind)
+;; `smartparens'
+(johnson/package-install 'smartparens)
+(use-package smartparens
+  :init
+  (progn
+    (smartparens-global-mode 1)
+    (show-smartparens-global-mode 1)
+    (require 'smartparens-config)))
 
-;;; `magit'
-(use-pkg 'magit)
-(global-set-key (kbd "C-x g") 'magit-status)
+;; `guide-key-mode'
+(johnson/package-install 'guide-key)
+(use-package guide-key
+  :init
+  (guide-key-mode 1)
+  (setq guide-key/guide-key-sequence '("C-x" "C-c"))
+  (setq guide-key/idle-delay 2.0)
+  (setq guide-key/recursive-key-sequence-flag t))
 
-;;; `company'
-(use-pkg 'company)
-(global-company-mode 1)
-(global-set-key (kbd "C-c C-c") 'company-complete)
+;; `yari'
+(johnson/package-install 'yari)
+(use-package yari
+  :bind
+  ("C-c y" . yari-helm))
 
-;;; `expand-region'
-(use-pkg 'expand-region)
-(global-set-key (kbd "C-=") 'er/expand-region)
+;; `magit'
+(johnson/package-install 'magit)
+(use-package magit
+  :bind
+  ("C-x g" . magit-status))
 
-;;; `powerline'
-(use-pkg 'powerline)
-(powerline-default-theme)
+;; `company'
+(johnson/package-install 'company)
+(use-package company
+  :init
+  (global-company-mode 1)
+  :bind
+  ("C-c C-c" . company-complete))
 
-;;; `ace-jump-mode'
-(use-pkg 'ace-jump-mode)
-(global-set-key (kbd "C-x j") 'ace-jump-char-mode)
+;; `expand-region'
+(johnson/package-install 'expand-region)
+(use-package expand-region
+  :bind
+  ("C-=" . er/expand-region))
 
-;;; `winner-mode'
+;; `powerline'
+(johnson/package-install 'powerline)
+(use-package powerline
+  :config
+  (powerline-default-theme))
+
+;; `ace-jump-mode'
+(johnson/package-install 'ace-jump-mode)
+(use-package ace-jump-mode
+  :bind
+  ("C-x j" . ace-jump-char-mode))
+
+;; `winner-mode'
 (winner-mode 1)
 
-;;; `ample-theme'
-(use-pkg 'ample-theme)
+;; `ample-theme'
+(johnson/package-install 'ample-theme)
 (load-theme 'ample t)
 
-;;; buffer management
-(use-pkg 'ibuffer-vc)
-(add-hook 'ibuffer-hook
-	  (lambda ()
-	    (ibuffer-vc-generate-filter-groups-by-vc-root)))
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "C-x k") 'bury-buffer)
-(global-set-key (kbd "C-c n") 'new-frame)
-(global-set-key (kbd "C-c k") 'delete-frame)
-(global-set-key (kbd "C-x C-k") 'kill-this-buffer)
+;; `ibuffer-vc'
+(johnson/package-install 'ibuffer-vc)
+(use-package ibuffer-vc
+  :init
+  (add-hook 'ibuffer-hook
+	    (lambda ()
+	      (ibuffer-vc-generate-filter-groups-by-vc-root)))
+  :bind
+  ("C-x C-b" . ibuffer))
 
-;;; visual
+;; visual settings
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
 (add-to-list 'default-frame-alist '(font .  "Droid Sans Mono-10" ))
 (set-face-attribute 'default t :font  "Droid Sans Mono-10" )
 
-;;; start up
+;; start up settings
 (setq inhibit-startup-screen t)
 (setq initial-major-mode 'ruby-mode)
-(setq initial-scratch-message "\
-# This buffer is for notes you don't want to save
-# and Ruby code you'll throw away.")
 (setq initial-buffer-choice "~/Code/notes.org")
 
-;;; misc
+;; misc settings
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq backup-directory-alist '(("." . "~/tmp")))
 (global-set-key (kbd "C-c C-q") 'indent-region)
-
-(provide 'init)
-;;; init.el ends here
+(global-set-key (kbd "C-x k") 'bury-buffer)
+(global-set-key (kbd "C-c n") 'new-frame)
+(global-set-key (kbd "C-c k") 'delete-frame)
+(global-set-key (kbd "C-x C-k") 'kill-this-buffer)
+(bind-key "C-+" 'text-scale-increase)
+(bind-key "C--" 'text-scale-decrease)
