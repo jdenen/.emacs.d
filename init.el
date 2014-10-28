@@ -85,6 +85,23 @@
   (setq guide-key/idle-delay 2.0)
   (setq guide-key/recursive-key-sequence-flag t))
 
+;; Execute the current buffer with environment variables.
+(defun johnson/rspec-chrome (env)
+  "Execute the current spec buffer with ENV variables."
+  (interactive "sBROWSER_TYPE: ")
+  (progn
+    (setq rspec-use-bundler-when-possible nil)
+    (setq rspec-spec-command (concat (format "BROWSER_TYPE=%s" env) " rspec"))
+    (rspec-run-single-file
+     (rspec-spec-file-for (buffer-file-name))
+     (rspec-core-options))))
+
+;; `rbenv'
+(johnson/package-install 'rbenv)
+(use-package rbenv
+  :init
+  (global-rbenv-mode 1))
+
 ;; `inf-ruby'
 (johnson/package-install 'inf-ruby)
 (use-package inf-ruby
@@ -96,6 +113,15 @@
 (use-package yari
   :bind
   ("C-c y" . yari-helm))
+
+;; `rspec-mode'
+(johnson/package-install 'rspec-mode)
+(use-package rspec-mode
+  :init
+  (setq rspec-use-rake-when-possible nil)
+  (setq rspec-command-options "--format progress")
+  :bind
+  ("C-c , i" . johnson/rspec-chrome))
 
 ;; `magit'
 (johnson/package-install 'magit)
