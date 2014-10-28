@@ -108,6 +108,34 @@
   :init
   (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
 
+;; `ansi-term-pry'
+(defun johnson/ansi-term-pry ()
+  "Pry via `ansi-term'"
+  (interactive)
+  (if (get-buffer "*Pry*")
+      (switch-to-buffer-other-window "*Pry*")
+      (ansi-term "pry" "Pry")))
+(bind-key "C-c t p" 'johnson/ansi-term-pry)
+
+;; `key-chord'
+(johnson/package-install 'key-chord)
+(use-package key-chord
+  :init
+  (progn
+    (key-chord-mode 1)
+    (key-chord-define-global "jj" 'ace-jump-char-mode)
+    (key-chord-define-global "jg" 'goto-line)
+    (key-chord-define-global "js" 'helm-swoop)
+    (key-chord-define-global "jr" 'jump-to-register)))
+
+;; registers
+(mapcar
+ (lambda (r)
+   (set-register (car r) (cons 'file (cdr r))))
+ '((?i . "~/.emacs.d/init.el")
+   (?n . "~/Code/notes.org")
+   (?h . "~/Code/mantacode/manta-automated-test-suite/spec/spec_helper.rb")))
+
 ;; `yari'
 (johnson/package-install 'yari)
 (use-package yari
