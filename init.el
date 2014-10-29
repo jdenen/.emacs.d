@@ -222,3 +222,7 @@
 (global-set-key (kbd "C-x C-k") 'kill-this-buffer)
 (bind-key "C-+" 'text-scale-increase)
 (bind-key "C--" 'text-scale-decrease)
+(bind-key "C-<" 'shrink-window-horizontally)
+(bind-key "C->" 'enlarge-window-horizontally)
+(bind-key "C-," 'shrink-window)
+(bind-key "C-." 'enlarge-window)
