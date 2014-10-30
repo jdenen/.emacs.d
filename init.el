@@ -53,7 +53,7 @@
 (johnson/package-install 'helm-swoop)
 (use-package helm-swoop
   :bind
-  ("C-S-s" . helm-swoop))
+  ("C-s" . helm-swoop))
 
 ;; `projectile'
 (johnson/package-install 'projectile)
@@ -86,7 +86,7 @@
   (setq guide-key/recursive-key-sequence-flag t))
 
 ;; Execute the current buffer with environment variables.
-(defun johnson/rspec-chrome (env)
+(defun johnson/rspec-browser (env)
   "Execute the current spec buffer with ENV variables."
   (interactive "sBROWSER_TYPE: ")
   (progn
@@ -95,6 +95,18 @@
     (rspec-run-single-file
      (rspec-spec-file-for (buffer-file-name))
      (rspec-core-options))))
+
+;; pry binding
+(defun johnson/pry-binding ()
+  "Insert binding.pry."
+  (interactive)
+  (insert-before-markers "require 'pry'; binding.pry"))
+
+(defun johnson/pry-binding-hook ()
+  "Hook to set `johnson/pry-binding' kbd."
+  (local-set-key (kbd "C-c C-p") 'johnson/pry-binding))
+
+(add-hook 'ruby-mode-hook 'johnson/pry-binding-hook)
 
 ;; `rbenv'
 (johnson/package-install 'rbenv)
@@ -124,17 +136,17 @@
   (progn
     (key-chord-mode 1)
     (key-chord-define-global "jj" 'ace-jump-char-mode)
-    (key-chord-define-global "jg" 'goto-line)
-    (key-chord-define-global "js" 'helm-swoop)
     (key-chord-define-global "jr" 'jump-to-register)))
 
-;; registers
+
+;; `jump-to-register'
 (mapcar
  (lambda (r)
    (set-register (car r) (cons 'file (cdr r))))
  '((?i . "~/.emacs.d/init.el")
    (?n . "~/Code/notes.org")
-   (?h . "~/Code/mantacode/manta-automated-test-suite/spec/spec_helper.rb")))
+   (?h . "~/Code/mantacode/manta-automated-test-suite/spec/spec_helper.rb")
+   (?b . "~/Code/mantacode/responder/lib/responder/base.rb")))
 
 ;; `yari'
 (johnson/package-install 'yari)
@@ -149,7 +161,7 @@
   (setq rspec-use-rake-when-possible nil)
   (setq rspec-command-options "--format progress")
   :bind
-  ("C-c , i" . johnson/rspec-chrome))
+  ("C-c , i" . johnson/rspec-browser))
 
 ;; `magit'
 (johnson/package-install 'magit)
