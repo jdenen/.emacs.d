@@ -105,7 +105,6 @@
 (defun johnson/pry-binding-hook ()
   "Hook to set `johnson/pry-binding' kbd."
   (local-set-key (kbd "C-c C-p") 'johnson/pry-binding))
-
 (add-hook 'ruby-mode-hook 'johnson/pry-binding-hook)
 
 ;; `rbenv'
@@ -135,9 +134,8 @@
   :init
   (progn
     (key-chord-mode 1)
-    (key-chord-define-global "jj" 'ace-jump-char-mode)
+    (key-chord-define-global "jj" 'ace-jump-char-mode)  
     (key-chord-define-global "jr" 'jump-to-register)))
-
 
 ;; `jump-to-register'
 (mapcar
@@ -186,8 +184,19 @@
 ;; `powerline'
 (johnson/package-install 'powerline)
 (use-package powerline
+  :init
+  (display-time-mode 1)
   :config
   (powerline-default-theme))
+
+;; `diminish'
+(use-package diminish
+  :init
+  (eval-after-load "company" '(diminish 'company-mode))
+  (eval-after-load "helm" '(diminish 'helm-mode))
+  (eval-after-load "guide-key" '(diminish 'guide-key-mode))
+  (eval-after-load "magit" '(diminish 'magit-auto-revert-mode))
+  (eval-after-load "smartparens" '(diminish 'smartparens-mode)))
 
 ;; `ace-jump-mode'
 (johnson/package-install 'ace-jump-mode)
