@@ -31,8 +31,8 @@
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
-(add-to-list 'default-frame-alist '(font .  "Droid Sans Mono-10" ))
-(set-face-attribute 'default t :font  "Droid Sans Mono-10" )
+(add-to-list 'default-frame-alist '(font .  "Droid Sans Mono-10"))
+(set-face-attribute 'default t :font  "Droid Sans Mono-10")
 (johnson/package-install 'ample-theme)
 (load-theme 'ample t)
 
@@ -69,6 +69,7 @@
     (helm-mode 1)
     (require 'helm-config)
     (global-unset-key (kbd "C-x c"))
+    (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
     (define-key helm-map (kbd "C-z")  'helm-select-action)
     (when (executable-find "curl")
       (setq helm-google-suggest-use-curl-p      t))
@@ -100,7 +101,7 @@
   :init
   (progn
     (display-time-mode 1)
-    (powerline-default-theme))
+    (powerline-default-theme)))
 
 (use-package diminish
   :init
@@ -172,7 +173,7 @@
 (use-package expand-region
   :bind
   ("C-=" . er/expand-region)
-  ("C-c C-q" indent-region))
+  ("C-c C-q" . indent-region))
 
 (johnson/package-install 'ace-jump-mode)
 (use-package ace-jump-mode
