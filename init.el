@@ -5,26 +5,63 @@
 ;;;
 ;;; Code:
 
-;; User
+;;;
+;;; start up and initialization
+;;;
 (setq user-full-name "Johnson Denen"
       user-mail-address "jdenen@manta.com")
 
-;; MELPA
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
 
-;; johnson/package-install
 (defun johnson/package-install (package)
   "Install PACKAGE if it has not already been installed."
   (unless (package-installed-p package)
     (package-install package)))
 
-;; `use-package'
 (johnson/package-install 'use-package)
 (require 'use-package)
 
-;; `helm'
+(setq inhibit-startup-screen t)
+(setq initial-major-mode 'ruby-mode)
+(setq initial-buffer-choice "~/Code/notes.org")
+(fset 'yes-or-no-p 'y-or-n-p)
+(setq backup-directory-alist '(("." . "~/tmp")))
+(tool-bar-mode 0)
+(menu-bar-mode 0)
+(scroll-bar-mode 0)
+(add-to-list 'default-frame-alist '(font .  "Droid Sans Mono-10" ))
+(set-face-attribute 'default t :font  "Droid Sans Mono-10" )
+(johnson/package-install 'ample-theme)
+(load-theme 'ample t)
+
+;;;
+;;; emacs help
+;;;
+(johnson/package-install 'guide-key)
+(use-package guide-key
+  :init
+  (progn
+    (guide-key-mode 1)
+    (setq guide-key/guide-key-sequence '("C-x" "C-c"))
+    (setq guide-key/idle-delay 2.0)
+    (setq guide-key/recursive-key-sequence-flag t)))
+
+;;;
+;;; project source control and management
+;;;
+(johnson/package-install 'magit)
+(use-package magit
+  :bind ("C-x g" . magit-status))
+
+(johnson/package-install 'projectile)
+(use-package projectile
+  :init (projectile-global-mode t))
+
+;;;
+;;; helm search and navigation
+;;;
 (johnson/package-install 'helm)
 (use-package helm
   :init
@@ -32,11 +69,9 @@
     (helm-mode 1)
     (require 'helm-config)
     (global-unset-key (kbd "C-x c"))
-    (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-    (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
     (define-key helm-map (kbd "C-z")  'helm-select-action)
     (when (executable-find "curl")
-      (setq helm-google-suggest-use-curl-p t))
+      (setq helm-google-suggest-use-curl-p      t))
     (setq helm-quick-update                     t
 	  helm-split-window-in-side-p           t
 	  helm-buffers-fuzzy-matching           t
@@ -49,25 +84,69 @@
   ("C-c h" . helm-mini)
   ("C-x h" . helm-command-prefix))
 
-;; `helm-swoop'
 (johnson/package-install 'helm-swoop)
 (use-package helm-swoop
-  :bind
-  ("C-s" . helm-swoop))
+  :bind ("C-s" . helm-swoop))
 
-;; `projectile'
-(johnson/package-install 'projectile)
-(use-package projectile
-  :init
-  (projectile-global-mode 1))
-
-;; `helm-projectile'
 (johnson/package-install 'helm-projectile)
 (use-package helm-projectile
-  :init
-  (helm-projectile-on))
+  :init (helm-projectile-on))
 
-;; `smartparens'
+;;;
+;;; mode line styling
+;;;
+(johnson/package-install 'powerline)
+(use-package powerline
+  :init
+  (progn
+    (display-time-mode 1)
+    (powerline-default-theme))
+
+(use-package diminish
+  :init
+  (progn
+    (eval-after-load "company"     '(diminish 'company-mode))
+    (eval-after-load "helm"        '(diminish 'helm-mode))
+    (eval-after-load "guide-key"   '(diminish 'guide-key-mode))
+    (eval-after-load "magit"       '(diminish 'magit-auto-revert-mode))
+    (eval-after-load "smartparens" '(diminish 'smartparens-mode))))
+
+;;;
+;;; buffer management
+;;;
+(johnson/package-install 'buffer-move)
+(use-package buffer-move
+  :init (winner-mode 1)
+  :bind
+  ("<C-S-up>"    . buf-move-up)
+  ("<C-S-left>"  . buf-move-left)
+  ("<C-S-right>" . buf-move-right)
+  ("<C-S-down>"  . buf-move-down)
+  ("C-x k"       . bury-buffer)
+  ("C-x C-k"     . kill-this-buffer)
+  ("C-c n"       . new-frame)
+  ("C-c k"       . delete-frame)
+  ("C-+"         . text-scale-increase)
+  ("C--"         . text-scale-decrease)
+  ("C-<"         . shrink-window-horizontally)
+  ("C->"         . enlarge-window-horizontally)
+  ("C-,"         . shrink-window)
+  ("C-."         . enlarge-window))
+
+;;;
+;;; registers
+;;;
+(mapcar
+ (lambda (r)
+   (set-register (car r) (cons 'file (cdr r))))
+ '((?i . "~/.emacs.d/init.el")
+   (?n . "~/Code/notes.org")
+   (?h . "~/Code/mantacode/manta-automated-test-suite/spec/spec_helper.rb")
+   (?b . "~/Code/mantacode/responder/lib/responder/base.rb")))
+
+;;;
+;;; coding productivity
+;;;
 (johnson/package-install 'smartparens)
 (use-package smartparens
   :init
@@ -76,16 +155,61 @@
     (show-smartparens-global-mode 1)
     (require 'smartparens-config)))
 
-;; `guide-key-mode'
-(johnson/package-install 'guide-key)
-(use-package guide-key
+(johnson/package-install 'key-chord)
+(use-package key-chord
   :init
-  (guide-key-mode 1)
-  (setq guide-key/guide-key-sequence '("C-x" "C-c"))
-  (setq guide-key/idle-delay 2.0)
-  (setq guide-key/recursive-key-sequence-flag t))
+  (progn
+    (key-chord-mode 1)
+    (key-chord-define-global "jj" 'ace-jump-char-mode)  
+    (key-chord-define-global "jr" 'jump-to-register)))
 
-;; Execute the current buffer with environment variables.
+(johnson/package-install 'company)
+(use-package company
+  :init (global-company-mode 1)
+  :bind ("C-c C-c" . company-complete))
+
+(johnson/package-install 'expand-region)
+(use-package expand-region
+  :bind
+  ("C-=" . er/expand-region)
+  ("C-c C-q" indent-region))
+
+(johnson/package-install 'ace-jump-mode)
+(use-package ace-jump-mode
+  :bind ("C-x j" . ace-jump-char-mode))
+
+;;;
+;;; ruby
+;;;
+(johnson/package-install 'rbenv)
+(use-package rbenv
+  :init (global-rbenv-mode 1))
+
+(johnson/package-install 'yari)
+(use-package yari
+  :bind ("C-c y" . yari-helm))
+
+(johnson/package-install 'rspec-mode)
+(use-package rspec-mode
+  :init
+  (progn
+    (setq rspec-use-rake-when-possible nil)
+    (setq rspec-command-options "--format progress"))
+  :bind
+  ("C-c , i" . johnson/rspec-browser))
+
+(johnson/package-install 'inf-ruby)
+(use-package inf-ruby
+  :init (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
+
+(defun johnson/ansi-term-pry ()
+  "Jump to pry session."
+  (interactive)
+  (if (get-buffer "*Pry*")
+      (switch-to-buffer-other-window "*Pry*")
+      (ansi-term "pry" "Pry")))
+(bind-key "C-c t p" 'johnson/ansi-term-pry)
+
 (defun johnson/rspec-browser (env)
   "Execute the current spec buffer with ENV variables."
   (interactive "sBROWSER_TYPE: ")
@@ -96,7 +220,6 @@
      (rspec-spec-file-for (buffer-file-name))
      (rspec-core-options))))
 
-;; pry binding
 (defun johnson/pry-binding ()
   "Insert binding.pry."
   (interactive)
@@ -106,144 +229,3 @@
   "Hook to set `johnson/pry-binding' kbd."
   (local-set-key (kbd "C-c C-p") 'johnson/pry-binding))
 (add-hook 'ruby-mode-hook 'johnson/pry-binding-hook)
-
-;; `rbenv'
-(johnson/package-install 'rbenv)
-(use-package rbenv
-  :init
-  (global-rbenv-mode 1))
-
-;; `inf-ruby'
-(johnson/package-install 'inf-ruby)
-(use-package inf-ruby
-  :init
-  (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
-
-;; `ansi-term-pry'
-(defun johnson/ansi-term-pry ()
-  "Pry via `ansi-term'"
-  (interactive)
-  (if (get-buffer "*Pry*")
-      (switch-to-buffer-other-window "*Pry*")
-      (ansi-term "pry" "Pry")))
-(bind-key "C-c t p" 'johnson/ansi-term-pry)
-
-;; `key-chord'
-(johnson/package-install 'key-chord)
-(use-package key-chord
-  :init
-  (progn
-    (key-chord-mode 1)
-    (key-chord-define-global "jj" 'ace-jump-char-mode)  
-    (key-chord-define-global "jr" 'jump-to-register)))
-
-;; `jump-to-register'
-(mapcar
- (lambda (r)
-   (set-register (car r) (cons 'file (cdr r))))
- '((?i . "~/.emacs.d/init.el")
-   (?n . "~/Code/notes.org")
-   (?h . "~/Code/mantacode/manta-automated-test-suite/spec/spec_helper.rb")
-   (?b . "~/Code/mantacode/responder/lib/responder/base.rb")))
-
-;; `yari'
-(johnson/package-install 'yari)
-(use-package yari
-  :bind
-  ("C-c y" . yari-helm))
-
-;; `rspec-mode'
-(johnson/package-install 'rspec-mode)
-(use-package rspec-mode
-  :init
-  (setq rspec-use-rake-when-possible nil)
-  (setq rspec-command-options "--format progress")
-  :bind
-  ("C-c , i" . johnson/rspec-browser))
-
-;; `magit'
-(johnson/package-install 'magit)
-(use-package magit
-  :bind
-  ("C-x g" . magit-status))
-
-;; `company'
-(johnson/package-install 'company)
-(use-package company
-  :init
-  (global-company-mode 1)
-  :bind
-  ("C-c C-c" . company-complete))
-
-;; `expand-region'
-(johnson/package-install 'expand-region)
-(use-package expand-region
-  :bind
-  ("C-=" . er/expand-region))
-
-;; `powerline'
-(johnson/package-install 'powerline)
-(use-package powerline
-  :init
-  (display-time-mode 1)
-  :config
-  (powerline-default-theme))
-
-;; `diminish'
-(use-package diminish
-  :init
-  (eval-after-load "company" '(diminish 'company-mode))
-  (eval-after-load "helm" '(diminish 'helm-mode))
-  (eval-after-load "guide-key" '(diminish 'guide-key-mode))
-  (eval-after-load "magit" '(diminish 'magit-auto-revert-mode))
-  (eval-after-load "smartparens" '(diminish 'smartparens-mode)))
-
-;; `ace-jump-mode'
-(johnson/package-install 'ace-jump-mode)
-(use-package ace-jump-mode
-  :bind
-  ("C-x j" . ace-jump-char-mode))
-
-;; `winner-mode'
-(winner-mode 1)
-
-;; `ample-theme'
-(johnson/package-install 'ample-theme)
-(load-theme 'ample t)
-
-;; `ibuffer-vc'
-(johnson/package-install 'ibuffer-vc)
-(use-package ibuffer-vc
-  :init
-  (add-hook 'ibuffer-hook
-	    (lambda ()
-	      (ibuffer-vc-generate-filter-groups-by-vc-root)))
-  :bind
-  ("C-x C-b" . ibuffer))
-
-;; visual settings
-(tool-bar-mode 0)
-(menu-bar-mode 0)
-(scroll-bar-mode 0)
-(add-to-list 'default-frame-alist '(font .  "Droid Sans Mono-10" ))
-(set-face-attribute 'default t :font  "Droid Sans Mono-10" )
-
-;; start up settings
-(setq inhibit-startup-screen t)
-(setq initial-major-mode 'ruby-mode)
-(setq initial-buffer-choice "~/Code/notes.org")
-
-;; misc settings
-(fset 'yes-or-no-p 'y-or-n-p)
-(setq backup-directory-alist '(("." . "~/tmp")))
-(global-set-key (kbd "C-c C-q") 'indent-region)
-(global-set-key (kbd "C-x k") 'bury-buffer)
-(global-set-key (kbd "C-c n") 'new-frame)
-(global-set-key (kbd "C-c k") 'delete-frame)
-(global-set-key (kbd "C-x C-k") 'kill-this-buffer)
-(bind-key "C-+" 'text-scale-increase)
-(bind-key "C--" 'text-scale-decrease)
-(bind-key "C-<" 'shrink-window-horizontally)
-(bind-key "C->" 'enlarge-window-horizontally)
-(bind-key "C-," 'shrink-window)
-(bind-key "C-." 'enlarge-window)
