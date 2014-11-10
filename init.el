@@ -83,6 +83,7 @@
   :bind
   ("C-x m" . helm-M-x)
   ("C-c h" . helm-mini)
+  ("M-y"   . helm-show-kill-ring)
   ("C-x h" . helm-command-prefix))
 
 (johnson/package-install 'helm-swoop)
