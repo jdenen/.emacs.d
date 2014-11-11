@@ -143,7 +143,7 @@
    (set-register (car r) (cons 'file (cdr r))))
  '((?i . "~/.emacs.d/init.el")
    (?n . "~/Code/notes.org")
-   (?h . "~/Code/mantacode/manta-automated-test-suite/spec/spec_helper.rb")
+   (?h . "~/Code/mantacode/smoke/spec/spec_helper.rb")
    (?b . "~/Code/mantacode/responder/lib/responder/base.rb")))
 
 ;;;
