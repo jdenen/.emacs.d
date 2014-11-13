@@ -243,3 +243,62 @@
 
 (bind-key "C-c t b" 'johnson/ansi-term-bash)
 (bind-key "C-c t p" 'johnson/ansi-term-pry)
+
+;;;
+;;; jekyll
+;;;
+(defvar jekyll-directory "~/Code/jdenen/blog/"
+  "Path to Jekyll blog.")
+(defvar jekyll-drafts-dir "_drafts/"
+  "Relative path to drafts directory.")
+(defvar jekyll-posts-dir "_posts/"
+  "Relative path to posts directory.")
+(defvar jekyll-post-ext ".md"
+  "File extension of Jekyll posts.")
+(defvar jekyll-post-template 
+  "---\nlayout: post\ntitle: %s\n---\n\n"
+  "Default template for Jekyll posts.  %s will be replace by the post title.")
+
+(defun jekyll-make-slug (s)
+  "Turn a string into a slug."
+  (replace-regexp-in-string 
+   " " "-" (downcase
+            (replace-regexp-in-string
+             "[^A-Za-z0-9 ]" "" s))))
+
+(defun jekyll-yaml-escape (s)
+  "Escape a string for YAML."
+  (if (or (string-match ":" s)
+          (string-match "\"" s))
+      (concat "\"" (replace-regexp-in-string "\"" "\\\\\"" s) "\"")
+    s))
+
+(defun johnson/create-blog-post (title)
+  "Create a new blog post."
+  (interactive "sPost Title: ")
+  (let ((post-file (concat jekyll-directory jekyll-drafts-dir
+			   (jekyll-make-slug title)
+			   jekyll-post-ext)))
+    (find-file post-file)
+    (insert (format jekyll-post-template (jekyll-yaml-escape title)))))
+
+(defun johnson/publish-current-draft ()
+  "Publish current buffer to blog."
+  (interactive)
+  (let ((post-file (concat jekyll-directory jekyll-posts-dir
+			   (format-time-string "%Y-%m-%d-")
+			   (file-name-nondirectory buffer-file-name))))
+    (rename-file (buffer-file-name) post-file)
+    (kill-buffer (buffer-name))
+    (find-file post-file)))
+
+(defun johnson/serve-with-drafts ()
+  "Serve blog with drafts."
+  (interactive)
+  (let ((serve-command (concat "cd " jekyll-directory "; "
+			       "jekyll serve --drafts")))
+    (async-shell-command serve-command)))
+
+(bind-key "C-c j c" 'johnson/create-blog-post)
+(bind-key "C-c j p" 'johnson/publish-current-draft)
+(bind-key "C-c j s" 'johnson/serve-with-drafts)
