@@ -245,7 +245,7 @@
 (bind-key "C-c t p" 'johnson/ansi-term-pry)
 
 ;;;
-;;; jekyll
+;;; jekyll blogging
 ;;;
 (defvar jekyll-directory "~/Code/jdenen/blog/"
   "Path to Jekyll blog.")
@@ -292,13 +292,31 @@
     (kill-buffer (buffer-name))
     (find-file post-file)))
 
-(defun johnson/serve-with-drafts ()
+(defun johnson/serve-jekyll ()
   "Serve blog with drafts."
   (interactive)
   (let ((serve-command (concat "cd " jekyll-directory "; "
 			       "jekyll serve --drafts")))
-    (async-shell-command serve-command)))
+    (progn
+      (async-shell-command serve-command)
+      (set-buffer "*Async Shell Command*")
+      (rename-buffer "Jekyll"))))
+
+(defun johnson/restart-jekyll ()
+  "Restart Jekyll."
+  (interactive)
+  (progn
+    (johnson/kill-jekyll)
+    (johnson/serve-with-drafts)))
+
+(defun johnson/kill-jekyll ()
+  "Stop the Jekyll server."
+  (interactive)
+  (if (get-buffer "Jekyll")
+      (kill-buffer "Jekyll")))
 
 (bind-key "C-c j c" 'johnson/create-blog-post)
 (bind-key "C-c j p" 'johnson/publish-current-draft)
-(bind-key "C-c j s" 'johnson/serve-with-drafts)
+(bind-key "C-c j s" 'johnson/serve-jekyll)
+(bind-key "C-c j r" 'johnson/restart-jekyll)
+(bind-key "C-c j k" 'johnson/kill-jekyll)
