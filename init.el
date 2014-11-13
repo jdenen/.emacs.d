@@ -204,14 +204,6 @@
 (use-package inf-ruby
   :init (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
 
-(defun johnson/ansi-term-pry ()
-  "Jump to pry session."
-  (interactive)
-  (if (get-buffer "*Pry*")
-      (switch-to-buffer-other-window "*Pry*")
-      (ansi-term "pry" "Pry")))
-(bind-key "C-c t p" 'johnson/ansi-term-pry)
-
 (defun johnson/rspec-browser (env)
   "Execute the current spec buffer with ENV variables."
   (interactive "sBROWSER_TYPE: ")
@@ -231,3 +223,23 @@
   "Hook to set `johnson/pry-binding' kbd."
   (local-set-key (kbd "C-c C-p") 'johnson/pry-binding))
 (add-hook 'ruby-mode-hook 'johnson/pry-binding-hook)
+
+;;;
+;;; terminals
+;;;
+(defun johnson/ansi-term-pry ()
+  "Jump to pry session."
+  (interactive)
+  (if (get-buffer "*Pry*")
+      (switch-to-buffer-other-window "*Pry*")
+    (ansi-term "pry" "Pry")))
+
+(defun johnson/ansi-term-bash ()
+  "Jump to bash session."
+  (interactive)
+  (if (get-buffer "*Bash*")
+      (switch-to-buffer-other-window "*Bash*")
+    (ansi-term "/bin/bash" "Bash")))
+
+(bind-key "C-c t b" 'johnson/ansi-term-bash)
+(bind-key "C-c t p" 'johnson/ansi-term-pry)
