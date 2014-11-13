@@ -258,6 +258,12 @@
 (defvar jekyll-post-template 
   "---\nlayout: post\ntitle: %s\n---\n\n"
   "Default template for Jekyll posts.  %s will be replace by the post title.")
+(defvar jekyll-highlight-ruby
+  "{% highlight ruby %}"
+  "Begin Ruby block with Jekyll markdown syntax.")
+(defvar jekyll-highlight-end
+  "{% endhighlight %}"
+  "End Ruby block with Jekyll markdown syntax.")
 
 (defun jekyll-make-slug (s)
   "Turn a string into a slug."
@@ -270,8 +276,13 @@
   "Escape a string for YAML."
   (if (or (string-match ":" s)
           (string-match "\"" s))
-      (concat "\"" (replace-regexp-in-string "\"" "\\\\\"" s) "\"")
-    s))
+      (concat "\"" (replace-regexp-in-string "\"" "\\\\\"" s) "\"") s))
+
+(defun johnson/jekyll-ruby-snippet ()
+  "Inject Ruby snippet into a blog post."
+  (interactive)
+  (insert (concat jekyll-highlight-ruby "\n\n" jekyll-highlight-end))
+  (previous-line))
 
 (defun johnson/blog-draft (title)
   "Create a new blog post with basic liquid config."
@@ -318,6 +329,7 @@
 
 (bind-key "C-c j d" 'johnson/blog-draft)
 (bind-key "C-c j p" 'johnson/publish-current-draft)
-(bind-key "C-c j s" 'johnson/serve-jekyll)
-(bind-key "C-c j r" 'johnson/restart-jekyll)
-(bind-key "C-c j k" 'johnson/kill-jekyll)
+(bind-key "C-c j r" 'johnson/jekyll-ruby-snippet)
+(bind-key "C-c j s s" 'johnson/serve-jekyll)
+(bind-key "C-c j s k" 'johnson/kill-jekyll)
+(bind-key "C-c j s r" 'johnson/restart-jekyll)
