@@ -273,14 +273,15 @@
       (concat "\"" (replace-regexp-in-string "\"" "\\\\\"" s) "\"")
     s))
 
-(defun johnson/create-blog-post (title)
-  "Create a new blog post."
+(defun johnson/blog-draft (title)
+  "Create a new blog post with basic liquid config."
   (interactive "sPost Title: ")
   (let ((post-file (concat jekyll-directory jekyll-drafts-dir
 			   (jekyll-make-slug title)
 			   jekyll-post-ext)))
-    (find-file post-file)
-    (insert (format jekyll-post-template (jekyll-yaml-escape title)))))
+    (with-current-buffer (find-file post-file)
+      (unless (re-search-forward "---" nil t)
+	  (insert (format jekyll-post-template (jekyll-yaml-escape title)))))))
 
 (defun johnson/publish-current-draft ()
   "Publish current buffer to blog."
@@ -307,7 +308,7 @@
   (interactive)
   (progn
     (johnson/kill-jekyll)
-    (johnson/serve-with-drafts)))
+    (johnson/serve-jekyll)))
 
 (defun johnson/kill-jekyll ()
   "Stop the Jekyll server."
@@ -315,7 +316,7 @@
   (if (get-buffer "Jekyll")
       (kill-buffer "Jekyll")))
 
-(bind-key "C-c j c" 'johnson/create-blog-post)
+(bind-key "C-c j d" 'johnson/blog-draft)
 (bind-key "C-c j p" 'johnson/publish-current-draft)
 (bind-key "C-c j s" 'johnson/serve-jekyll)
 (bind-key "C-c j r" 'johnson/restart-jekyll)
