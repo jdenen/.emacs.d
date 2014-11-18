@@ -284,6 +284,11 @@
   (insert (concat jekyll-highlight-ruby "\n\n" jekyll-highlight-end))
   (previous-line))
 
+(defun johnson/jekyll-img (image)
+  "Inject /images/IMAGE into a blog post."
+  (interactive "sImage: ")
+  (insert (concat "![](/images/" image ")")))
+
 (defun johnson/blog-draft (title)
   "Create a new blog post with basic liquid config."
   (interactive "sPost Title: ")
@@ -330,6 +335,7 @@
 (bind-key "C-c j d" 'johnson/blog-draft)
 (bind-key "C-c j p" 'johnson/publish-current-draft)
 (bind-key "C-c j r" 'johnson/jekyll-ruby-snippet)
+(bind-key "C-c j i" 'johnson/jekyll-img)
 (bind-key "C-c j s s" 'johnson/serve-jekyll)
 (bind-key "C-c j s k" 'johnson/kill-jekyll)
 (bind-key "C-c j s r" 'johnson/restart-jekyll)
