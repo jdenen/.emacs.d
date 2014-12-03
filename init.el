@@ -25,14 +25,15 @@
 
 (setq inhibit-startup-screen t)
 (setq initial-major-mode 'ruby-mode)
+(setq initial-scratch-message "# This is a Ruby scratch buffer. \n\n")
 (setq initial-buffer-choice "~/Code/notes.org")
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq backup-directory-alist '(("." . "~/tmp")))
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
-(add-to-list 'default-frame-alist '(font .  "Droid Sans Mono-10"))
-(set-face-attribute 'default t :font  "Droid Sans Mono-10")
+(add-to-list 'default-frame-alist '(font .  "Droid Sans Mono-8"))
+(set-face-attribute 'default t :font  "Droid Sans Mono-8")
 (johnson/package-install 'ample-theme)
 (load-theme 'ample t)
 
@@ -163,7 +164,15 @@
   (progn
     (key-chord-mode 1)
     (key-chord-define-global "jj" 'ace-jump-char-mode)  
-    (key-chord-define-global "jr" 'jump-to-register)))
+    (key-chord-define-global "jr" 'jump-to-register)
+    (key-chord-define-global "js" 'johnson/goto-scratch)
+    (key-chord-define-global "jg" 'magit-status)
+    (key-chord-define-global "jp" 'helm-projectile)
+    (key-chord-define-global "uu" 'undo)
+    (key-chord-define-global ";e" 'er/expand-region)
+    (key-chord-define-global ";g" 'keyboard-quit)
+    (key-chord-define-global ";c" 'company-complete)
+    (key-chord-define-global ";s" 'helm-swoop)))
 
 (johnson/package-install 'company)
 (use-package company
@@ -223,6 +232,11 @@
   "Hook to set `johnson/pry-binding' kbd."
   (local-set-key (kbd "C-c C-p") 'johnson/pry-binding))
 (add-hook 'ruby-mode-hook 'johnson/pry-binding-hook)
+
+(defun johnson/goto-scratch ()
+  "Open scratch buffer"
+  (interactive)
+  (switch-to-buffer-other-window "*scratch*"))
 
 ;;;
 ;;; terminals
