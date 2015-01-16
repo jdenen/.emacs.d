@@ -239,6 +239,11 @@
   (switch-to-buffer-other-window "*scratch*"))
 
 ;;;
+;;; tramp
+;;;
+(setq tramp-default-method "ssh")
+
+;;;
 ;;; terminals
 ;;;
 (defun johnson/ansi-term-pry ()
