@@ -264,6 +264,25 @@
 (bind-key "C-c t p" 'johnson/ansi-term-pry)
 
 ;;;
+;;; RSS
+;;;
+(johnson/package-install 'elfeed)
+(use-package elfeed
+  :init
+  (setq elfeed-feeds
+	'("http://blog.testingcurator.com/feed/"
+	  "http://jkotests.wordpress.com/feed/"
+	  "http://watirmelon.com/feed/"
+	  "http://feeds.feedburner.com/blogspot/RLXA?format=xml"
+	  "http://www.iteststuff.ca/feeds/posts/default"
+	  "http://feeds.feedburner.com/SoftwareTestingGeek?format=xml"
+	  "http://planet.emacsen.org/atom.xml"
+	  "http://xkcd.com/rss.xml"
+	  "http://feeds.feedburner.com/Rubyflow?format=xml"))
+  :bind
+  ("C-c r" . elfeed))
+
+;;;
 ;;; jekyll blogging
 ;;;
 (defvar jekyll-directory "~/Code/jdenen/blog/"
