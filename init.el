@@ -35,7 +35,8 @@
 (add-to-list 'default-frame-alist '(font .  "Droid Sans Mono-8"))
 (set-face-attribute 'default t :font  "Droid Sans Mono-8")
 (johnson/package-install 'ample-theme)
-(load-theme 'ample t)
+(load-theme 'ample-flat t)
+(global-hl-line-mode 1)
 
 ;;;
 ;;; emacs help
@@ -278,7 +279,8 @@
 	  "http://feeds.feedburner.com/SoftwareTestingGeek?format=xml"
 	  "http://planet.emacsen.org/atom.xml"
 	  "http://xkcd.com/rss.xml"
-	  "http://feeds.feedburner.com/Rubyflow?format=xml"))
+	  "http://feeds.feedburner.com/Rubyflow?format=xml"
+	  "https://groups.google.com/forum/feed/columbusrb/msgs/rss.xml?num=15"))
   :bind
   ("C-c r" . elfeed))
 
