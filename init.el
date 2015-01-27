@@ -88,15 +88,10 @@
   ("M-y"   . helm-show-kill-ring)
   ("C-x h" . helm-command-prefix))
 
-;;;
-;;; ace-isearch
-;;;
 (johnson/package-install 'helm-swoop)
-(johnson/package-install 'ace-isearch)
-(use-package ace-isearch
-  :init
-  (global-ace-isearch-mode 1)
-  (setq ace-isearch-input-length 1))
+(use-package helm-swoop
+  :bind
+  ("C-s" . helm-swoop))
 
 (johnson/package-install 'helm-projectile)
 (use-package helm-projectile
@@ -170,7 +165,7 @@
   :init
   (progn
     (key-chord-mode 1)
-;;    (key-chord-define-global "jj" 'ace-jump-char-mode)  
+    (key-chord-define-global "jj" 'ace-jump-char-mode)  
     (key-chord-define-global "jr" 'jump-to-register)
     (key-chord-define-global "jg" 'magit-status)
     (key-chord-define-global "jp" 'helm-projectile)
