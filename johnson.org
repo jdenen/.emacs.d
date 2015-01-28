@@ -1,11 +1,11 @@
 ** johnson.org
 *** Introduction
-Use `org-babel-load-file` in your `init.el` to convert an `org-mode` file into Emacs configuration. To install this configuration, clone the repo.
+Use =org-babel-load-file= in your =init.el= to convert an =org-mode= file into Emacs configuration. To install this configuration, clone the repo.
 #+BEGIN_SRC bash
-cd ~ && git clone git@github.com:jdenen/.emacs.d
+git clone git@github.com:jdenen/.emacs.d ~/.emacs.d
 #+END_SRC
 *** Org config
-I'm using `org-mode` to write my Emacs configuration, so it makes sense to start with configuring `org-mode` first.
+I'm using =org-mode= to write my Emacs configuration, so it makes sense to start with configuring =org-mode= first.
 
 I prefer a clean, indented outline look.
 #+BEGIN_SRC emacs-lisp
@@ -26,7 +26,7 @@ If I install my config on a new machine, I want it to work auto-magically. This 
     (package-install package)))
 #+END_SRC
 
-`use-package` makes package configuration neat and easy.
+=use-package= makes package configuration neat and easy.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'use-package)
 (require 'use-package)
@@ -40,7 +40,7 @@ No startup screen, tool bars, or scroll bars.
 (scroll-bar-mode 0)
 #+END_SRC
 
-Use `ample-theme` with the Droid Sans Mono font.
+Use =ample-theme= with the Droid Sans Mono font.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'ample-theme)
 (load-theme 'ample t)
@@ -53,7 +53,7 @@ Highlight the current buffer line.
 (global-hl-line-mode 1)
 #+END_SRC
 
-Start the scratch buffer in `ruby-mode`.
+Start the scratch buffer in =ruby-mode=.
 #+BEGIN_SRC emacs-lisp
 (setq initial-major-mode 'ruby-mode)
 (setq initial-scratch-message "# This is a Ruby scratch buffer. \n\n")
@@ -66,7 +66,7 @@ Throw in a few other sane defaults.
 (setq tramp-default-method "ssh")
 #+END_SRC
 *** Emacs help
-There's a lot to remember when using Emacs. I use `guide-key` to help me remember key sequences that begin with `C-x` or `C-c`.
+There's a lot to remember when using Emacs. I use =guide-key= to help me remember key sequences that begin with =C-x= or =C-c=.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'guide-key)
 (use-package guide-key
@@ -78,7 +78,7 @@ There's a lot to remember when using Emacs. I use `guide-key` to help me remembe
     (setq guide-key/recursive-key-sequence-flag t)))
 #+END_SRC
 *** Git projects
-My projects are Git based, and `magit` is the best Git interface out there.
+My projects are Git based, and =magit= is the best Git interface out there.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'magit)
 (use-package magit
@@ -86,7 +86,7 @@ My projects are Git based, and `magit` is the best Git interface out there.
   ("C-x g" . magit-status))
 #+END_SRC
 
-`projectile` makes project navigation better.
+=projectile= makes project navigation better.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'projectile)
 (use-package projectile
@@ -94,7 +94,7 @@ My projects are Git based, and `magit` is the best Git interface out there.
   (projectile-global-mode t))
 #+END_SRC
 *** Helm navigation
-I prefer `helm` style navigation to `ido-mode` or default Emacs navigation.
+I prefer =helm= style navigation to =ido-mode= or default Emacs navigation.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'helm)
 (use-package helm
@@ -120,7 +120,7 @@ I prefer `helm` style navigation to `ido-mode` or default Emacs navigation.
   ("C-x h" . helm-command-prefix))
 #+END_SRC
 
-`projectile` navigation should be `helm` styled too.
+=projectile= navigation should be =helm= styled too.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'helm-projectile)
 (use-package helm-projectile
@@ -136,7 +136,7 @@ And buffer searching.
   ("C-s" . helm-swoop))
 #+END_SRC
 *** Mode line
-I often use Emacs in `fullscreen-mode`, which blocks my view of the clock. I use `powerline` to show me the time and generally make the Emacs mode line better.
+I often use Emacs in =fullscreen-mode=, which blocks my view of the clock. I use =powerline= to show me the time and generally make the Emacs mode line better.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'powerline)
 (use-package powerline
@@ -146,9 +146,9 @@ I often use Emacs in `fullscreen-mode`, which blocks my view of the clock. I use
     (powerline-default-theme)))
 #+END_SRC
 
-`diminish` hides a bunch of mode line information that I do not care to know. These are typically modes that I'm *always* in.
+=diminish= hides a bunch of mode line information that I do not care to know. These are typically modes that I'm *always* in.
 #+BEGIN_SRC emacs-lisp
-(johnson/package-install `diminish)
+(johnson/package-install =diminish)
 (use-package diminish
   :init
   (progn
@@ -161,7 +161,7 @@ I often use Emacs in `fullscreen-mode`, which blocks my view of the clock. I use
 *** General programming
 This sections includes packages that make programming more efficient.
 
-`smartparens` auto-closes blocks and lamdas in Ruby, and it's *essential* for elisp and all its parentheses.
+=smartparens= auto-closes blocks and lamdas in Ruby, and it's *essential* for elisp and all its parentheses.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'smartparens)
 (use-package smartparens
@@ -172,7 +172,7 @@ This sections includes packages that make programming more efficient.
     (require 'smartparens-config)))
 #+END_SRC
 
-`expand-region` and its smart selection makes refactoring code easier. I add a useful keybinding for indentation as well.
+=expand-region= and its smart selection makes refactoring code easier. I add a useful keybinding for indentation as well.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'expand-region)
 (use-package expand-region
@@ -180,7 +180,7 @@ This sections includes packages that make programming more efficient.
   ("C-c C-q" . indent-region))
 #+END_SRC
 
-`company` provides a code completion drop-down menu.
+=company= provides a code completion drop-down menu.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'company)
 (use-package company
@@ -190,7 +190,7 @@ This sections includes packages that make programming more efficient.
   ("C-c C-c" . company-complete))
 #+END_SRC
 *** Registers
-I visit some files a ton. Jumping to them with `key-chord-mode` plus a single character is super efficient.
+I visit some files a ton. Jumping to them with =key-chord-mode= plus a single character is super efficient.
 #+BEGIN_SRC emacs-lisp
 (mapcar
  (lambda (r)
@@ -207,13 +207,13 @@ This section includes a bunch of package configuration for a better Ruby program
   :init (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
 #+END_SRC
 
-`yari` makes navigating Ruby's `ri` documentation easy.
+=yari= makes navigating Ruby's =ri= documentation easy.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'yari)
 (use-package yari)
 #+END_SRC
 
-`rspec-mode` is essential for Ruby testing via Emacs.
+=rspec-mode= is essential for Ruby testing via Emacs.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'rspec-mode)
 (use-package rspec-mode
@@ -223,7 +223,7 @@ This section includes a bunch of package configuration for a better Ruby program
     (setq rspec-command-options "--format progress")))
 #+END_SRC
 
-This is a simple function to insert `require 'pry'; binding.pry` for Ruby debugging.
+This is a simple function to insert =require 'pry'; binding.pry= for Ruby debugging.
 #+BEGIN_SRC emacs-lisp
 (defun johnson/pry-binding ()
   "Insert binding.pry."
@@ -231,7 +231,7 @@ This is a simple function to insert `require 'pry'; binding.pry` for Ruby debugg
   (insert-before-markers "require 'pry'; binding.pry"))
 #+END_SRC
 *** Ace
-`ace-jump-char-mode` is bound the the keychord "jj" and it lets me jump to any visible character quickly.
+=ace-jump-char-mode= is bound the the keychord "jj" and it lets me jump to any visible character quickly.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'ace-jump-mode)
 (use-package ace-jump-mode
@@ -239,15 +239,15 @@ This is a simple function to insert `require 'pry'; binding.pry` for Ruby debugg
   ("C-x j" . ace-jump-char-mode))
 #+END_SRC
 
-`ace-window` makes window navigation as efficient as `ace-jump-char-mode`. Bound to the "yy" keychord.
+=ace-window= makes window navigation as efficient as =ace-jump-char-mode=. Bound to the "yy" keychord.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'ace-window)
 (use-package ace-window)
 #+END_SRC
 *** Terminal manipulation
-I prefer `ansi-term` but need to use it more efficiently.
+I prefer =ansi-term= but need to use it more efficiently.
 
-If you're on a terminal buffer named `*ansi-term*`, rename it. Otherwise, evaluate the terminal situation further with `johnson/switch-or-create-ansi-term-buffer`.
+If you're on a terminal buffer named =*ansi-term*=, rename it. Otherwise, evaluate the terminal situation further with =johnson/switch-or-create-ansi-term-buffer=.
 #+BEGIN_SRC emacs-lisp
 (require 'term)
 (defun johnson/rename-or-find-ansi-term ()
@@ -258,7 +258,7 @@ If you're on a terminal buffer named `*ansi-term*`, rename it. Otherwise, evalua
       (johnson/find-ansi-term)))
 #+END_SRC
 
-If a terminal buffer named `*ansi-term*` exists, switch to it in a new window. Otherwise, create a new `ansi-term` buffer.
+If a terminal buffer named =*ansi-term*= exists, switch to it in a new window. Otherwise, create a new =ansi-term= buffer.
 #+BEGIN_SRC emacs-lisp
 (defun johnson/find-ansi-term ()
   "Switch to or generate a terminal buffer."
@@ -268,7 +268,7 @@ If a terminal buffer named `*ansi-term*` exists, switch to it in a new window. O
     (ansi-term "/bin/bash")))
 #+END_SRC
 
-Rename, switch to, or create an `ansi-term` buffer.
+Rename, switch to, or create an =ansi-term= buffer.
 #+BEGIN_SRC emacs-lisp
 (defun johnson/ansi-term ()
   "Efficient ansi-term generation."
@@ -278,7 +278,7 @@ Rename, switch to, or create an `ansi-term` buffer.
     (johnson/find-ansi-term)))
 #+END_SRC
 *** Window manipulation
-`buffer-move` lets you swap buffers between windows. 
+=buffer-move= lets you swap buffers between windows. 
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'buffer-move)
 (use-package buffer-move
@@ -289,7 +289,7 @@ Rename, switch to, or create an `ansi-term` buffer.
   ("<M-down>"  . buf-move-down))
 #+END_SRC
 
-`winner-mode` allows you to quickly do and undo changes to your windows.
+=winner-mode= allows you to quickly do and undo changes to your windows.
 #+BEGIN_SRC emacs-lisp
 (winner-mode 1)
 #+END_SRC
@@ -325,7 +325,7 @@ Keybindings for resizing windows, resizing text, killing and hiding buffers.
   ("C-c r" . elfeed))
 #+END_SRC
 *** Keychords
-`key-chord-mode` makes my Emacs life easier. I replace my most used sequences with two character chords.
+=key-chord-mode= makes my Emacs life easier. I replace my most used sequences with two character chords.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'key-chord)
 (use-package key-chord
