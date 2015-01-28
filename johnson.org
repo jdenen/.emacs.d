@@ -269,6 +269,13 @@ Rename, switch to, or create an =ansi-term= buffer.
       (johnson/rename-or-find-ansi-term)
     (johnson/find-ansi-term)))
 #+END_SRC
+
+Kill the buffer when a terminal is exited.
+#+BEGIN_SRC emacs-lisp
+(defadvice term-handle-exit
+    (after term-kill-buffer-on-exit activate)
+  (kill-buffer))
+#+END_SRC
 *** Window manipulation
 =buffer-move= lets you swap buffers between windows. 
 #+BEGIN_SRC emacs-lisp
@@ -327,9 +334,6 @@ Keybindings for resizing windows, resizing text, killing and hiding buffers.
     ;; ace chords
     (key-chord-define-global "jj" 'ace-jump-char-mode)
     (key-chord-define-global "kk" 'ace-window)
-    ;; helm chords
-    (key-chord-define-global "HH" 'helm-projectile)
-    (key-chord-define-global "FF" 'find-file)
     ;; ruby chords
     (key-chord-define-global "vv" 'johnson/pry-binding)
     (key-chord-define-global "yy" 'yari-helm)
