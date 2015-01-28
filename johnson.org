@@ -1,0 +1,128 @@
+#+begin_src emacs-lisp
+(setq user-full-name "Johnson Denen"
+      user-mail-address "johnson.denen@gmail.com")
+#+end_src
+
+*** Installing and configuring packages
+This is a simple installation function that makes setting up Emacs on a new machine super easy.
+#+BEGIN_SRC emacs-lisp
+(defun johnson/package-install (package)
+  "Install PACKAGE if it has not already been installed."
+  (unless (package-installed-p package)
+    (package-install package)))
+#+END_SRC
+
+The use-package functionality makes package configuration seem sane.
+#+BEGIN_SRC emacs-lisp
+(johnson/package-install 'use-package)
+(require 'use-package)
+#+END_SRC
+
+*** Basic configuration
+No startup screen, tool bars, or scroll bars.
+#+BEGIN_SRC emacs-lisp
+(setq inhibit-startup-screen t)
+(tool-bar-mode 0)
+(menu-bar-mode 0)
+(scroll-bar-mode 0)
+#+END_SRC
+
+Start the scratch buffer in ruby-mode.
+#+BEGIN_SRC emacs-lisp
+(setq initial-major-mode 'ruby-mode)
+(setq initial-scratch-message "# This is a Ruby scratch buffer. \n\n")
+#+END_SRC
+
+Use ample-theme with a nice default font.
+#+BEGIN_SRC emacs-lisp
+(johnson/package-install 'ample-theme)
+(load-theme 'ample t)
+(add-to-list 'default-frame-alist '(font .  "Droid Sans Mono-8"))
+(set-face-attribute 'default t :font  "Droid Sans Mono-8")
+#+END_SRC
+
+Highlight the current line.
+#+BEGIN_SRC emacs-lisp
+(global-hl-line-mode 1)
+#+END_SRC
+
+Throw in a few other sane defaults.
+#+BEGIN_SRC emacs-lisp
+(fset 'yes-or-no-p 'y-or-n-p)
+(setq backup-directory-alist '(("." . "~/tmp")))
+#+END_SRC
+*** Emacs help
+I often forget the longer key mappings, so guide-key is very helpful. I set it to pop after two 
+seconds for any "C-x" or "C-c" started sequence.
+#+BEGIN_SRC emacs-lisp
+(johnson/package-install 'guide-key)
+(use-package guide-key
+  :init
+  (progn
+    (guide-key-mode 1)
+    (setq guide-key/guide-key-sequence '("C-x" "C-c"))
+    (setq guide-key/idle-delay 2.0)
+    (setq guide-key/recursive-key-sequence-flag t)))
+#+END_SRC
+
+*** Git projects
+I use Git source control for all my projects. Magit is the greatest Git interface ever. 
+#+BEGIN_SRC emacs-lisp
+(johnson/package-install 'magit)
+(use-package magit
+  :bind 
+  ("C-x g" . magit-status))
+#+END_SRC
+
+I use projectile to navigate my projects.
+#+BEGIN_SRC emacs-lisp
+(johnson/package-install 'projectile)
+(use-package projectile
+  :init 
+  (projectile-global-mode t))
+#+END_SRC
+
+*** Helm style navigation
+I prefer helm style navigation as opposed to flex/ido.
+#+BEGIN_SRC emacs-lisp
+(johnson/package-install 'helm)
+(use-package helm
+  :init
+  (progn
+    (helm-mode 1)
+    (require 'helm-config)
+    (global-unset-key (kbd "C-x c"))
+    (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+    (define-key helm-map (kbd "C-z")  'helm-select-action)
+    (when (executable-find "curl")
+      (setq helm-google-suggest-use-curl-p      t))
+    (setq helm-quick-update                     t
+	  helm-split-window-in-side-p           t
+	  helm-buffers-fuzzy-matching           t
+	  helm-move-to-line-cycle-in-source     t
+	  helm-ff-search-library-in-sexp        t
+	  helm-scroll-amount                    8
+	  helm-ff-file-name-history-use-recentf t))
+  :bind
+  ("C-x m" . helm-M-x)
+  ("C-c h" . helm-mini)
+  ("C-x y" . helm-show-kill-ring)
+  ("C-x h" . helm-command-prefix))
+#+END_SRC
+
+Project navigation should occur through helm too.
+#+BEGIN_SRC emacs-lisp
+(johnson/package-install 'helm-projectile)
+(use-package helm-projectile
+  :init 
+  (helm-projectile-on))
+#+END_SRC
+
+And I like to search buffers with helm.
+#+BEGIN_SRC emacs-lisp
+(johnson/package-install 'helm-swoop)
+(use-package helm-swoop
+  :bind
+  ("C-s" . helm-swoop))
+#+END_SRC
+
