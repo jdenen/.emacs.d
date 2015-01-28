@@ -342,6 +342,7 @@ Keybindings for resizing windows, resizing text, killing and hiding buffers.
     (key-chord-define-global "uu" 'undo)
     ;; other chords
     (key-chord-define-global "KK" 'kill-this-buffer)
+    (key-chord-define-global "BB" 'switch-to-buffer)
     (key-chord-define-global "jt" 'johnson/ansi-term)
     (key-chord-define-global "jr" 'jump-to-register)
     (key-chord-define-global "MM" 'magit-status)))
