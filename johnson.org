@@ -70,6 +70,7 @@ There's a lot to remember when using Emacs. I use =guide-key= to help me remembe
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'guide-key)
 (use-package guide-key
+  :diminish guide-key-mode
   :init
   (progn
     (guide-key-mode 1)
@@ -82,6 +83,7 @@ My projects are Git based, and =magit= is the best Git interface out there.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'magit)
 (use-package magit
+  :diminish magit-auto-revert-mode
   :bind 
   ("C-x g" . magit-status))
 #+END_SRC
@@ -98,6 +100,7 @@ I prefer =helm= style navigation to =ido-mode= or default Emacs navigation.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'helm)
 (use-package helm
+  :diminish helm-mode
   :init
   (progn
     (helm-mode 1)
@@ -145,19 +148,6 @@ I often use Emacs in =fullscreen-mode=, which blocks my view of the clock. I use
     (display-time-mode 1)
     (powerline-default-theme)))
 #+END_SRC
-
-=diminish= hides a bunch of mode line information that I do not care to know. These are typically modes that I'm *always* in.
-#+BEGIN_SRC emacs-lisp
-(johnson/package-install =diminish)
-(use-package diminish
-  :init
-  (progn
-    (eval-after-load "company"     '(diminish 'company-mode))
-    (eval-after-load "helm"        '(diminish 'helm-mode))
-    (eval-after-load "guide-key"   '(diminish 'guide-key-mode))
-    (eval-after-load "magit"       '(diminish 'magit-auto-revert-mode))
-    (eval-after-load "smartparens" '(diminish 'smartparens-mode))))
-#+END_SRC
 *** General programming
 This sections includes packages that make programming more efficient.
 
@@ -165,6 +155,7 @@ This sections includes packages that make programming more efficient.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'smartparens)
 (use-package smartparens
+  :diminish smartparens-mode
   :init
   (progn
     (smartparens-global-mode 1)
@@ -184,6 +175,7 @@ This sections includes packages that make programming more efficient.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'company)
 (use-package company
+  :diminish company-mode
   :init 
   (global-company-mode 1)
   :bind 
