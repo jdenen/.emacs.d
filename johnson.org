@@ -328,7 +328,7 @@ Keybindings for resizing windows, resizing text, killing and hiding buffers.
     (key-chord-define-global "jj" 'ace-jump-char-mode)
     (key-chord-define-global "kk" 'ace-window)
     ;; helm chords
-    (key-chord-define-global "PP" 'helm-projectile)
+    (key-chord-define-global "HH" 'helm-projectile)
     (key-chord-define-global "FF" 'find-file)
     ;; ruby chords
     (key-chord-define-global "vv" 'johnson/pry-binding)
