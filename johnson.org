@@ -274,7 +274,7 @@ Kill the buffer when a terminal is exited.
 #+BEGIN_SRC emacs-lisp
 (defadvice term-handle-exit
     (after term-kill-buffer-on-exit activate)
-  (kill-buffer))
+  (kill-buffer-and-window))
 #+END_SRC
 *** Window manipulation
 =buffer-move= lets you swap buffers between windows. 
