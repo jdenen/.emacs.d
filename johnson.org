@@ -44,8 +44,8 @@ Use =ample-theme= with the Droid Sans Mono font.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'ample-theme)
 (load-theme 'ample t)
-(add-to-list 'default-frame-alist '(font .  "Droid Sans Mono-8"))
-(set-face-attribute 'default t :font  "Droid Sans Mono-8")
+(add-to-list 'default-frame-alist '(font .  "Droid Sans Mono-12"))
+(set-face-attribute 'default t :font  "Droid Sans Mono-12")
 #+END_SRC
 
 Highlight the current buffer line.
