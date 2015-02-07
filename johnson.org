@@ -331,19 +331,12 @@ Keybindings for resizing windows, resizing text, killing and hiding buffers.
   :init
   (progn
     (key-chord-mode 1)
-    ;; ace chords
     (key-chord-define-global "jj" 'ace-jump-char-mode)
     (key-chord-define-global "kk" 'ace-window)
-    ;; ruby chords
-    (key-chord-define-global "vv" 'johnson/pry-binding)
-    (key-chord-define-global "yy" 'yari-helm)
-    ;; editing chords
-    (key-chord-define-global ";;" 'er/expand-region)
     (key-chord-define-global "uu" 'undo)
-    ;; other chords
-    (key-chord-define-global "KK" 'kill-this-buffer)
-    (key-chord-define-global "BB" 'switch-to-buffer)
     (key-chord-define-global "jt" 'johnson/ansi-term)
     (key-chord-define-global "jr" 'jump-to-register)
+    (key-chord-define-global ";;" 'er/expand-region)
+    (key-chord-define-global "yy" 'helm-show-kill-ring)
     (key-chord-define-global "MM" 'magit-status)))
 #+END_SRC
