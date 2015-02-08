@@ -237,40 +237,26 @@ This is a simple function to insert =require 'pry'; binding.pry= for Ruby debugg
 (use-package ace-window)
 #+END_SRC
 *** Terminal manipulation
-I prefer =ansi-term= but need to use it more efficiently.
-
-If you're on a terminal buffer named =*ansi-term*=, rename it. Otherwise, evaluate the terminal situation further with =johnson/switch-or-create-ansi-term-buffer=.
+If you call =johnson/ansi-term= on a terminal buffer, bury the buffer. Otherwise, open a terminal buffer by finding
+one that already exists or creating a new =ansi-term= session.
 #+BEGIN_SRC emacs-lisp
 (require 'term)
-(defun johnson/rename-or-find-ansi-term ()
-    "Rename current terminal buffer or find a new one."
-    (interactive)
-    (if (string= "*ansi-term*" (buffer-name))
-        (call-interactively 'rename-buffer)
-      (johnson/find-ansi-term)))
-#+END_SRC
-
-If a terminal buffer named =*ansi-term*= exists, switch to it in a new window. Otherwise, create a new =ansi-term= buffer.
-#+BEGIN_SRC emacs-lisp
 (defun johnson/find-ansi-term ()
   "Switch to or generate a terminal buffer."
   (interactive)
   (if (get-buffer "*ansi-term*")
       (switch-to-buffer-other-window "*ansi-term*")
     (ansi-term "/bin/bash")))
-#+END_SRC
 
-Rename, switch to, or create an =ansi-term= buffer.
-#+BEGIN_SRC emacs-lisp
 (defun johnson/ansi-term ()
-  "Efficient ansi-term generation."
+  "Efficient terminal management."
   (interactive)
   (if (string= "term-mode" major-mode)
-      (johnson/rename-or-find-ansi-term)
+      (bury-buffer)
     (johnson/find-ansi-term)))
 #+END_SRC
 
-Kill the buffer when a terminal is exited.
+Kill the buffer and window when a terminal is exited.
 #+BEGIN_SRC emacs-lisp
 (defadvice term-handle-exit
     (after term-kill-buffer-on-exit activate)
@@ -338,5 +324,6 @@ Keybindings for resizing windows, resizing text, killing and hiding buffers.
     (key-chord-define-global "jr" 'jump-to-register)
     (key-chord-define-global ";;" 'er/expand-region)
     (key-chord-define-global "yy" 'helm-show-kill-ring)
+    (key-chord-define-global "aa" 'winner-undo)
     (key-chord-define-global "MM" 'magit-status)))
 #+END_SRC
