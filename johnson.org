@@ -325,5 +325,6 @@ Keybindings for resizing windows, resizing text, killing and hiding buffers.
     (key-chord-define-global ";;" 'er/expand-region)
     (key-chord-define-global "yy" 'helm-show-kill-ring)
     (key-chord-define-global "aa" 'winner-undo)
+    (key-chord-define-global "qq" 'winner-redo)
     (key-chord-define-global "MM" 'magit-status)))
 #+END_SRC
