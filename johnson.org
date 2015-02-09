@@ -222,6 +222,16 @@ This section includes a bunch of package configuration for a better Ruby program
     (setq rspec-command-options "--format progress")))
 #+END_SRC
 
+**** Pry
+Default to the =pry= Ruby REPL.
+#+BEGIN_SRC emacs-lisp
+(autoload 'inf-ruby-minor-mode "inf-ruby" "Run an inferior Ruby process")
+(add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
+(setq inf-ruby-default-implementation "pry")
+(setq inf-ruby-first-prompt-pattern "^\\[[0-9]+\\] pry\\((.*)\\)> *")
+(setq inf-ruby-prompt-pattern "^\\[[0-9]+\\] pry\\((.*)\\)[>*\"'] *")
+#+END_SRC
+
 This is a simple function to insert =require 'pry'; binding.pry= for Ruby debugging.
 #+BEGIN_SRC emacs-lisp
 (defun johnson/pry-binding ()
