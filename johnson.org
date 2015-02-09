@@ -31,6 +31,13 @@ If I install my config on a new machine, I want it to work auto-magically. This 
 (johnson/package-install 'use-package)
 (require 'use-package)
 #+END_SRC
+*** OSX environment
+Force Emacs environment and user shell environment to match on OSX.
+#+BEGIN_SRC emacs-lisp
+(johnson/package-install 'exec-path-from-shell)
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
+#+END_SRC
 *** Basic configuration
 No startup screen, tool bars, or scroll bars.
 #+BEGIN_SRC emacs-lisp
