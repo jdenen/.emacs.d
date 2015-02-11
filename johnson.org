@@ -232,6 +232,14 @@ Default to the =pry= Ruby REPL.
 (setq inf-ruby-prompt-pattern "^\\[[0-9]+\\] pry\\((.*)\\)[>*\"'] *")
 #+END_SRC
 
+Make clearing an inf-ruby REPL possible.
+#+BEGIN_SRC emacs-lisp
+(defun comint-clear-buffer ()
+  (interactive)
+  (let ((comint-buffer-maximum-size 0))
+    (comint-truncate-buffer)))
+#+END_SRC
+
 This is a simple function to insert =require 'pry'; binding.pry= for Ruby debugging.
 #+BEGIN_SRC emacs-lisp
 (defun johnson/pry-binding ()
@@ -338,6 +346,7 @@ Keybindings for resizing windows, resizing text, killing and hiding buffers.
     (key-chord-define-global "jj" 'ace-jump-char-mode)
     (key-chord-define-global "kk" 'ace-window)
     (key-chord-define-global "uu" 'undo)
+    (key-chord-define-global "cm" 'comint-clear-buffer)
     (key-chord-define-global "jt" 'johnson/ansi-term)
     (key-chord-define-global "jr" 'jump-to-register)
     (key-chord-define-global ";;" 'er/expand-region)
