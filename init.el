@@ -4,5 +4,5 @@
 
 (require 'org)
 (org-babel-load-file
- (expand-file-name "johnson.org"
+ (expand-file-name "config.org"
 		   user-emacs-directory))

@@ -1,4 +1,4 @@
-** johnson.org
+** init.org
 *** Introduction
 Use =org-babel-load-file= in your =init.el= to convert an =org-mode= file into Emacs configuration. To install this configuration, clone the repo.
 #+BEGIN_SRC bash
@@ -10,6 +10,34 @@ I'm using =org-mode= to write my Emacs configuration, so it makes sense to start
 I prefer a clean, indented outline look.
 #+BEGIN_SRC emacs-lisp
 (setq org-startup-indented t)
+#+END_SRC
+*** Org capture
+I use =org-capture= to for note taking and RSS archiving.
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-c c") 'org-capture)
+#+END_SRC
+
+Neatly store RSS entries as org capture entries.
+#+BEGIN_SRC emacs-lisp
+(defun elfeed-entry-as-html-link ()
+  "Store an http link to an elfeed entry"
+  (when (equal major-mode 'elfeed-show-mode)
+    (let ((description (elfeed-entry-title elfeed-show-entry))
+      (link (elfeed-entry-link elfeed-show-entry)))
+     (org-store-link-props
+      :type "http"
+      :link link
+      :description description))))
+(add-hook 'org-store-link-functions 'elfeed-entry-as-html-link)
+#+END_SRC
+
+=org-capture= templates.
+#+BEGIN_SRC emacs-lisp
+(setq org-capture-templates
+ '(("t" "todo" entry (file+headline "~/.emacs.d/johnson.org" "Tasks")
+        "** TODO %?\n %a")
+   ("f" "feed" entry (file+headline "~/.emacs.d/johnson.org" "Pocket")
+        "** TODO %?\n%l")))
 #+END_SRC
 *** User info
 Emacs knows my name and e-mail.
@@ -194,8 +222,9 @@ I visit some files a ton. Jumping to them with =key-chord-mode= plus a single ch
 (mapcar
  (lambda (r)
    (set-register (car r) (cons 'file (cdr r))))
- '((?j . "~/.emacs.d/johnson.org")
-   (?i . "~/.emacs.d/init.el")))
+ '((?i . "~/.emacs.d/config.org")
+   (?d . "~/Code/qa-skynet/qa-data.org")
+   (?j . "~/.emacs.d/johnson.org")))
 #+END_SRC
 *** Ruby programming
 This section includes a bunch of package configuration for a better Ruby programming experience.
@@ -316,6 +345,7 @@ Keybindings for resizing windows, resizing text, killing and hiding buffers.
 (bind-key "C-." 'enlarge-window)
 #+END_SRC
 *** RSS
+I use =elfeed= for RSS.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'elfeed)
 (use-package elfeed
@@ -329,6 +359,9 @@ Keybindings for resizing windows, resizing text, killing and hiding buffers.
 	  "http://www.iteststuff.ca/feeds/posts/default"
 	  "http://feeds.feedburner.com/SoftwareTestingGeek?format=xml"
 	  "http://planet.emacsen.org/atom.xml"
+    "http://thechangelog.com/tagged/api/feed/"
+    "http://thechangelog.com/tagged/docker/feed/"
+    "http://thechangelog.com/tagged/ruby/feed/"
 	  "http://xkcd.com/rss.xml"
 	  "http://feeds.feedburner.com/Rubyflow?format=xml"
 	  "https://groups.google.com/forum/feed/columbusrb/msgs/rss.xml?num=15"))
