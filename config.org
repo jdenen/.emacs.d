@@ -39,9 +39,9 @@ Neatly store RSS entries as org capture entries.
    ("b" "blog" entry (file+headline "~/.emacs.d/johnson.org" "Blog")
         "** TODO %?\n")
    ("p" "podcast" entry (file+headline "~/.emacs.d/johnson.org" "Podcast")
-        "** TODO %?\n%l")
+        "** %?\n%l")
    ("f" "feed" entry (file+headline "~/.emacs.d/johnson.org" "Pocket")
-        "** TODO %?\n%l")))
+        "** %?\n%l")))
 #+END_SRC
 *** User info
 Emacs knows my name and e-mail.
