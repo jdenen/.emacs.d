@@ -36,6 +36,10 @@ Neatly store RSS entries as org capture entries.
 (setq org-capture-templates
  '(("t" "todo" entry (file+headline "~/.emacs.d/johnson.org" "Tasks")
         "** TODO %?\n %a")
+   ("b" "blog" entry (file+headline "~/.emacs.d/johnson.org" "Blog")
+        "** TODO %?\n")
+   ("p" "podcast" entry (file+headline "~/.emacs.d/johnson.org" "Podcast")
+        "** TODO %?\n%l")
    ("f" "feed" entry (file+headline "~/.emacs.d/johnson.org" "Pocket")
         "** TODO %?\n%l")))
 #+END_SRC
@@ -224,6 +228,7 @@ I visit some files a ton. Jumping to them with =key-chord-mode= plus a single ch
    (set-register (car r) (cons 'file (cdr r))))
  '((?i . "~/.emacs.d/config.org")
    (?d . "~/Code/qa-skynet/qa-data.org")
+   (?t . "~/Code/qa-skynet/todo.org")
    (?j . "~/.emacs.d/johnson.org")))
 #+END_SRC
 *** Ruby programming
@@ -354,6 +359,12 @@ I use =elfeed= for RSS.
 	'("http://blog.testingcurator.com/feed/"
 	  "http://jkotests.wordpress.com/feed/"
 	  "http://watirmelon.com/feed/"
+    "http://existentialcomics.com/rss.xml"
+    "http://testtotester.blogspot.com/feeds/posts/default"
+    "http://feeds.feedburner.com/SoftwareTestingPodcast?format=xml"
+    "http://feeds.feedburner.com/mottestingfeeds?format=xml"
+    "http://metaautomation.blogspot.com/feeds/posts/default"
+    "http://www.steveo1967.blogspot.com/feeds/posts/default"
     "http://feeds.feedburner.com/CitconBlogs?format=xml"
 	  "http://feeds.feedburner.com/blogspot/RLXA?format=xml"
 	  "http://www.iteststuff.ca/feeds/posts/default"
@@ -379,6 +390,7 @@ I use =elfeed= for RSS.
     (key-chord-define-global "jj" 'ace-jump-char-mode)
     (key-chord-define-global "kk" 'ace-window)
     (key-chord-define-global "uu" 'undo)
+    (key-chord-define-global "BB" 'browse-url)
     (key-chord-define-global "cm" 'comint-clear-buffer)
     (key-chord-define-global "jt" 'johnson/ansi-term)
     (key-chord-define-global "jr" 'jump-to-register)
