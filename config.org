@@ -281,6 +281,16 @@ This is a simple function to insert =require 'pry'; binding.pry= for Ruby debugg
   (interactive)
   (insert-before-markers "require 'pry'; binding.pry"))
 #+END_SRC
+*** JSON
+I work with a lot of JSON responses, so parsing them into a readable format is 
+a must. I prefer 2 space indentation.
+
+#+BEGIN_SRC emacs-lisp
+(johnson/package-install 'json-reformat)
+(use-package json-reformat
+  :init
+  (setq json-reformat:indent-width 2))
+#+END_SRC
 *** Ace
 =ace-jump-char-mode= is bound the the keychord "jj" and it lets me jump to any visible character quickly.
 #+BEGIN_SRC emacs-lisp
@@ -395,8 +405,10 @@ I use =elfeed= for RSS.
     (key-chord-define-global "jt" 'johnson/ansi-term)
     (key-chord-define-global "jr" 'jump-to-register)
     (key-chord-define-global ";;" 'er/expand-region)
+    (key-chord-define-global "ww" 'kill-region)
     (key-chord-define-global "yy" 'helm-show-kill-ring)
     (key-chord-define-global "aa" 'winner-undo)
     (key-chord-define-global "qq" 'winner-redo)
+    (key-chord-define-global "JJ" 'json-reformat-region)
     (key-chord-define-global "MM" 'magit-status)))
 #+END_SRC
