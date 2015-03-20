@@ -256,6 +256,12 @@ This section includes a bunch of package configuration for a better Ruby program
     (setq rspec-command-options "--format progress")))
 #+END_SRC
 
+I use a lot of Rake tasks, so a task runner is nice. I use =rake.el=.
+#+BEGIN_SRC emacs-lisp
+(johnson/package-install 'rake)
+(use-package rake)
+#+END_SRC
+
 **** Pry
 Default to the =pry= Ruby REPL.
 #+BEGIN_SRC emacs-lisp
