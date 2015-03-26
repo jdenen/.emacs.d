@@ -34,13 +34,13 @@ Neatly store RSS entries as org capture entries.
 =org-capture= templates.
 #+BEGIN_SRC emacs-lisp
 (setq org-capture-templates
- '(("t" "todo" entry (file+headline "~/.emacs.d/johnson.org" "Tasks")
-        "** TODO %?\n %a")
-   ("b" "blog" entry (file+headline "~/.emacs.d/johnson.org" "Blog")
-        "** TODO %?\n")
-   ("p" "podcast" entry (file+headline "~/.emacs.d/johnson.org" "Podcast")
+ '(("d" "do" entry (file+headline "~/.emacs.d/johnson.org" "Do")
+        "** %?\n %a")
+   ("w" "write" entry (file+headline "~/.emacs.d/johnson.org" "Write")
+        "** %?\n")
+   ("l" "listen" entry (file+headline "~/.emacs.d/johnson.org" "Listen")
         "** %?\n%l")
-   ("f" "feed" entry (file+headline "~/.emacs.d/johnson.org" "Pocket")
+   ("f" "read" entry (file+headline "~/.emacs.d/johnson.org" "Read")
         "** %?\n%l")))
 #+END_SRC
 *** User info
