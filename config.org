@@ -240,10 +240,18 @@ This section includes a bunch of package configuration for a better Ruby program
   :init (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
 #+END_SRC
 
-=yari= makes navigating Ruby's =ri= documentation easy.
+With =yari=, you can browse Ruby's documentation without leaving Emacs.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'yari)
 (use-package yari)
+#+END_SRC
+
+And =yard-mode= colorizes comment documentation for easy reading.
+#+BEGIN_SRC emacs-lisp
+(johnson/package-install 'yard-mode)
+(use-package yard-mode
+  :init
+  (add-hook 'ruby-mode-hook 'yard-mode))
 #+END_SRC
 
 =rspec-mode= is essential for Ruby testing via Emacs.
