@@ -270,6 +270,16 @@ I use a lot of Rake tasks, so a task runner is nice. I use =rake.el=.
 (use-package rake)
 #+END_SRC
 
+I write ATDD style tests with Cucumber, so I include =feature-mode=.
+#+BEGIN_SRC emacs-lisp
+(johnson/package-install 'feature-mode)
+(use-package feature-mode
+  :init
+  (progn
+    (setq feature-cucumber-command
+      "bundle exec cucumber CUCUMBER_OPTS=\"{options}\" FEATURE=\"{feature}\"")))
+#+END_SRC
+
 **** Pry
 Default to the =pry= Ruby REPL.
 #+BEGIN_SRC emacs-lisp
