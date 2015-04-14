@@ -235,11 +235,16 @@ I visit some files a ton. Jumping to them with =key-chord-mode= plus a single ch
 This section includes a bunch of package configuration for a better Ruby programming experience.
 
 #+BEGIN_SRC emacs-lisp
-(johnson/package-install 'inf-ruby)
-(use-package inf-ruby
-  :init (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
+(johnson/package-install 'rake)
+(use-package rake)
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+(johnson/package-install 'bundler)
+(use-package bundler)
+#+END_SRC
+
+**** Documentation
 With =yari=, you can browse Ruby's documentation without leaving Emacs.
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'yari)
@@ -253,6 +258,16 @@ And =yard-mode= colorizes comment documentation for easy reading.
   :init
   (add-hook 'ruby-mode-hook 'yard-mode))
 #+END_SRC
+**** Testing
+I write ATDD style tests with Cucumber, so I include =feature-mode=.
+#+BEGIN_SRC emacs-lisp
+(johnson/package-install 'feature-mode)
+(use-package feature-mode
+  :init
+  (progn
+    (setq feature-cucumber-command
+      "bundle exec cucumber CUCUMBER_OPTS=\"{options}\" FEATURE=\"{feature}\"")))
+#+END_SRC
 
 =rspec-mode= is essential for Ruby testing via Emacs.
 #+BEGIN_SRC emacs-lisp
@@ -264,24 +279,16 @@ And =yard-mode= colorizes comment documentation for easy reading.
     (setq rspec-command-options "--format progress")))
 #+END_SRC
 
-I use a lot of Rake tasks, so a task runner is nice. I use =rake.el=.
+**** Pry REPL
+I use =pry= to debug and explore Ruby code. Using it in an Emacs REPL buffer is awesome.
+
 #+BEGIN_SRC emacs-lisp
-(johnson/package-install 'rake)
-(use-package rake)
+(johnson/package-install 'inf-ruby)
+(use-package inf-ruby
+  :init (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
 #+END_SRC
 
-I write ATDD style tests with Cucumber, so I include =feature-mode=.
-#+BEGIN_SRC emacs-lisp
-(johnson/package-install 'feature-mode)
-(use-package feature-mode
-  :init
-  (progn
-    (setq feature-cucumber-command
-      "bundle exec cucumber CUCUMBER_OPTS=\"{options}\" FEATURE=\"{feature}\"")))
-#+END_SRC
-
-**** Pry
-Default to the =pry= Ruby REPL.
+Default the inferior process to Pry.
 #+BEGIN_SRC emacs-lisp
 (autoload 'inf-ruby-minor-mode "inf-ruby" "Run an inferior Ruby process")
 (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
@@ -290,7 +297,7 @@ Default to the =pry= Ruby REPL.
 (setq inf-ruby-prompt-pattern "^\\[[0-9]+\\] pry\\((.*)\\)[>*\"'] *")
 #+END_SRC
 
-Make clearing an inf-ruby REPL possible.
+Make clearing an =inf-ruby= REPL possible.
 #+BEGIN_SRC emacs-lisp
 (defun comint-clear-buffer ()
   (interactive)
