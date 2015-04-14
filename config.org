@@ -220,6 +220,12 @@ This sections includes packages that make programming more efficient.
   :bind 
   ("C-c C-c" . company-complete))
 #+END_SRC
+
+Jumping to the last change with =goto-chg= mode is more efficient.
+#+BEGIN_SRC emacs-lisp
+(johnson/package-install 'goto-chg)
+(use-package goto-chg)
+#+END_SRC
 *** Registers
 I visit some files a ton. Jumping to them with =key-chord-mode= plus a single character is super efficient.
 #+BEGIN_SRC emacs-lisp
@@ -441,5 +447,7 @@ I use =elfeed= for RSS.
     (key-chord-define-global "aa" 'winner-undo)
     (key-chord-define-global "qq" 'winner-redo)
     (key-chord-define-global "JJ" 'json-reformat-region)
+    (key-chord-define-global "gc" 'goto-last-change)
+    (key-chord-define-global "GC" 'goto-last-change-reverse)
     (key-chord-define-global "MM" 'magit-status)))
 #+END_SRC
