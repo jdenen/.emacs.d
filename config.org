@@ -240,16 +240,6 @@ I visit some files a ton. Jumping to them with =key-chord-mode= plus a single ch
 *** Ruby programming
 This section includes a bunch of package configuration for a better Ruby programming experience.
 
-#+BEGIN_SRC emacs-lisp
-(johnson/package-install 'rake)
-(use-package rake)
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(johnson/package-install 'bundler)
-(use-package bundler)
-#+END_SRC
-
 **** Documentation
 With =yari=, you can browse Ruby's documentation without leaving Emacs.
 #+BEGIN_SRC emacs-lisp
@@ -317,6 +307,17 @@ This is a simple function to insert =require 'pry'; binding.pry= for Ruby debugg
   "Insert binding.pry."
   (interactive)
   (insert-before-markers "require 'pry'; binding.pry"))
+#+END_SRC
+
+**** Project management
+#+BEGIN_SRC emacs-lisp
+(johnson/package-install 'rake)
+(use-package rake)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(johnson/package-install 'bundler)
+(use-package bundler)
 #+END_SRC
 *** JSON
 I work with a lot of JSON responses, so parsing them into a readable format is 
