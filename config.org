@@ -329,6 +329,11 @@ This is a simple function to insert =require 'pry'; binding.pry= for Ruby debugg
 (johnson/package-install 'bundler)
 (use-package bundler)
 #+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(johnson/package-install 'rubocop)
+(use-package rubocop)
+#+END_SRC
 *** JSON
 Easily parsing JSON in Emacs is super useful.
 
