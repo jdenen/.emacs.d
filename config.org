@@ -134,6 +134,12 @@ My projects are Git based, and =magit= is the best Git interface out there.
   :init 
   (projectile-global-mode t))
 #+END_SRC
+*** SVN projects
+#+BEGIN_SRC emacs-lisp
+(autoload 'svn-status "dsvn" "Run `svn status'." t)
+(autoload 'svn-update "dsvn" "Run `svn update'." t)
+(require 'vc-svn)
+#+END_SRC
 *** Helm navigation
 I prefer =helm= style navigation to =ido-mode= or default Emacs navigation.
 #+BEGIN_SRC emacs-lisp
@@ -254,6 +260,7 @@ And =yard-mode= colorizes comment documentation for easy reading.
   :init
   (add-hook 'ruby-mode-hook 'yard-mode))
 #+END_SRC
+
 **** Testing
 I write ATDD style tests with Cucumber, so I include =feature-mode=.
 #+BEGIN_SRC emacs-lisp
