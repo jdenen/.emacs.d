@@ -165,6 +165,7 @@ I prefer =helm= style navigation to =ido-mode= or default Emacs navigation.
   :bind
   ("C-x m" . helm-M-x)
   ("C-x y" . helm-show-kill-ring)
+  ("M-."   . helm-etags-select)
   ("C-x h" . helm-command-prefix))
 #+END_SRC
 
@@ -239,9 +240,11 @@ I visit some files a ton. Jumping to them with =key-chord-mode= plus a single ch
  (lambda (r)
    (set-register (car r) (cons 'file (cdr r))))
  '((?i . "~/.emacs.d/config.org")
-   (?d . "~/Code/qa-skynet/qa-data.org")
-   (?t . "~/Code/qa-skynet/todo.org")
-   (?j . "~/.emacs.d/johnson.org")))
+   (?b . "~/.bash_profile")
+   (?c . "~/Documents/org/cscc.org")
+   (?n . "~/Documents/org/nw.org")
+   (?g . "~/Documents/org/csg.org")
+   (?j . "~/Documents/org/johnson.org")))
 #+END_SRC
 *** Ruby
 This section includes a bunch of package configuration for a better Ruby programming experience.
@@ -370,7 +373,7 @@ one that already exists or creating a new =ansi-term= session.
   "Switch to or generate a terminal buffer."
   (interactive)
   (if (get-buffer "*ansi-term*")
-      (switch-to-buffer-other-window "*ansi-term*")
+      (switch-to-buffer "*ansi-term*")
     (ansi-term "/bin/bash")))
 
 (defun johnson/ansi-term ()
@@ -465,8 +468,12 @@ I use =elfeed= for RSS.
     (key-chord-define-global "yy" 'helm-show-kill-ring)
     (key-chord-define-global "aa" 'winner-undo)
     (key-chord-define-global "qq" 'winner-redo)
+    (key-chord-define-global ",," 'helm-etags-select)
+    (key-chord-define-global "\\\\" 'pop-tag-mark)
     (key-chord-define-global "JJ" 'json-reformat-region)
     (key-chord-define-global "gc" 'goto-last-change)
     (key-chord-define-global "GC" 'goto-last-change-reverse)
-    (key-chord-define-global "MM" 'magit-status)))
+    (key-chord-define-global "MM" 'magit-status)
+    (key-chord-define-global "VV" 'svn-status)
+    (key-chord-define-global "VU" 'svn-update)))
 #+END_SRC
