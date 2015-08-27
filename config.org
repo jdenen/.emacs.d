@@ -211,6 +211,41 @@ git clone git@github.com:jdenen/.emacs.d ~/.emacs.d
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
+(defun johnson/given-step ()
+  "Template for a new Given step."
+  (interactive)
+  (insert-before-markers "Given /^$/ do\n\nend\n")
+  (while (progn
+           (previous-line)
+           (not (looking-at "^G"))))
+  (while (progn
+           (forward-char)
+           (not (looking-at "[:$:]")))))
+
+(defun johnson/when-step ()
+  "Template for a new When step."
+  (interactive)
+  (insert-before-markers "When /^$/ do\n\nend\n")
+  (while (progn
+           (previous-line)
+           (not (looking-at "^W"))))
+  (while (progn
+           (forward-char)
+           (not (looking-at "[:$:]")))))
+
+(defun johnson/then-step ()
+  "Template for a new Then step."
+  (interactive)
+  (insert-before-markers "Then /^$/ do\n\nend\n")
+  (while (progn
+           (previous-line)
+           (not (looking-at "^T"))))
+  (while (progn
+           (forward-char)
+           (not (looking-at "[:$:]")))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
 (johnson/package-install 'rspec-mode)
 (use-package rspec-mode
   :init
@@ -218,7 +253,6 @@ git clone git@github.com:jdenen/.emacs.d ~/.emacs.d
     (setq rspec-use-rake-when-possible nil)
     (setq rspec-command-options "--format progress")))
 #+END_SRC
-
 **** Pry
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'inf-ruby)
