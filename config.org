@@ -174,6 +174,16 @@ git clone git@github.com:jdenen/.emacs.d ~/.emacs.d
 (johnson/package-install 'ace-window)
 (use-package ace-window)
 #+END_SRC
+*** Code folding
+#+BEGIN_SRC emacs-lisp
+(defun johnson/toggle-fold (column)
+  "Fold code blocks by cursor column. This is dirty."
+  (interactive "P")
+  (set-selective-display
+    (or column
+      (unless selective-display
+        (1+ (current-column))))))
+#+END_SRC
 *** Registers
 #+BEGIN_SRC emacs-lisp
 (mapcar
@@ -211,38 +221,32 @@ git clone git@github.com:jdenen/.emacs.d ~/.emacs.d
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(defun johnson/given-step ()
-  "Template for a new Given step."
+(defun johnson/walk-back-to-regexp (c)
+  "Move cursor to start of Regexp on line starting with character C."
+  (while (progn
+           (previous-line)
+           (not (looking-at (concat "^" c)))))
+  (while (progn
+           (forward-char)
+           (not (looking-at "[:$:]")))))
+
+(defun johnson/new-given-def ()
+  "Create a new Cucumber Given definition."
   (interactive)
   (insert-before-markers "Given /^$/ do\n\nend\n")
-  (while (progn
-           (previous-line)
-           (not (looking-at "^G"))))
-  (while (progn
-           (forward-char)
-           (not (looking-at "[:$:]")))))
+  (johnson/walk-back-to-regexp "G"))
 
-(defun johnson/when-step ()
-  "Template for a new When step."
+(defun johnson/new-when-def ()
+  "Create a new Cucumber When definition."
   (interactive)
   (insert-before-markers "When /^$/ do\n\nend\n")
-  (while (progn
-           (previous-line)
-           (not (looking-at "^W"))))
-  (while (progn
-           (forward-char)
-           (not (looking-at "[:$:]")))))
+  (johnson/walk-back-to-regexp "W"))
 
-(defun johnson/then-step ()
-  "Template for a new Then step."
+(defun johnson/new-then-def ()
+  "Create a new Cucumber Then definition."
   (interactive)
   (insert-before-markers "Then /^$/ do\n\nend\n")
-  (while (progn
-           (previous-line)
-           (not (looking-at "^T"))))
-  (while (progn
-           (forward-char)
-           (not (looking-at "[:$:]")))))
+  (johnson/walk-back-to-regexp "T"))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -277,7 +281,6 @@ git clone git@github.com:jdenen/.emacs.d ~/.emacs.d
   (interactive)
   (insert-before-markers "require 'pry'; binding.pry"))
 #+END_SRC
-
 **** Rake
 #+BEGIN_SRC emacs-lisp
 (johnson/package-install 'rake)
@@ -371,6 +374,7 @@ git clone git@github.com:jdenen/.emacs.d ~/.emacs.d
     (key-chord-define-global "BB" 'browse-url)
     (key-chord-define-global "cm" 'comint-clear-buffer)
     (key-chord-define-global "jt" 'johnson/ansi-term)
+    (key-chord-define-global "jp" 'shell)
     (key-chord-define-global "jr" 'jump-to-register)
     (key-chord-define-global ";;" 'er/expand-region)
     (key-chord-define-global "WW" 'kill-region)
