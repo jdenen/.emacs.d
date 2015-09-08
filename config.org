@@ -1,58 +1,166 @@
-** init.org
-*** Introduction
+* init.org
+My Emacs config in an easy-to-read Org file. Installation is as easy as:
 #+BEGIN_SRC bash
-git clone git@github.com:jdenen/.emacs.d ~/.emacs.d
+git clone https://github.com/jdenen/.emacs.d ~/.emacs.d
 #+END_SRC
-*** Org config
-#+BEGIN_SRC emacs-lisp
-(setq org-startup-indented t)
-#+END_SRC
-*** User info
+** About Me
 #+begin_src emacs-lisp
 (setq user-full-name "Johnson Denen"
       user-mail-address "johnson.denen@gmail.com")
 #+end_src
-*** Packages
+** Installing Packages
 #+BEGIN_SRC emacs-lisp
-(defun johnson/package-install (package)
+(defun my/package-install (package)
   "Install PACKAGE if it has not already been installed."
   (unless (package-installed-p package)
     (package-install package)))
 
-(johnson/package-install 'use-package)
+(my/package-install 'use-package)
 (require 'use-package)
 #+END_SRC
+** Environment Configuration
+Use Emacs on Mac, Windows, and Linux distros
 *** OSX
 #+BEGIN_SRC emacs-lisp
-(johnson/package-install 'exec-path-from-shell)
+;;; Ensure terminals behave correctly
+(my/package-install 'exec-path-from-shell)
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 #+END_SRC
-*** Basics
+** Basic Behavior
+*** Window Management
 #+BEGIN_SRC emacs-lisp
+(winner-mode 1)
+
+(my/package-install 'buffer-move)
+(use-package buffer-move
+  :bind
+  ("<M-up>"    . buf-move-up)
+  ("<M-left>"  . buf-move-left)
+  ("<M-right>" . buf-move-right)
+  ("<M-down>"  . buf-move-down))
+
+(bind-key "C-x k" 'bury-buffer)
+(bind-key "C-x C-k" 'kill-this-buffer)
+(bind-key "C-+" 'text-scale-increase)
+(bind-key "C--" 'text-scale-decrease)
+(bind-key "C-<" 'shrink-window-horizontally)
+(bind-key "C->" 'enlarge-window-horizontally)
+(bind-key "C-," 'shrink-window)
+(bind-key "C-." 'enlarge-window)
+#+END_SRC
+*** Buffer Navigation
+#+BEGIN_SRC emacs-lisp
+(my/package-install 'ace-jump-mode)
+(use-package ace-jump-mode
+  :bind 
+  ("C-x j" . ace-jump-char-mode))
+
+(my/package-install 'ace-window)
+(use-package ace-window)
+#+END_SRC
+*** Terminal Management
+#+BEGIN_SRC emacs-lisp
+(require 'term)
+(defun my/bash ()
+  "Switch to or generate a terminal."
+  (interactive)
+  (if (get-buffer "*bash*")
+      (switch-to-buffer "*bash*")
+    (ansi-term "/bin/bash" "bash")))
+#+END_SRC
+*** Key Chords
+#+BEGIN_SRC emacs-lisp
+(my/package-install 'key-chord)
+(use-package key-chord
+  :init
+  (progn
+    (key-chord-mode 1)
+    ;;; Windows and Buffers
+    (key-chord-define-global "jj" 'ace-jump-char-mode)
+    (key-chord-define-global "jw" 'ace-window)
+    (key-chord-define-global "jr" 'jump-to-register)
+    (key-chord-define-global "jt" 'my/bash)
+    (key-chord-define-global "jx" 'bury-buffer)
+    (key-chord-define-global "jd" 'helm-etags-select)
+    (key-chord-define-global "jb" 'pop-tag-mark)
+    (key-chord-define-global "ju" 'winner-undo)
+    (key-chord-define-global "jf" 'winner-redo)
+    (key-chord-define-global "j1" 'delete-other-windows)
+    (key-chord-define-global "j2" 'split-window-below)
+    (key-chord-define-global "j3" 'split-window-right)
+    ;;; Text Manipulation
+    (key-chord-define-global "uu" 'undo)
+    (key-chord-define-global "xx" 'er/expand-region)
+    (key-chord-define-global "yy" 'helm-show-kill-ring)
+    ;;; Version Control
+    (key-chord-define-global "MM" 'magit-status)
+    (key-chord-define-global "VV" 'svn-status)
+    (key-chord-define-global "VU" 'svn-update)))
+#+END_SRC
+*** Misc
+#+BEGIN_SRC emacs-lisp
+;;; No toolbars, scrollbars, or startup screens
 (setq inhibit-startup-screen t)
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
 (toggle-word-wrap 1)
 
+;;; Single character confirmation
 (fset 'yes-or-no-p 'y-or-n-p)
+
 (setq backup-directory-alist '(("." . "~/tmp")))
 (setq tramp-default-method "ssh")
 
-(johnson/package-install 'ample-theme)
+(my/package-install 'ample-theme)
 (load-theme 'ample t)
 (add-to-list 'default-frame-alist '(font .  "Droid Sans Mono-12"))
 (set-face-attribute 'default t :font  "Droid Sans Mono-12")
-#+END_SRC
 
-#+BEGIN_SRC emacs-lisp
+;;; Start scratch buffer with Ruby
 (setq initial-major-mode 'ruby-mode)
 (setq initial-scratch-message "# This is a Ruby scratch buffer. \n\n")
 #+END_SRC
-*** Help
+
 #+BEGIN_SRC emacs-lisp
-(johnson/package-install 'guide-key)
+(my/package-install 'powerline)
+(use-package powerline
+  :init
+  (progn
+    (display-time-mode 1)
+    (powerline-default-theme)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(my/package-install 'smartparens)
+(use-package smartparens
+  :diminish smartparens-mode
+  :init
+  (progn
+    (smartparens-global-mode 1)
+    (show-smartparens-global-mode 1)
+    (require 'smartparens-config)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(my/package-install 'company)
+(use-package company
+  :diminish company-mode
+  :init 
+  (global-company-mode 1))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(my/package-install 'expand-region)
+(use-package expand-region
+  :bind
+  ("C-c C-q" . indent-region))
+#+END_SRC
+** Help Menu
+Reminders for commands starting with `C-x` or `C-c`.
+#+BEGIN_SRC emacs-lisp
+(my/package-install 'guide-key)
 (use-package guide-key
   :diminish guide-key-mode
   :init
@@ -62,30 +170,9 @@ git clone git@github.com:jdenen/.emacs.d ~/.emacs.d
     (setq guide-key/idle-delay 2.0)
     (setq guide-key/recursive-key-sequence-flag t)))
 #+END_SRC
-*** Projects
+** Helm
 #+BEGIN_SRC emacs-lisp
-(johnson/package-install 'magit)
-(use-package magit
-  :diminish magit-auto-revert-mode
-  :bind 
-  ("C-x g" . magit-status))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(autoload 'svn-status "dsvn" "Run `svn status'." t)
-(autoload 'svn-update "dsvn" "Run `svn update'." t)
-(require 'vc-svn)
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(johnson/package-install 'projectile)
-(use-package projectile
-  :init 
-  (projectile-global-mode t))
-#+END_SRC
-*** Helm
-#+BEGIN_SRC emacs-lisp
-(johnson/package-install 'helm)
+(my/package-install 'helm)
 (use-package helm
   :diminish helm-mode
   :init
@@ -110,118 +197,61 @@ git clone git@github.com:jdenen/.emacs.d ~/.emacs.d
   ("M-."   . helm-etags-select)
   ("C-x h" . helm-command-prefix))
 
-(johnson/package-install 'helm-projectile)
-(use-package helm-projectile
-  :init 
-  (helm-projectile-on))
-
-(johnson/package-install 'helm-swoop)
+;;; Search current buffers with `helm`
+(my/package-install 'helm-swoop)
 (use-package helm-swoop
   :bind
   ("C-s" . helm-swoop))
 #+END_SRC
-*** Powerline
+** Version Control
 #+BEGIN_SRC emacs-lisp
-(johnson/package-install 'powerline)
-(use-package powerline
-  :init
-  (progn
-    (display-time-mode 1)
-    (powerline-default-theme)))
-#+END_SRC
-*** Programming
-#+BEGIN_SRC emacs-lisp
-(johnson/package-install 'smartparens)
-(use-package smartparens
-  :diminish smartparens-mode
-  :init
-  (progn
-    (smartparens-global-mode 1)
-    (show-smartparens-global-mode 1)
-    (require 'smartparens-config)))
-#+END_SRC
+;;; Git
+(my/package-install 'magit)
+(use-package magit
+  :diminish magit-auto-revert-mode
+  :bind 
+  ("C-x g" . magit-status))
 
-#+BEGIN_SRC emacs-lisp
-(johnson/package-install 'expand-region)
-(use-package expand-region
-  :bind
-  ("C-c C-q" . indent-region))
+;;; Subversion
+(autoload 'svn-status "dsvn" "Run `svn status'." t)
+(autoload 'svn-update "dsvn" "Run `svn update'." t)
+(require 'vc-svn)
 #+END_SRC
-
+** Project Navigation
 #+BEGIN_SRC emacs-lisp
-(johnson/package-install 'company)
-(use-package company
-  :diminish company-mode
+(my/package-install 'projectile)
+(use-package projectile
   :init 
-  (global-company-mode 1)
-  :bind 
-  ("C-c C-c" . company-complete))
-#+END_SRC
+  (projectile-global-mode t))
 
-#+BEGIN_SRC emacs-lisp
-(johnson/package-install 'goto-chg)
-(use-package goto-chg)
+;;; Navigate projects with `helm`
+(my/package-install 'helm-projectile)
+(use-package helm-projectile
+  :init 
+  (helm-projectile-on))
 #+END_SRC
-
+** Ruby
+*** YARD
 #+BEGIN_SRC emacs-lisp
-(johnson/package-install 'ace-jump-mode)
-(use-package ace-jump-mode
-  :bind 
-  ("C-x j" . ace-jump-char-mode))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(johnson/package-install 'ace-window)
-(use-package ace-window)
-#+END_SRC
-*** Code folding
-#+BEGIN_SRC emacs-lisp
-(defun johnson/toggle-fold (column)
-  "Fold code blocks by cursor column. This is dirty."
-  (interactive "P")
-  (set-selective-display
-    (or column
-      (unless selective-display
-        (1+ (current-column))))))
-#+END_SRC
-*** Registers
-#+BEGIN_SRC emacs-lisp
-(mapcar
- (lambda (r)
-   (set-register (car r) (cons 'file (cdr r))))
- '((?i . "~/.emacs.d/config.org")
-   (?b . "~/.bash_profile")
-   (?c . "~/Documents/org/cscc.org")
-   (?n . "~/Documents/org/nw.org")
-   (?g . "~/Documents/org/csg.org")
-   (?j . "~/Documents/org/johnson.org")))
-#+END_SRC
-*** Ruby
-**** Documentation
-#+BEGIN_SRC emacs-lisp
-(johnson/package-install 'yari)
+(my/package-install 'yari)
 (use-package yari)
-#+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-(johnson/package-install 'yard-mode)
+(my/package-install 'yard-mode)
 (use-package yard-mode
+  :diminish yard-mode
   :init
   (add-hook 'ruby-mode-hook 'yard-mode))
 #+END_SRC
-
-**** Testing
+*** Cucumber
 #+BEGIN_SRC emacs-lisp
-(johnson/package-install 'feature-mode)
+(my/package-install 'feature-mode)
 (use-package feature-mode
   :init
   (progn
     (setq feature-cucumber-command
-      "bundle exec cucumber CUCUMBER_OPTS=\"{options}\" -p none -r features FEATURE=\"{feature}\"")))
-#+END_SRC
+      "bundle exec cucumber -r features")))
 
-#+BEGIN_SRC emacs-lisp
-(defun johnson/walk-back-to-regexp (c)
+(defun my/walk-back-to-regexp (c)
   "Move cursor to start of Regexp on line starting with character C."
   (while (progn
            (previous-line)
@@ -230,36 +260,66 @@ git clone git@github.com:jdenen/.emacs.d ~/.emacs.d
            (forward-char)
            (not (looking-at "[:$:]")))))
 
-(defun johnson/new-given-def ()
+(defun my/new-given-def ()
   "Create a new Cucumber Given definition."
   (interactive)
   (insert-before-markers "Given /^$/ do\n\nend\n")
-  (johnson/walk-back-to-regexp "G"))
+  (my/walk-back-to-regexp "G"))
 
-(defun johnson/new-when-def ()
+(defun my/new-when-def ()
   "Create a new Cucumber When definition."
   (interactive)
   (insert-before-markers "When /^$/ do\n\nend\n")
-  (johnson/walk-back-to-regexp "W"))
+  (my/walk-back-to-regexp "W"))
 
-(defun johnson/new-then-def ()
+(defun my/new-then-def ()
   "Create a new Cucumber Then definition."
   (interactive)
   (insert-before-markers "Then /^$/ do\n\nend\n")
-  (johnson/walk-back-to-regexp "T"))
-#+END_SRC
+  (my/walk-back-to-regexp "T"))
 
+(defun my/features ()
+  "Run Cucumber from Ruby project root."
+  (interactive)
+  (let ((default-directory (rspec-project-root)))
+    (shell-command "bundle exec cucumber")))
+#+END_SRC
+*** RSpec
 #+BEGIN_SRC emacs-lisp
-(johnson/package-install 'rspec-mode)
+;;; RSpec
+(my/package-install 'rspec-mode)
 (use-package rspec-mode
+  :diminish rspec-mode
   :init
   (progn
     (setq rspec-use-rake-when-possible nil)
     (setq rspec-command-options "--format progress")))
+
+(defun my/specs ()
+  "Run RSpec from Ruby project root."
+  (interactive)
+  (let ((default-directory (rspec-project-root)))
+    (shell-command "bundle exec rspec")))
 #+END_SRC
-**** Pry
+*** Pry
 #+BEGIN_SRC emacs-lisp
-(johnson/package-install 'inf-ruby)
+(defun my/pry ()
+  "Pry console via `ansi-term`. Requires top-level lib files when available."
+  (interactive)
+  (let ((default-directory (rspec-project-root)))
+    (term-send-string
+      (ansi-term "pry" "Pry")
+      (concat "Dir['./lib/*.rb'].each{ |f| require f } rescue nil" "\n"))))
+
+(defun my/binding.pry ()
+  "Insert binding.pry."
+  (interactive)
+  (insert-before-markers "require 'pry'; binding.pry"))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+;;; Ruby REPL
+(my/package-install 'inf-ruby)
 (use-package inf-ruby
   :init (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
 
@@ -274,119 +334,73 @@ git clone git@github.com:jdenen/.emacs.d ~/.emacs.d
   (let ((comint-buffer-maximum-size 0))
     (comint-truncate-buffer)))
 #+END_SRC
-
+*** Etags
 #+BEGIN_SRC emacs-lisp
-(defun johnson/pry-binding ()
-  "Insert binding.pry."
+(defun my/ruby-tags ()
+  "Generate Etags for Ruby with the `ripper-tags` gem."
   (interactive)
-  (insert-before-markers "require 'pry'; binding.pry"))
+  (let ((default-directory (rspec-project-root)))
+    (shell-command "ripper-tags -R -e -f TAGS")))
 #+END_SRC
-**** Rake
+*** Projects
 #+BEGIN_SRC emacs-lisp
-(johnson/package-install 'rake)
+(my/package-install 'rake)
 (use-package rake)
-#+END_SRC
 
-**** Bundler
-#+BEGIN_SRC emacs-lisp
-(johnson/package-install 'bundler)
+(my/package-install 'bundler)
 (use-package bundler)
-#+END_SRC
 
-**** Linting
-#+BEGIN_SRC emacs-lisp
-(johnson/package-install 'rubocop)
+(my/package-install 'rubocop)
 (use-package rubocop)
 #+END_SRC
-
-*** Text
-**** JSON
+*** Key Chords
 #+BEGIN_SRC emacs-lisp
-(johnson/package-install 'json-reformat)
+;;; ruby-mode
+(key-chord-define ruby-mode-map "3p" 'my/pry)
+(key-chord-define ruby-mode-map "3f" 'my/features)
+(key-chord-define ruby-mode-map "3s" 'my/spec)
+(key-chord-define ruby-mode-map "3c" 'rubocop-check-current-file)
+(key-chord-define ruby-mode-map "3b" 'bundle-exec)
+(key-chord-define ruby-mode-map "3." 'my/binding.pry)
+(key-chord-define ruby-mode-map "3e" 'my/ruby-tags)
+(key-chord-define ruby-mode-map "3y" 'yari)
+;;; feature-mode
+(key-chord-define feature-mode-map "jd" 'feature-goto-step-definition)
+#+END_SRC
+** Text Modes
+*** Org
+#+BEGIN_SRC emacs-lisp
+;;; Present `org-mode` in a less cluttered way 
+(setq org-startup-indented t)
+#+END_SRC
+
+*** JSON
+#+BEGIN_SRC emacs-lisp
+(my/package-install 'json-reformat)
 (use-package json-reformat
   :init
   (setq json-reformat:indent-width 2))
 #+END_SRC
-
-**** YAML
+*** YAML
 #+BEGIN_SRC emacs-lisp
-(johnson/package-install 'yaml-mode)
+(my/package-install 'yaml-mode)
 (use-package yaml-mode)
 #+END_SRC
-
-**** Markdown
+*** Markdown
 #+BEGIN_SRC emacs-lisp
-(johnson/package-install 'markdown-mode)
+(my/package-install 'markdown-mode)
 (use-package markdown-mode)
 #+END_SRC
-*** Terminal
+** Registers
 #+BEGIN_SRC emacs-lisp
-(require 'term)
-(defun johnson/find-ansi-term ()
-  "Switch to or generate a terminal buffer."
-  (interactive)
-  (if (get-buffer "*ansi-term*")
-      (switch-to-buffer "*ansi-term*")
-    (ansi-term "/bin/bash")))
-
-(defun johnson/ansi-term ()
-  "Efficient terminal management."
-  (interactive)
-  (if (string= "term-mode" major-mode)
-      (bury-buffer)
-    (johnson/find-ansi-term)))
-
-(defadvice term-handle-exit
-    (after term-kill-buffer-on-exit activate)
-  (kill-buffer-and-window))
+(mapcar
+ (lambda (r)
+   (set-register (car r) (cons 'file (cdr r))))
+ '((?i . "~/.emacs.d/config.org")
+   (?b . "~/.bash_profile")
+   (?c . "~/Documents/org/cscc.org")
+   (?n . "~/Documents/org/nw.org")
+   (?g . "~/Documents/org/csg.org")
+   (?j . "~/Documents/org/johnson.org")))
 #+END_SRC
-*** Windows
-#+BEGIN_SRC emacs-lisp
-(winner-mode 1)
 
-(johnson/package-install 'buffer-move)
-(use-package buffer-move
-  :bind
-  ("<M-up>"    . buf-move-up)
-  ("<M-left>"  . buf-move-left)
-  ("<M-right>" . buf-move-right)
-  ("<M-down>"  . buf-move-down))
-
-(bind-key "C-x k" 'bury-buffer)
-(bind-key "C-x C-k" 'kill-this-buffer)
-(bind-key "C-+" 'text-scale-increase)
-(bind-key "C--" 'text-scale-decrease)
-(bind-key "C-<" 'shrink-window-horizontally)
-(bind-key "C->" 'enlarge-window-horizontally)
-(bind-key "C-," 'shrink-window)
-(bind-key "C-." 'enlarge-window)
-#+END_SRC
-*** Chords
-#+BEGIN_SRC emacs-lisp
-(johnson/package-install 'key-chord)
-(use-package key-chord
-  :init
-  (progn
-    (key-chord-mode 1)
-    (key-chord-define-global "jj" 'ace-jump-char-mode)
-    (key-chord-define-global "kk" 'ace-window)
-    (key-chord-define-global "uu" 'undo)
-    (key-chord-define-global "BB" 'browse-url)
-    (key-chord-define-global "cm" 'comint-clear-buffer)
-    (key-chord-define-global "jt" 'johnson/ansi-term)
-    (key-chord-define-global "jp" 'shell)
-    (key-chord-define-global "jr" 'jump-to-register)
-    (key-chord-define-global ";;" 'er/expand-region)
-    (key-chord-define-global "WW" 'kill-region)
-    (key-chord-define-global "yy" 'helm-show-kill-ring)
-    (key-chord-define-global "aa" 'winner-undo)
-    (key-chord-define-global "qq" 'winner-redo)
-    (key-chord-define-global ",," 'helm-etags-select)
-    (key-chord-define-global "\\\\" 'pop-tag-mark)
-    (key-chord-define-global "JJ" 'json-reformat-region)
-    (key-chord-define-global "gc" 'goto-last-change)
-    (key-chord-define-global "GC" 'goto-last-change-reverse)
-    (key-chord-define-global "MM" 'magit-status)
-    (key-chord-define-global "VV" 'svn-status)
-    (key-chord-define-global "VU" 'svn-update)))
-#+END_SRC
