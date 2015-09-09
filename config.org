@@ -69,6 +69,13 @@ Use Emacs on Mac, Windows, and Linux distros
       (switch-to-buffer "*bash*")
     (ansi-term "/bin/bash" "bash")))
 #+END_SRC
+
+Bury buffer on terminal command `exit`
+#+BEGIN_SRC emacs-lisp
+(defadvice term-handle-exit
+    (after term-kill-buffer-on-exit activate)
+  (bury-buffer))
+#+END_SRC
 *** Key Chords
 #+BEGIN_SRC emacs-lisp
 (my/package-install 'key-chord)
