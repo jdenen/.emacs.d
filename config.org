@@ -362,14 +362,13 @@ Reminders for commands starting with `C-x` or `C-c`.
 *** Key Chords
 #+BEGIN_SRC emacs-lisp
 ;;; ruby-mode
-(key-chord-define ruby-mode-map "3p" 'my/pry)
-(key-chord-define ruby-mode-map "3f" 'my/features)
-(key-chord-define ruby-mode-map "3s" 'my/spec)
-(key-chord-define ruby-mode-map "3c" 'rubocop-check-current-file)
-(key-chord-define ruby-mode-map "3b" 'bundle-exec)
-(key-chord-define ruby-mode-map "3." 'my/binding.pry)
-(key-chord-define ruby-mode-map "3e" 'my/ruby-tags)
-(key-chord-define ruby-mode-map "3y" 'yari)
+(key-chord-define ruby-mode-map "PP" 'my/pry)
+(key-chord-define ruby-mode-map "FF" 'my/features)
+(key-chord-define ruby-mode-map "SS" 'my/specs)
+(key-chord-define ruby-mode-map "RR" 'rubocop-check-current-file)
+(key-chord-define ruby-mode-map "BB" 'my/binding.pry)
+(key-chord-define ruby-mode-map "TT" 'my/ruby-tags)
+(key-chord-define ruby-mode-map "YY" 'yari)
 ;;; feature-mode
 (key-chord-define feature-mode-map "jd" 'feature-goto-step-definition)
 #+END_SRC
