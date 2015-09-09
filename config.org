@@ -74,7 +74,10 @@ Bury buffer on terminal command `exit`
 #+BEGIN_SRC emacs-lisp
 (defadvice term-handle-exit
     (after term-kill-buffer-on-exit activate)
-  (bury-buffer))
+  (let ((term-name (buffer-name)))
+    (progn
+      (bury-buffer)
+      (kill-buffer term-name))))
 #+END_SRC
 *** Key Chords
 #+BEGIN_SRC emacs-lisp
