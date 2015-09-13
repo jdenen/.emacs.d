@@ -86,17 +86,12 @@ Bury buffer on terminal command =exit=.
   :init
   (progn
     (key-chord-mode 1)
-      ;;; Windows and Buffers
+    (key-chord-define-global "jj" 'ace-jump-char-mode)
     (key-chord-define-global "jr" 'jump-to-register)
     (key-chord-define-global "jx" 'bury-buffer)
-    (key-chord-define-global "j1" 'delete-other-windows)
-    (key-chord-define-global "j2" 'split-window-below)
-    (key-chord-define-global "j3" 'split-window-right)
-    ;;; Text Manipulation
+    (key-chord-define-global "jt" 'my/bash)
     (key-chord-define-global "uu" 'undo)
-    (key-chord-define-global ";;" 'er/expand-region)
     (key-chord-define-global "yy" 'helm-show-kill-ring)
-    ;;; Version Control
     (key-chord-define-global "MM" 'magit-status)
     (key-chord-define-global "VV" 'svn-status)
     (key-chord-define-global "VU" 'svn-update)))
@@ -209,42 +204,59 @@ Reminders for commands starting with =C-x= or =C-c=.
 ** Hydra
 #+BEGIN_SRC emacs-lisp
 (my/package-install 'hydra)
-#+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra/menu ()
+(defhydra hydra/main ()
   "Menu"
-  ("m" helm-M-x "Command")
-  ("p" hydra/projectile/body "Project" :exit t)
-  ("f" find-file "File")
-  ("t" my/bash "Terminal" :exit t)
-  ("w" hydra/windmove/body "Window" :exit t)
-  ("q" nil "Quit" :exit t))
+  ("p" hydra/projectile/body "Projectile" :exit t)
+  ("b" (my/nav-to-hydra 'switch-to-buffer) "Buffer" :exit t)
+  ("f" (my/nav-to-hydra 'find-file) "File" :exit t)
+  ("e" hydra/edit/body "Edit" :exit t))
+(key-chord-define-global "kk" 'hydra/main/body)
 
 (defhydra hydra/projectile ()
-  "Project"
-  ("p" helm-projectile-switch-project "Project")
-  ("f" helm-projectile-find-file "File")
-  ("b" helm-projectile-switch-to-buffer "Buffer")
-  ("j" helm-etags-select "Tag" :exit t)
-  ("v" projectile-vc "VC" :exit t)
-  ("k" hydra/menu/body "Menu" :exit t)
-  ("q" nil "Quit" exit: t))
-
-(defhydra hydra/windmove ()
-  "Window"
-  ("b" windmove-left "Left")
-  ("f" windmove-right "Right")
-  ("p" windmove-up "Up")
-  ("n" windmove-down "Down")
-  ("u" winner-undo "Undo")
-  ("r" winner-redo "Redo")
-  ("k" hydra/menu/body "Menu" :exit t)
-  ("q" nil "Quit" exit: t))
+  "Projectile"
+  ("p" (my/nav-to-hydra 'helm-projectile-switch-project) "Project" :exit t)
+  ("f" (my/nav-to-hydra 'helm-projectile-find-file) "File" :exit t))
 #+END_SRC
 
+Navigate to a buffer and present options via =hydra/edit=.
+
 #+BEGIN_SRC emacs-lisp
-(key-chord-define-global "kk" 'hydra/menu/body)
+(defun my/nav-to-hydra (expr)
+  "Execute EXPR then open hydra/edit/body."
+  (progn
+    (funcall expr)
+    (hydra/edit/body)))
+
+(defhydra hydra/edit ()
+  "Edit"
+  ("s" helm-swoop "Search")
+  ("x" my/expand-to-hydra "Expand" :exit t)
+  ("M" magit-status "Git" :exit t)
+  ("g" helm-etags-select "Goto")
+  ("1" delete-other-windows "Focus")
+  ("q" nil "Quit" :exit t))
+#+END_SRC
+
+Expand region and present options via =hydra/expand=.
+
+#+BEGIN_SRC emacs-lisp
+(defun my/expand-to-hydra ()
+  "Expand region into hydra options."
+  (interactive)
+  (progn
+    (er--expand-region-1)
+    (hydra/expand/body)))
+(key-chord-define-global "xx" 'my/expand-to-hydra)
+
+(defhydra hydra/expand ()
+  "Expand"
+  ("x" er/expand-region "Expand")
+  ("c" er/contract-region "Contract")
+  ("m" helm-M-x "Command")
+  ("n" narrow-to-region "Narrow")
+  ("w" kill-region "Kill")
+  ("q" nil "Quit" :exit t))
 #+END_SRC
 ** Version Control
 #+BEGIN_SRC emacs-lisp
