@@ -86,21 +86,15 @@ Bury buffer on terminal command =exit=.
   :init
   (progn
     (key-chord-mode 1)
-    ;;; Windows and Buffers
-    (key-chord-define-global "jj" 'ace-jump-char-mode)
-    (key-chord-define-global "kk" 'ace-window)
+      ;;; Windows and Buffers
     (key-chord-define-global "jr" 'jump-to-register)
-    (key-chord-define-global "jt" 'my/bash)
     (key-chord-define-global "jx" 'bury-buffer)
-    (key-chord-define-global "jd" 'helm-etags-select)
-    (key-chord-define-global "aa" 'winner-undo)
-    (key-chord-define-global "qq" 'winner-redo)
     (key-chord-define-global "j1" 'delete-other-windows)
     (key-chord-define-global "j2" 'split-window-below)
     (key-chord-define-global "j3" 'split-window-right)
     ;;; Text Manipulation
     (key-chord-define-global "uu" 'undo)
-    (key-chord-define-global "xx" 'er/expand-region)
+    (key-chord-define-global ";;" 'er/expand-region)
     (key-chord-define-global "yy" 'helm-show-kill-ring)
     ;;; Version Control
     (key-chord-define-global "MM" 'magit-status)
@@ -211,6 +205,46 @@ Reminders for commands starting with =C-x= or =C-c=.
 (use-package helm-swoop
   :bind
   ("C-s" . helm-swoop))
+#+END_SRC
+** Hydra
+#+BEGIN_SRC emacs-lisp
+(my/package-install 'hydra)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra/menu ()
+  "Menu"
+  ("m" helm-M-x "Command")
+  ("p" hydra/projectile/body "Project" :exit t)
+  ("f" find-file "File")
+  ("t" my/bash "Terminal" :exit t)
+  ("w" hydra/windmove/body "Window" :exit t)
+  ("q" nil "Quit" :exit t))
+
+(defhydra hydra/projectile ()
+  "Project"
+  ("p" helm-projectile-switch-project "Project")
+  ("f" helm-projectile-find-file "File")
+  ("b" helm-projectile-switch-to-buffer "Buffer")
+  ("j" helm-etags-select "Tag" :exit t)
+  ("v" projectile-vc "VC" :exit t)
+  ("k" hydra/menu/body "Menu" :exit t)
+  ("q" nil "Quit" exit: t))
+
+(defhydra hydra/windmove ()
+  "Window"
+  ("b" windmove-left "Left")
+  ("f" windmove-right "Right")
+  ("p" windmove-up "Up")
+  ("b" windmove-down "Down")
+  ("u" winner-undo "Undo")
+  ("r" winner-redo "Redo")
+  ("k" hydra/menu/body "Menu" :exit t)
+  ("q" nil "Quit" exit: t))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(key-chord-define-global "kk" 'hydra/menu/body)
 #+END_SRC
 ** Version Control
 #+BEGIN_SRC emacs-lisp
