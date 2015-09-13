@@ -236,7 +236,7 @@ Reminders for commands starting with =C-x= or =C-c=.
   ("b" windmove-left "Left")
   ("f" windmove-right "Right")
   ("p" windmove-up "Up")
-  ("b" windmove-down "Down")
+  ("n" windmove-down "Down")
   ("u" winner-undo "Undo")
   ("r" winner-redo "Redo")
   ("k" hydra/menu/body "Menu" :exit t)
