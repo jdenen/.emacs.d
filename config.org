@@ -221,6 +221,12 @@ Reminders for commands starting with =C-x= or =C-c=.
   :bind 
   ("C-x g" . magit-status))
 
+(my/package-install 'git-gutter)
+(use-package git-gutter
+  :diminish git-gutter-mode
+  :init
+  (global-git-gutter-mode +1))
+
 ;;; Subversion
 (autoload 'svn-status "dsvn" "Run `svn status'." t)
 (autoload 'svn-update "dsvn" "Run `svn update'." t)
