@@ -375,13 +375,17 @@ Reminders for commands starting with =C-x= or =C-c=.
 ;;; feature-mode
 (key-chord-define feature-mode-map "jd" 'feature-goto-step-definition)
 #+END_SRC
+** Scala
+#+BEGIN_SRC emacs-lisp
+(my/package-install 'scala-mode)
+(use-package scala-mode)
+#+END_SRC
 ** Text Modes
 *** Org
 #+BEGIN_SRC emacs-lisp
 ;;; Present `org-mode` in a less cluttered way 
 (setq org-startup-indented t)
 #+END_SRC
-
 *** JSON
 #+BEGIN_SRC emacs-lisp
 (my/package-install 'json-reformat)
