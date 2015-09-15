@@ -459,6 +459,15 @@ Undo last edit and present options via =hydra/edit=.
 (my/package-install 'scala-mode)
 (use-package scala-mode)
 #+END_SRC
+** C#
+#+BEGIN_SRC emacs-lisp
+(my/package-install 'csharp-mode)
+(use-package csharp-mode)
+
+;; (my/package-install 'omnisharp-mode)
+;; (use-package omnisharp-mode
+;;   :init (add-hook 'csharp-mode-hook 'omnisharp-mode))
+#+END_SRC
 ** Text Modes
 *** Org
 #+BEGIN_SRC emacs-lisp
