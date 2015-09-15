@@ -467,4 +467,10 @@ Expand region and present options via =hydra/expand=.
    (?g . "~/Documents/org/csg.org")
    (?j . "~/Documents/org/johnson.org")))
 #+END_SRC
-
+** Twitter
+#+BEGIN_SRC emacs-lisp
+(my/package-install 'twittering-mode)
+(use-package twittering-mode
+  :init
+  (setq twittering-icon-mode t))
+#+END_SRC
