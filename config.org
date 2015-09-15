@@ -90,7 +90,6 @@ Bury buffer on terminal command =exit=.
     (key-chord-define-global "jr" 'jump-to-register)
     (key-chord-define-global "jx" 'bury-buffer)
     (key-chord-define-global "jt" 'my/bash)
-    (key-chord-define-global "uu" 'undo)
     (key-chord-define-global "yy" 'helm-show-kill-ring)
     (key-chord-define-global "MM" 'magit-status)
     (key-chord-define-global "VV" 'svn-status)
@@ -233,6 +232,8 @@ Navigate to a buffer and present options via =hydra/edit=.
   "Edit"
   ("s" helm-swoop "Search")
   ("x" my/expand-to-hydra "Expand" :exit t)
+  ("u" undo "Undo")
+  ("r" diff-undo "Redo")
   ("M" magit-status "Git" :exit t)
   ("g" helm-etags-select "Goto")
   ("1" delete-other-windows "Focus")
@@ -258,6 +259,18 @@ Expand region and present options via =hydra/expand=.
   ("n" narrow-to-region "Narrow")
   ("w" kill-region "Kill")
   ("q" keyboard-quit "Quit" :exit t))
+#+END_SRC
+
+Undo last edit and present options via =hydra/edit=.
+
+#+BEGIN_SRC emacs-lisp
+(defun my/undo ()
+  "Undo last edit into hydra options."
+  (interactive)
+  (progn
+    (undo)
+    (hydra/edit/body)))
+(key-chord-define-global "uu" 'my/undo)
 #+END_SRC
 ** Version Control
 #+BEGIN_SRC emacs-lisp
