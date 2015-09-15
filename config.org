@@ -208,9 +208,10 @@ Reminders for commands starting with =C-x= or =C-c=.
 (defhydra hydra/main ()
   "Menu"
   ("p" hydra/projectile/body "Projectile" :exit t)
-  ("b" (my/nav-to-hydra 'switch-to-buffer) "Buffer" :exit t)
-  ("f" (my/nav-to-hydra 'find-file) "File" :exit t)
-  ("e" hydra/edit/body "Edit" :exit t))
+  ("f" (my/nav-to-hydra 'helm-projectile-find-file-in-known-projects) "File" :exit t)
+  ("b" (my/nav-to-hydra 'helm-multi-files) "Buffer" :exit t)
+  ("e" hydra/edit/body "Edit" :exit t)
+  ("q" keyboard-quit "Quit" :exit t))
 (key-chord-define-global "kk" 'hydra/main/body)
 
 (defhydra hydra/projectile ()
@@ -235,7 +236,7 @@ Navigate to a buffer and present options via =hydra/edit=.
   ("M" magit-status "Git" :exit t)
   ("g" helm-etags-select "Goto")
   ("1" delete-other-windows "Focus")
-  ("q" nil "Quit" :exit t))
+  ("q" keyboard-quit "Quit" :exit t))
 #+END_SRC
 
 Expand region and present options via =hydra/expand=.
@@ -247,7 +248,7 @@ Expand region and present options via =hydra/expand=.
   (progn
     (er/expand-region 1)
     (hydra/expand/body)))
-(key-chord-define-global "xx" 'my/expand-to-hydra)
+(key-chord-define-global ";;" 'my/expand-to-hydra)
 
 (defhydra hydra/expand ()
   "Expand"
@@ -256,14 +257,13 @@ Expand region and present options via =hydra/expand=.
   ("m" helm-M-x "Command")
   ("n" narrow-to-region "Narrow")
   ("w" kill-region "Kill")
-  ("q" nil "Quit" :exit t))
+  ("q" keyboard-quit "Quit" :exit t))
 #+END_SRC
 ** Version Control
 #+BEGIN_SRC emacs-lisp
 ;;; Git
 (my/package-install 'magit)
 (use-package magit
-  :diminish magit-auto-revert-mode
   :bind 
   ("C-x g" . magit-status))
 
