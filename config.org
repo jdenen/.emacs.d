@@ -489,10 +489,8 @@ Undo last edit and present options via =hydra/edit=.
    (set-register (car r) (cons 'file (cdr r))))
  '((?i . "~/.emacs.d/config.org")
    (?b . "~/.bash_profile")
-   (?c . "~/Documents/org/cscc.org")
-   (?n . "~/Documents/org/nw.org")
-   (?g . "~/Documents/org/csg.org")
-   (?j . "~/Documents/org/johnson.org")))
+   (?c . "~/Documents/org-docs/cscc.org")
+   (?j . "~/Documents/org-docs/johnson.org")))
 #+END_SRC
 ** Twitter
 #+BEGIN_SRC emacs-lisp
