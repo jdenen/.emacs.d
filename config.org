@@ -209,7 +209,11 @@ Reminders for commands starting with =C-x= or =C-c=.
   ("p" hydra/projectile/body "Projectile" :exit t)
   ("f" (my/nav-to-hydra 'helm-projectile-find-file-in-known-projects) "File" :exit t)
   ("b" (my/nav-to-hydra 'helm-multi-files) "Buffer" :exit t)
+  ("T" beginning-of-buffer "Top")
+  ("B" end-of-buffer "Bottom")
   ("e" hydra/edit/body "Edit" :exit t)
+  ("w" hydra/window/body "Window" :exit t)
+  ("m" helm-M-x "Command")
   ("q" keyboard-quit "Quit" :exit t))
 (key-chord-define-global "kk" 'hydra/main/body)
 
@@ -217,6 +221,16 @@ Reminders for commands starting with =C-x= or =C-c=.
   "Projectile"
   ("p" (my/nav-to-hydra 'helm-projectile-switch-project) "Project" :exit t)
   ("f" (my/nav-to-hydra 'helm-projectile-find-file) "File" :exit t))
+
+(defhydra hydra/window ()
+  "Window"
+  ("o" ace-window "Switch")
+  ("1" delete-other-windows "Focus")
+  ("2" split-window-below "Below")
+  ("3" split-window-right "Right")
+  ("k" bury-buffer "Bury")
+  ("e" hydra/edit/body "Edit" :exit t)
+  ("q" keyboard-quit "Quit" :exit t))
 #+END_SRC
 
 Navigate to a buffer and present options via =hydra/edit=.
