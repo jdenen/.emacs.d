@@ -207,7 +207,6 @@ Reminders for commands starting with =C-x= or =C-c=.
 (defhydra hydra/main ()
   "Menu"
   ("p" hydra/projectile/body "Projectile" :exit t)
-  ("f" (my/nav-to-hydra 'helm-projectile-find-file-in-known-projects) "File" :exit t)
   ("b" (my/nav-to-hydra 'helm-multi-files) "Buffer" :exit t)
   ("T" beginning-of-buffer "Top")
   ("B" end-of-buffer "Bottom")
