@@ -245,7 +245,7 @@ Expand region and present options via =hydra/expand=.
   "Expand region into hydra options."
   (interactive)
   (progn
-    (er--expand-region-1)
+    (er/expand-region 1)
     (hydra/expand/body)))
 (key-chord-define-global "xx" 'my/expand-to-hydra)
 
