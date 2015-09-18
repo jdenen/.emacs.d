@@ -57,7 +57,9 @@ Use Emacs on Mac, Windows, and Linux distros.
   ("C-x j" . ace-jump-char-mode))
 
 (my/package-install 'ace-window)
-(use-package ace-window)
+(use-package ace-window
+  :init
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 #+END_SRC
 *** Terminal Management
 #+BEGIN_SRC emacs-lisp
@@ -91,6 +93,7 @@ Bury buffer on terminal command =exit=.
     (key-chord-define-global "jx" 'bury-buffer)
     (key-chord-define-global "jt" 'my/bash)
     (key-chord-define-global "yy" 'helm-show-kill-ring)
+    (key-chord-define-global "hh" 'helm-multi-files)
     (key-chord-define-global "MM" 'magit-status)
     (key-chord-define-global "VV" 'svn-status)
     (key-chord-define-global "VU" 'svn-update)))
@@ -204,53 +207,42 @@ Reminders for commands starting with =C-x= or =C-c=.
 #+BEGIN_SRC emacs-lisp
 (my/package-install 'hydra)
 
-(defhydra hydra/main ()
-  "Menu"
-  ("p" hydra/projectile/body "Projectile" :exit t)
-  ("b" (my/nav-to-hydra 'helm-multi-files) "Buffer" :exit t)
-  ("T" beginning-of-buffer "Top")
-  ("B" end-of-buffer "Bottom")
-  ("e" hydra/edit/body "Edit" :exit t)
-  ("w" hydra/window/body "Window" :exit t)
-  ("m" helm-M-x "Command")
-  ("q" keyboard-quit "Quit" :exit t))
-(key-chord-define-global "kk" 'hydra/main/body)
-
-(defhydra hydra/projectile ()
-  "Projectile"
-  ("p" (my/nav-to-hydra 'helm-projectile-switch-project) "Project" :exit t)
-  ("f" (my/nav-to-hydra 'helm-projectile-find-file) "File" :exit t))
-
 (defhydra hydra/window ()
   "Window"
-  ("o" ace-window "Switch")
-  ("1" delete-other-windows "Focus")
-  ("2" split-window-below "Below")
-  ("3" split-window-right "Right")
-  ("k" bury-buffer "Bury")
-  ("e" hydra/edit/body "Edit" :exit t)
+  ("o" ace-select-window "Switch")
+  ("s" ace-swap-window "Swap")
+  ("d" ace-delete-window "Delete")
+  ("m" ace-maximize-window "Maximize")
+  ("b" split-window-below "Split 2")
+  ("r" split-window-right "Split 3")
   ("q" keyboard-quit "Quit" :exit t))
+(key-chord-define-global "kk" 'hydra/window/body)
 #+END_SRC
 
-Navigate to a buffer and present options via =hydra/edit=.
+Undo into =hydra/undo=, all using =undo-tree-mode=.
 
 #+BEGIN_SRC emacs-lisp
-(defun my/nav-to-hydra (expr)
-  "Execute EXPR then open hydra/edit/body."
-  (progn
-    (funcall expr)
-    (hydra/edit/body)))
+(my/package-install 'undo-tree)
+(use-package undo-tree
+  :diminish undo-tree-mode
+  :init 
+  (global-undo-tree-mode 1))
 
-(defhydra hydra/edit ()
-  "Edit"
-  ("s" helm-swoop "Search")
+(defun my/undo ()
+  "Undo last edit into hydra options."
+  (interactive)
+  (progn
+    (undo-tree-undo)
+    (hydra/undo/body)))
+
+(defhydra hydra/undo ()
+  "Undo"
+  ("u" undo-tree-undo "Undo")
+  ("r" undo-tree-redo "Redo")
   ("x" my/expand-to-hydra "Expand" :exit t)
-  ("u" undo "Undo")
-  ("r" diff-undo "Redo")
-  ("M" magit-status "Git" :exit t)
-  ("g" helm-etags-select "Goto")
-  ("1" delete-other-windows "Focus")
   ("q" keyboard-quit "Quit" :exit t))
+
+(key-chord-define-global "uu" 'my/undo)
 #+END_SRC
 
 Expand region and present options via =hydra/expand=.
@@ -262,7 +254,6 @@ Expand region and present options via =hydra/expand=.
   (progn
     (er/expand-region 1)
     (hydra/expand/body)))
-(key-chord-define-global ";;" 'my/expand-to-hydra)
 
 (defhydra hydra/expand ()
   "Expand"
@@ -272,18 +263,8 @@ Expand region and present options via =hydra/expand=.
   ("n" narrow-to-region "Narrow")
   ("w" kill-region "Kill")
   ("q" keyboard-quit "Quit" :exit t))
-#+END_SRC
 
-Undo last edit and present options via =hydra/edit=.
-
-#+BEGIN_SRC emacs-lisp
-(defun my/undo ()
-  "Undo last edit into hydra options."
-  (interactive)
-  (progn
-    (undo)
-    (hydra/edit/body)))
-(key-chord-define-global "uu" 'my/undo)
+(key-chord-define-global ";;" 'my/expand-to-hydra)
 #+END_SRC
 ** Version Control
 #+BEGIN_SRC emacs-lisp
