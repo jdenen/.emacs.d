@@ -215,6 +215,8 @@ Reminders for commands starting with =C-x= or =C-c=.
   ("m" ace-maximize-window "Maximize")
   ("b" split-window-below "Split 2")
   ("r" split-window-right "Split 3")
+  ("u" winner-undo "Undo")
+  ("p" winner-redo "Redo")
   ("q" keyboard-quit "Quit" :exit t))
 (key-chord-define-global "kk" 'hydra/window/body)
 #+END_SRC
