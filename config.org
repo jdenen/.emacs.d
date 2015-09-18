@@ -206,7 +206,29 @@ Reminders for commands starting with =C-x= or =C-c=.
 ** Hydra
 #+BEGIN_SRC emacs-lisp
 (my/package-install 'hydra)
+#+END_SRC
 
+Move around buffers with ease.
+
+#+BEGIN_SRC emacs-lisp
+(my/package-install 'goto-chg)
+(use-package goto-chg)
+
+(defhydra hydra/buffer ()
+  "Changes"
+  ("n" git-gutter:next-hunk "Next")
+  ("p" git-gutter:previous-hunk "Previous")
+  ("r" git-gutter:revert-hunk "Revert")
+  ("N" goto-last-change "Last")
+  ("P" goto-last-change-reverse "Back")
+  ("q" keyboard-quit "Quit" :exit t))
+
+(key-chord-define-global "qq" 'hydra/buffer/body)
+#+END_SRC
+
+Move around windows with ease.
+
+#+BEGIN_SRC emacs-lisp
 (defhydra hydra/window ()
   "Window"
   ("o" ace-select-window "Switch")
@@ -218,6 +240,7 @@ Reminders for commands starting with =C-x= or =C-c=.
   ("u" winner-undo "Undo")
   ("p" winner-redo "Redo")
   ("q" keyboard-quit "Quit" :exit t))
+
 (key-chord-define-global "kk" 'hydra/window/body)
 #+END_SRC
 
