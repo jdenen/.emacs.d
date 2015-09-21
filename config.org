@@ -59,7 +59,9 @@ Use Emacs on Mac, Windows, and Linux distros.
 (my/package-install 'ace-window)
 (use-package ace-window
   :init
-  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
+  (progn
+    (setq aw-dispatch-always t)
+    (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))))
 #+END_SRC
 *** Terminal Management
 #+BEGIN_SRC emacs-lisp
