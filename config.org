@@ -388,7 +388,9 @@ Expand region and present options via =hydra/expand=.
   :init
   (progn
     (setq rspec-use-rake-when-possible nil)
-    (setq rspec-command-options "--format progress")))
+    (setq rspec-command-options "--format progress"))
+  :bind
+  ("C-c , T" . rspec-find-spec-or-target-other-window))
 
 (defun my/specs ()
   "Run RSpec from Ruby project root."
