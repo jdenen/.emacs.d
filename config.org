@@ -331,6 +331,8 @@ Expand region and present options via =hydra/expand=.
 ;;; Git
 (my/package-install 'magit)
 (use-package magit
+  :init
+  (setq magit-push-always-verify nil)
   :bind 
   ("C-x g" . magit-status))
 
