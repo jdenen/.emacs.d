@@ -258,7 +258,7 @@ Move around buffers with ease.
   ("P" goto-last-change-reverse "Back")
   ("q" keyboard-quit "Quit" :exit t))
 
-(key-chord-define-global "qq" 'hydra/buffer/body)
+(key-chord-define-global "NN" 'hydra/buffer/body)
 #+END_SRC
 
 Move around windows with ease.
