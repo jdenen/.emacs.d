@@ -27,6 +27,66 @@ Use Emacs on Mac, Windows, and Linux distros.
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 #+END_SRC
+** Visual
+#+BEGIN_SRC emacs-lisp
+(setq inhibit-startup-screen t)
+(setq inhibit-startup-message t)
+(setq inhibit-splash-screen t)
+(tool-bar-mode 0)
+(menu-bar-mode 0)
+(scroll-bar-mode 0)
+(toggle-word-wrap 1)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(my/package-install 'ample-theme)
+(load-theme 'ample t)
+(set-face-attribute 'default nil :height 94)
+(set-face-attribute 'fringe nil :background "#2d2d2d")
+(set-face-attribute 'default nil :family "Source Code Pro for Powerline")
+(set-fontset-font "fontset-default" 'unicode "DejaVu Sans Mono for Powerline")
+(set-face-attribute 'vertical-border nil :foreground (face-attribute 'fringe :background))
+(add-to-list 'default-frame-alist '(height . 40))
+(add-to-list 'default-frame-alist '(width . 90))
+#+END_SRC
+
+Scrolling was way too fast. This is much better.
+
+#+BEGIN_SRC emacs-lisp
+(setq scroll-step 1)
+(setq scroll-conservatively 10000)
+#+END_SRC
+
+Start scratch buffer in Ruby mode.
+
+#+BEGIN_SRC emacs-lisp
+(setq initial-major-mode 'ruby-mode)
+(setq initial-scratch-message "# This is a Ruby scratch buffer. \n\n")
+#+END_SRC
+** Fringe
+#+BEGIN_SRC emacs-lisp
+(fringe-mode '(4 . 4))
+
+(my/package-install 'git-gutter)
+(use-package git-gutter
+  :diminish git-gutter-mode
+  :init
+  (global-git-gutter-mode +1))
+#+END_SRC
+** Powerline
+#+BEGIN_SRC emacs-lisp
+(my/package-install 'powerline)
+(use-package powerline
+  :init
+  (progn
+    (display-time-mode 1)
+    (column-number-mode 1)
+    (if (display-graphic-p)
+        (progn
+          (setq powerline-default-separator 'contour)
+          (setq powerline-height 25))
+      (setq powerline-default-separator-dir '(right . left)))))
+#+END_SRC
 ** Basic Behavior
 *** Window Management
 #+BEGIN_SRC emacs-lisp
@@ -102,36 +162,9 @@ Bury buffer on terminal command =exit=.
 #+END_SRC
 *** Misc
 #+BEGIN_SRC emacs-lisp
-;;; No toolbars, scrollbars, or startup screens
-(setq inhibit-startup-screen t)
-(tool-bar-mode 0)
-(menu-bar-mode 0)
-(scroll-bar-mode 0)
-(toggle-word-wrap 1)
-
-;;; Single character confirmation
 (fset 'yes-or-no-p 'y-or-n-p)
-
 (setq backup-directory-alist '(("." . "~/tmp")))
 (setq tramp-default-method "ssh")
-
-(my/package-install 'ample-theme)
-(load-theme 'ample t)
-(add-to-list 'default-frame-alist '(font .  "Droid Sans Mono-12"))
-(set-face-attribute 'default t :font  "Droid Sans Mono-12")
-
-;;; Start scratch buffer with Ruby
-(setq initial-major-mode 'ruby-mode)
-(setq initial-scratch-message "# This is a Ruby scratch buffer. \n\n")
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(my/package-install 'powerline)
-(use-package powerline
-  :init
-  (progn
-    (display-time-mode 1)
-    (powerline-default-theme)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -300,12 +333,6 @@ Expand region and present options via =hydra/expand=.
 (use-package magit
   :bind 
   ("C-x g" . magit-status))
-
-(my/package-install 'git-gutter)
-(use-package git-gutter
-  :diminish git-gutter-mode
-  :init
-  (global-git-gutter-mode +1))
 
 ;;; Subversion
 (autoload 'svn-status "dsvn" "Run `svn status'." t)
@@ -480,8 +507,9 @@ Expand region and present options via =hydra/expand=.
 ** Text Modes
 *** Org
 #+BEGIN_SRC emacs-lisp
-;;; Present `org-mode` in a less cluttered way 
 (setq org-startup-indented t)
+(setq org-src-fontify-natively t)
+(setq org-src-tab-acts-natively t)
 #+END_SRC
 *** JSON
 #+BEGIN_SRC emacs-lisp
