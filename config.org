@@ -41,7 +41,7 @@ Use Emacs on Mac, Windows, and Linux distros.
 #+BEGIN_SRC emacs-lisp
 (my/package-install 'ample-theme)
 (load-theme 'ample t)
-(set-face-attribute 'default nil :height 94)
+(set-face-attribute 'default nil :height 96)
 (set-face-attribute 'fringe nil :background "#2d2d2d")
 (set-face-attribute 'default nil :family "Source Code Pro for Powerline")
 (set-fontset-font "fontset-default" 'unicode "DejaVu Sans Mono for Powerline")
