@@ -489,6 +489,7 @@ Expand region and present options via =hydra/expand=.
 (key-chord-define ruby-mode-map "BB" 'my/binding.pry)
 (key-chord-define ruby-mode-map "TT" 'my/ruby-tags)
 (key-chord-define ruby-mode-map "YY" 'yari)
+(key-chord-define ruby-mode-map "jd" 'helm-etags-select)
 ;;; feature-mode
 (key-chord-define feature-mode-map "jd" 'feature-goto-step-definition)
 #+END_SRC
@@ -512,6 +513,17 @@ Expand region and present options via =hydra/expand=.
 (setq org-startup-indented t)
 (setq org-src-fontify-natively t)
 (setq org-src-tab-acts-natively t)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(setq org-default-notes-file "~/Documents/org-docs/johnson.org")
+(setq org-archive-location "~/Documents/org-docs/archive.org")
+(setq org-log-done 'time)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(key-chord-define-global "CC" 'org-capture)
+(key-chord-define-global "AA" 'org-agenda)
 #+END_SRC
 *** JSON
 #+BEGIN_SRC emacs-lisp
