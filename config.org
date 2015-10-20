@@ -487,7 +487,6 @@ Expand region and present options via =hydra/expand=.
 (key-chord-define ruby-mode-map "SS" 'my/specs)
 (key-chord-define ruby-mode-map "RR" 'rubocop-check-current-file)
 (key-chord-define ruby-mode-map "BB" 'my/binding.pry)
-(key-chord-define ruby-mode-map "TT" 'my/ruby-tags)
 (key-chord-define ruby-mode-map "YY" 'yari)
 (key-chord-define ruby-mode-map "jd" 'helm-etags-select)
 ;;; feature-mode
