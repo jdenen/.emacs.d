@@ -360,6 +360,28 @@ I clone a lot of GitHub repos. This removes the repetitive parts.
            (concat "git clone git@github.com:" user "/" repo " " name))
           (cd my-temp-dir)))
   #+END_SRC
+** Highlighting
+#+BEGIN_SRC emacs-lisp
+(defun my/hl ()
+  "Highlight word at point."
+  (interactive)
+  (setq my/hl-phrase (thing-at-point 'word))
+  (highlight-phrase my/hl-phrase))
+
+(defun my/unhl ()
+  "Unhighlight previously highlighted word."
+  (interactive)
+  (unhighlight-regexp my/hl-phrase))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(key-chord-define-global "HH" 'my/hl)
+(key-chord-define-global "UU" 'my/unhl)
+#+END_SRC
+** Tramp
+#+BEGIN_SRC emacs-lisp
+(setq tramp-default-method "ssh")
+#+END_SRC
 ** Project Navigation
 #+BEGIN_SRC emacs-lisp
 (my/package-install 'projectile)
