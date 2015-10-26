@@ -341,6 +341,25 @@ Expand region and present options via =hydra/expand=.
 (autoload 'svn-update "dsvn" "Run `svn update'." t)
 (require 'vc-svn)
 #+END_SRC
+
+I clone a lot of GitHub repos. This removes the repetitive parts.
+#+BEGIN_SRC emacs-lisp
+  (defun my/clone (user repo)
+    "Prompt for a Git clone."
+    (interactive (list (read-string "GitHub acct: ") (read-string "GitHub repo: ")))
+    (if (y-or-n-p "Rename?")
+        (let ((name (read-string "Name: ")))
+          (my/git-clone-cmd user repo name))
+      (my/git-clone-cmd user repo)))
+
+  (defun my/git-clone-cmd (user repo &optional name)
+    "Git clone into the Code directory."
+    (let ((my-temp-dir (nth 1 (split-string (pwd)))))
+          (cd "~/Code/")
+          (shell-command 
+           (concat "git clone git@github.com:" user "/" repo " " name))
+          (cd my-temp-dir)))
+  #+END_SRC
 ** Project Navigation
 #+BEGIN_SRC emacs-lisp
 (my/package-install 'projectile)
