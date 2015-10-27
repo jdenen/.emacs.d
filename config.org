@@ -524,7 +524,7 @@ I clone a lot of GitHub repos. This removes the repetitive parts.
 #+BEGIN_SRC emacs-lisp
 ;;; ruby-mode
 (key-chord-define ruby-mode-map "PP" 'my/pry)
-(key-chord-define ruby-mode-map "FF" 'my/features)
+(key-chord-define ruby-mode-map "CU" 'my/features)
 (key-chord-define ruby-mode-map "SS" 'my/specs)
 (key-chord-define ruby-mode-map "RR" 'rubocop-check-current-file)
 (key-chord-define ruby-mode-map "BB" 'my/binding.pry)
