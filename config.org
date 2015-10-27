@@ -556,8 +556,8 @@ I clone a lot of GitHub repos. This removes the repetitive parts.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(setq org-default-notes-file "~/Documents/org-docs/johnson.org")
-(setq org-archive-location "~/Documents/org-docs/archive.org")
+(setq org-default-notes-file "~/vc-docs/johnson.org")
+(setq org-archive-location "~/vc-docs/archive.org")
 (setq org-log-done 'time)
 #+END_SRC
 
