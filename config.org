@@ -590,8 +590,9 @@ I clone a lot of GitHub repos. This removes the repetitive parts.
    (set-register (car r) (cons 'file (cdr r))))
  '((?i . "~/.emacs.d/config.org")
    (?b . "~/.bash_profile")
-   (?c . "~/Documents/org-docs/cscc.org")
-   (?j . "~/Documents/org-docs/johnson.org")))
+   (?c . "~/vc-docs/cscc.org")
+   (?g . "~/vc-docs/grad.org")
+   (?j . "~/vc-docs/johnson.org")))
 #+END_SRC
 ** Twitter
 #+BEGIN_SRC emacs-lisp
