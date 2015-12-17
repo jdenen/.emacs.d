@@ -553,6 +553,7 @@ I clone a lot of GitHub repos. This removes the repetitive parts.
 (setq org-startup-indented t)
 (setq org-src-fontify-natively t)
 (setq org-src-tab-acts-natively t)
+(setq org-agenda-include-diary t)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -563,7 +564,7 @@ I clone a lot of GitHub repos. This removes the repetitive parts.
 
 #+BEGIN_SRC emacs-lisp
 (key-chord-define-global "CC" 'org-capture)
-(key-chord-define-global "AA" 'org-agenda)
+(key-chord-define-global "AA" 'org-agenda-list)
 #+END_SRC
 *** JSON
 #+BEGIN_SRC emacs-lisp
