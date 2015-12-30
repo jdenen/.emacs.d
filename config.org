@@ -159,6 +159,7 @@ Bury buffer on terminal command =exit=.
     (key-chord-define-global "hh" 'helm-multi-files)
     (key-chord-define-global "MM" 'magit-status)
     (key-chord-define-global "VV" 'svn-status)
+    (key-chord-define-global "jf" 'helm-recentf)
     (key-chord-define-global "VU" 'svn-update)))
 #+END_SRC
 *** Misc
@@ -231,7 +232,6 @@ Reminders for commands starting with =C-x= or =C-c=.
   ("C-x m" . helm-M-x)
   ("C-x y" . helm-show-kill-ring)
   ("M-."   . helm-etags-select)
-  ("C-c r" . helm-recentf)
   ("C-x h" . helm-command-prefix))
 
 ;;; Search current buffers with `helm`
