@@ -457,6 +457,7 @@ I clone a lot of GitHub repos. This removes the repetitive parts.
   :diminish rspec-mode
   :init
   (progn
+    (setenv "PAGER" (executable-find "cat"))
     (setq rspec-use-rake-when-possible nil)
     (setq rspec-command-options "--format progress"))
   :bind
@@ -488,7 +489,9 @@ I clone a lot of GitHub repos. This removes the repetitive parts.
 ;;; Ruby REPL
 (my/package-install 'inf-ruby)
 (use-package inf-ruby
-  :init (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
+  :init 
+  (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
+  (add-hook 'after-init-hook 'inf-ruby-switch-setup))
 
 (autoload 'inf-ruby-minor-mode "inf-ruby" "Run an inferior Ruby process")
 (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
