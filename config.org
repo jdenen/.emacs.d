@@ -231,13 +231,15 @@ Reminders for commands starting with =C-x= or =C-c=.
   ("C-x m" . helm-M-x)
   ("C-x y" . helm-show-kill-ring)
   ("M-."   . helm-etags-select)
+  ("C-c r" . helm-recentf)
   ("C-x h" . helm-command-prefix))
 
 ;;; Search current buffers with `helm`
 (my/package-install 'helm-swoop)
 (use-package helm-swoop
   :bind
-  ("C-s" . helm-swoop))
+  ("C-s" . helm-swoop)
+  ("C-M-s" . helm-multi-swoop))
 #+END_SRC
 ** Hydra
 #+BEGIN_SRC emacs-lisp
