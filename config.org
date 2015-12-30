@@ -1,3 +1,4 @@
+
 * init.org
 My Emacs config in an easy-to-read Org file. Installation is as easy as:
 #+BEGIN_SRC bash
