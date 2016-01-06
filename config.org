@@ -241,163 +241,6 @@ Reminders for commands starting with =C-x= or =C-c=.
   ("C-s" . helm-swoop)
   ("C-M-s" . helm-multi-swoop))
 #+END_SRC
-** Hydra
-#+BEGIN_SRC emacs-lisp
-(my/package-install 'hydra)
-#+END_SRC
-
-Move around buffers with ease.
-
-#+BEGIN_SRC emacs-lisp
-(my/package-install 'goto-chg)
-(use-package goto-chg)
-
-(defhydra hydra/buffer ()
-  "Changes"
-  ("n" git-gutter:next-hunk "Next")
-  ("p" git-gutter:previous-hunk "Previous")
-  ("r" git-gutter:revert-hunk "Revert")
-  ("N" goto-last-change "Last")
-  ("P" goto-last-change-reverse "Back")
-  ("q" keyboard-quit "Quit" :exit t))
-
-(key-chord-define-global "NN" 'hydra/buffer/body)
-#+END_SRC
-
-Move around windows with ease.
-
-#+BEGIN_SRC emacs-lisp
-(defhydra hydra/window ()
-  "Window"
-  ("o" ace-select-window "Switch")
-  ("s" ace-swap-window "Swap")
-  ("d" ace-delete-window "Delete")
-  ("m" ace-maximize-window "Maximize")
-  ("b" split-window-below "Split 2")
-  ("r" split-window-right "Split 3")
-  ("u" winner-undo "Undo")
-  ("p" winner-redo "Redo")
-  ("q" keyboard-quit "Quit" :exit t))
-
-(key-chord-define-global "kk" 'hydra/window/body)
-#+END_SRC
-
-Undo into =hydra/undo=, all using =undo-tree-mode=.
-
-#+BEGIN_SRC emacs-lisp
-(my/package-install 'undo-tree)
-(use-package undo-tree
-  :diminish undo-tree-mode
-  :init 
-  (global-undo-tree-mode 1))
-
-(defun my/undo ()
-  "Undo last edit into hydra options."
-  (interactive)
-  (progn
-    (undo-tree-undo)
-    (hydra/undo/body)))
-
-(defhydra hydra/undo ()
-  "Undo"
-  ("u" undo-tree-undo "Undo")
-  ("r" undo-tree-redo "Redo")
-  ("x" my/expand-to-hydra "Expand" :exit t)
-  ("q" keyboard-quit "Quit" :exit t))
-
-(key-chord-define-global "uu" 'my/undo)
-#+END_SRC
-
-Expand region and present options via =hydra/expand=.
-
-#+BEGIN_SRC emacs-lisp
-(defun my/expand-to-hydra ()
-  "Expand region into hydra options."
-  (interactive)
-  (progn
-    (er/expand-region 1)
-    (hydra/expand/body)))
-
-(defhydra hydra/expand ()
-  "Expand"
-  ("x" er/expand-region "Expand")
-  ("c" er/contract-region "Contract")
-  ("m" helm-M-x "Command")
-  ("n" narrow-to-region "Narrow")
-  ("w" kill-region "Kill")
-  ("q" keyboard-quit "Quit" :exit t))
-
-(key-chord-define-global ";;" 'my/expand-to-hydra)
-#+END_SRC
-** Version Control
-#+BEGIN_SRC emacs-lisp
-;;; Git
-(my/package-install 'magit)
-(use-package magit
-  :init
-  (setq magit-push-always-verify nil)
-  :bind 
-  ("C-x g" . magit-status))
-
-;;; Subversion
-(autoload 'svn-status "dsvn" "Run `svn status'." t)
-(autoload 'svn-update "dsvn" "Run `svn update'." t)
-(require 'vc-svn)
-#+END_SRC
-
-I clone a lot of GitHub repos. This removes the repetitive parts.
-#+BEGIN_SRC emacs-lisp
-  (defun my/clone (user repo)
-    "Prompt for a Git clone."
-    (interactive (list (read-string "GitHub acct: ") (read-string "GitHub repo: ")))
-    (if (y-or-n-p "Rename?")
-        (let ((name (read-string "Name: ")))
-          (my/git-clone-cmd user repo name))
-      (my/git-clone-cmd user repo)))
-
-  (defun my/git-clone-cmd (user repo &optional name)
-    "Git clone into the Code directory."
-    (let ((my-temp-dir (nth 1 (split-string (pwd)))))
-          (cd "~/Code/")
-          (shell-command 
-           (concat "git clone git@github.com:" user "/" repo " " name))
-          (cd my-temp-dir)))
-  #+END_SRC
-** Highlighting
-#+BEGIN_SRC emacs-lisp
-(defun my/hl ()
-  "Highlight word at point."
-  (interactive)
-  (setq my/hl-phrase (thing-at-point 'word))
-  (highlight-phrase my/hl-phrase))
-
-(defun my/unhl ()
-  "Unhighlight previously highlighted word."
-  (interactive)
-  (unhighlight-regexp my/hl-phrase))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(key-chord-define-global "HH" 'my/hl)
-(key-chord-define-global "UU" 'my/unhl)
-#+END_SRC
-** Tramp
-#+BEGIN_SRC emacs-lisp
-(setq tramp-default-method "ssh")
-#+END_SRC
-** Project Navigation
-#+BEGIN_SRC emacs-lisp
-(my/package-install 'projectile)
-(use-package projectile
-  :init 
-  (projectile-global-mode t))
-
-;;; Navigate projects with `helm`
-(my/package-install 'helm-projectile)
-(use-package helm-projectile
-  :init 
-  (helm-projectile-on))
-#+END_SRC
 ** Ruby
 *** YARD
 #+BEGIN_SRC emacs-lisp
@@ -529,15 +372,177 @@ I clone a lot of GitHub repos. This removes the repetitive parts.
 *** Key Chords
 #+BEGIN_SRC emacs-lisp
 ;;; ruby-mode
-(key-chord-define ruby-mode-map "PP" 'my/pry)
-(key-chord-define ruby-mode-map "CU" 'my/features)
-(key-chord-define ruby-mode-map "SS" 'my/specs)
-(key-chord-define ruby-mode-map "RR" 'rubocop-check-current-file)
 (key-chord-define ruby-mode-map "BB" 'my/binding.pry)
-(key-chord-define ruby-mode-map "YY" 'yari)
 (key-chord-define ruby-mode-map "jd" 'helm-etags-select)
 ;;; feature-mode
 (key-chord-define feature-mode-map "jd" 'feature-goto-step-definition)
+#+END_SRC
+** Hydra
+#+BEGIN_SRC emacs-lisp
+(my/package-install 'hydra)
+#+END_SRC
+
+Ruby buffer tasks.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra/ruby ()
+  "Ruby"
+  ("s" my/specs "RSpec" :exit t)
+  ("r" rake "Rake" :exit t)
+  ("c" rubocop-check-current-file "Rubocop" :exit t)
+  ("y" yari "Ri" :exit t)
+  ("t" my/ruby-tags "TAG" :exit t))
+
+(key-chord-define ruby-mode-map "ii" 'hydra/ruby/body)
+#+END_SRC
+
+Move around buffers with ease.
+
+#+BEGIN_SRC emacs-lisp
+(my/package-install 'goto-chg)
+(use-package goto-chg)
+
+(defhydra hydra/buffer ()
+  "Changes"
+  ("n" git-gutter:next-hunk "Next")
+  ("p" git-gutter:previous-hunk "Previous")
+  ("r" git-gutter:revert-hunk "Revert")
+  ("N" goto-last-change "Last")
+  ("P" goto-last-change-reverse "Back")
+  ("q" keyboard-quit "Quit" :exit t))
+
+(key-chord-define-global "NN" 'hydra/buffer/body)
+#+END_SRC
+
+Move around windows with ease.
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra/window ()
+  "Window"
+  ("o" ace-select-window "Switch" :exit t)
+  ("s" ace-swap-window "Swap" :exit t)
+  ("u" winner-undo "Undo")
+  ("p" winner-redo "Redo")
+  ("q" keyboard-quit "Quit" :exit t))
+
+(key-chord-define-global "kk" 'hydra/window/body)
+#+END_SRC
+
+Undo into =hydra/undo=, all using =undo-tree-mode=.
+
+#+BEGIN_SRC emacs-lisp
+(my/package-install 'undo-tree)
+(use-package undo-tree
+  :diminish undo-tree-mode
+  :init 
+  (global-undo-tree-mode 1))
+
+(defun my/undo ()
+  "Undo last edit into hydra options."
+  (interactive)
+  (progn
+    (undo-tree-undo)
+    (hydra/undo/body)))
+
+(defhydra hydra/undo ()
+  "Undo"
+  ("u" undo-tree-undo "Undo")
+  ("r" undo-tree-redo "Redo")
+  ("x" my/expand-to-hydra "Expand" :exit t)
+  ("q" keyboard-quit "Quit" :exit t))
+
+(key-chord-define-global "uu" 'my/undo)
+#+END_SRC
+
+Expand region and present options via =hydra/expand=.
+
+#+BEGIN_SRC emacs-lisp
+(defun my/expand-to-hydra ()
+  "Expand region into hydra options."
+  (interactive)
+  (progn
+    (er/expand-region 1)
+    (hydra/expand/body)))
+
+(defhydra hydra/expand ()
+  "Expand"
+  ("x" er/expand-region "Expand")
+  ("c" er/contract-region "Contract")
+  ("m" helm-M-x "Command")
+  ("n" narrow-to-region "Narrow")
+  ("w" kill-region "Kill")
+  ("q" keyboard-quit "Quit" :exit t))
+
+(key-chord-define-global ";;" 'my/expand-to-hydra)
+#+END_SRC
+** Version Control
+#+BEGIN_SRC emacs-lisp
+;;; Git
+(my/package-install 'magit)
+(use-package magit
+  :init
+  (setq magit-push-always-verify nil)
+  :bind 
+  ("C-x g" . magit-status))
+
+;;; Subversion
+(autoload 'svn-status "dsvn" "Run `svn status'." t)
+(autoload 'svn-update "dsvn" "Run `svn update'." t)
+(require 'vc-svn)
+#+END_SRC
+
+I clone a lot of GitHub repos. This removes the repetitive parts.
+#+BEGIN_SRC emacs-lisp
+  (defun my/clone (user repo)
+    "Prompt for a Git clone."
+    (interactive (list (read-string "GitHub acct: ") (read-string "GitHub repo: ")))
+    (if (y-or-n-p "Rename?")
+        (let ((name (read-string "Name: ")))
+          (my/git-clone-cmd user repo name))
+      (my/git-clone-cmd user repo)))
+
+  (defun my/git-clone-cmd (user repo &optional name)
+    "Git clone into the Code directory."
+    (let ((my-temp-dir (nth 1 (split-string (pwd)))))
+          (cd "~/Code/")
+          (shell-command 
+           (concat "git clone git@github.com:" user "/" repo " " name))
+          (cd my-temp-dir)))
+  #+END_SRC
+** Highlighting
+#+BEGIN_SRC emacs-lisp
+(defun my/hl ()
+  "Highlight word at point."
+  (interactive)
+  (setq my/hl-phrase (thing-at-point 'word))
+  (highlight-phrase my/hl-phrase))
+
+(defun my/unhl ()
+  "Unhighlight previously highlighted word."
+  (interactive)
+  (unhighlight-regexp my/hl-phrase))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(key-chord-define-global "HH" 'my/hl)
+(key-chord-define-global "UU" 'my/unhl)
+#+END_SRC
+** Tramp
+#+BEGIN_SRC emacs-lisp
+(setq tramp-default-method "ssh")
+#+END_SRC
+** Project Navigation
+#+BEGIN_SRC emacs-lisp
+(my/package-install 'projectile)
+(use-package projectile
+  :init 
+  (projectile-global-mode t))
+
+;;; Navigate projects with `helm`
+(my/package-install 'helm-projectile)
+(use-package helm-projectile
+  :init 
+  (helm-projectile-on))
 #+END_SRC
 ** Scala
 #+BEGIN_SRC emacs-lisp
