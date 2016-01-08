@@ -374,6 +374,7 @@ Reminders for commands starting with =C-x= or =C-c=.
 ;;; ruby-mode
 (key-chord-define ruby-mode-map "BB" 'my/binding.pry)
 (key-chord-define ruby-mode-map "jd" 'helm-etags-select)
+(key-chord-define ruby-mode-map "jb" 'pop-tag-mark)
 ;;; feature-mode
 (key-chord-define feature-mode-map "jd" 'feature-goto-step-definition)
 #+END_SRC
