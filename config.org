@@ -578,6 +578,14 @@ I clone a lot of GitHub repos. This removes the repetitive parts.
 (key-chord-define-global "CC" 'org-capture)
 (key-chord-define-global "AA" 'org-agenda-list)
 #+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(org-babel-do-load-languages
+  'org-babel-load-languages
+    '((ruby . t)
+      (sh . t)
+      (emacs-lisp . t)))
+#+END_SRC
 *** JSON
 #+BEGIN_SRC emacs-lisp
 (my/package-install 'json-reformat)
