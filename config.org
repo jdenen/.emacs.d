@@ -151,15 +151,10 @@ Bury buffer on terminal command =exit=.
   :init
   (progn
     (key-chord-mode 1)
-    (key-chord-define-global "jj" 'ace-jump-char-mode)
-    (key-chord-define-global "jr" 'jump-to-register)
-    (key-chord-define-global "jx" 'bury-buffer)
-    (key-chord-define-global "jt" 'my/bash)
     (key-chord-define-global "yy" 'helm-show-kill-ring)
     (key-chord-define-global "hh" 'helm-multi-files)
     (key-chord-define-global "MM" 'magit-status)
     (key-chord-define-global "VV" 'svn-status)
-    (key-chord-define-global "jf" 'helm-recentf)
     (key-chord-define-global "VU" 'svn-update)))
 #+END_SRC
 *** Misc
@@ -242,7 +237,7 @@ Reminders for commands starting with =C-x= or =C-c=.
   ("C-M-s" . helm-multi-swoop))
 #+END_SRC
 ** Ruby
-*** YARD
+
 #+BEGIN_SRC emacs-lisp
 (my/package-install 'yari)
 (use-package yari)
@@ -253,7 +248,7 @@ Reminders for commands starting with =C-x= or =C-c=.
   :init
   (add-hook 'ruby-mode-hook 'yard-mode))
 #+END_SRC
-*** Cucumber
+
 #+BEGIN_SRC emacs-lisp
 (my/package-install 'feature-mode)
 (use-package feature-mode
@@ -295,9 +290,8 @@ Reminders for commands starting with =C-x= or =C-c=.
   (let ((default-directory (rspec-project-root)))
     (shell-command "bundle exec cucumber")))
 #+END_SRC
-*** RSpec
+
 #+BEGIN_SRC emacs-lisp
-;;; RSpec
 (my/package-install 'rspec-mode)
 (use-package rspec-mode
   :diminish rspec-mode
@@ -315,24 +309,8 @@ Reminders for commands starting with =C-x= or =C-c=.
   (let ((default-directory (rspec-project-root)))
     (shell-command "bundle exec rspec")))
 #+END_SRC
-*** Pry
-#+BEGIN_SRC emacs-lisp
-(defun my/pry ()
-  "Pry console via `ansi-term`. Requires top-level lib files when available."
-  (interactive)
-  (let ((default-directory (rspec-project-root)))
-    (term-send-string
-      (ansi-term "pry" "Pry")
-      (concat "Dir['./lib/*.rb'].each{ |f| require f } rescue nil" "\n"))))
-
-(defun my/binding.pry ()
-  "Insert binding.pry."
-  (interactive)
-  (insert-before-markers "require 'pry'; binding.pry"))
-#+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-;;; Ruby REPL
 (my/package-install 'inf-ruby)
 (use-package inf-ruby
   :init 
@@ -350,15 +328,7 @@ Reminders for commands starting with =C-x= or =C-c=.
   (let ((comint-buffer-maximum-size 0))
     (comint-truncate-buffer)))
 #+END_SRC
-*** Etags
-#+BEGIN_SRC emacs-lisp
-(defun my/ruby-tags ()
-  "Generate Etags for Ruby with the `ripper-tags` gem."
-  (interactive)
-  (let ((default-directory (rspec-project-root)))
-    (shell-command "ripper-tags -R -e -f TAGS")))
-#+END_SRC
-*** Projects
+
 #+BEGIN_SRC emacs-lisp
 (my/package-install 'rake)
 (use-package rake)
@@ -369,14 +339,42 @@ Reminders for commands starting with =C-x= or =C-c=.
 (my/package-install 'rubocop)
 (use-package rubocop)
 #+END_SRC
-*** Key Chords
+
 #+BEGIN_SRC emacs-lisp
-;;; ruby-mode
+(defun my/binding.pry ()
+  "Insert binding.pry."
+  (interactive)
+  (insert-before-markers "require 'pry'; binding.pry"))
 (key-chord-define ruby-mode-map "BB" 'my/binding.pry)
-(key-chord-define ruby-mode-map "jd" 'helm-etags-select)
-(key-chord-define ruby-mode-map "jb" 'pop-tag-mark)
-;;; feature-mode
+#+END_SRC
+** Code Navigation
+#+BEGIN_SRC emacs-lisp
+(defun my/ruby-tags ()
+  "Generate Etags for Ruby with the `ripper-tags` gem."
+  (interactive)
+  (let ((default-directory (rspec-project-root)))
+    (shell-command "ripper-tags -R -e -f TAGS")))
+(key-chord-define ruby-mode-map "je" 'my/ruby-tags)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun my/pop-mark ()
+  "Pop etag mark or go to last edit."
+  (interactive)
+  (unless (ignore-errors (or (pop-tag-mark) t))
+    (goto-last-change 1)))
+(key-chord-define-global "jb" 'my/pop-mark)
+(key-chord-define-global "jd" 'helm-etags-select)
 (key-chord-define feature-mode-map "jd" 'feature-goto-step-definition)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(key-chord-define-global "jg" 'goto-line)
+(key-chord-define-global "jj" 'ace-jump-char-mode)
+(key-chord-define-global "jr" 'jump-to-register)
+(key-chord-define-global "jx" 'bury-buffer)
+(key-chord-define-global "jt" 'my/bash)
+(key-chord-define-global "jf" 'helm-recentf)
 #+END_SRC
 ** Hydra
 #+BEGIN_SRC emacs-lisp
