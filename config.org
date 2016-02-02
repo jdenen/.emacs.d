@@ -332,7 +332,9 @@
   (defun my/pry () 
     "Open a Pry REPL session."
     (interactive)
-    (ansi-term "pry" "Pry"))
+    (if (get-buffer "*Pry*")
+        (switch-to-buffer "*Pry*")
+      (ansi-term "pry" "Pry")))
 #+END_SRC
 *** Terminal
 #+BEGIN_SRC emacs-lisp
