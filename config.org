@@ -4,25 +4,6 @@
   (setq user-full-name "Johnson Denen"
         user-mail-address "johnson.denen@gmail.com")
 #+END_SRC
-** Packages
-#+BEGIN_SRC emacs-lisp
-  (defun my/installer (package)
-    "Install PACKAGE unless it's already installed."
-    (unless (package-installed-p package)
-      (progn
-        (package-install package)))
-    (require package))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(my/installer 'use-package)
-#+END_SRC
-** Mac
-#+BEGIN_SRC emacs-lisp
-  (my/installer 'exec-path-from-shell)
-  (when (memq window-system '(mac ns))
-    (exec-path-from-shell-initialize))
-#+END_SRC
 ** Startup
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-screen t)
@@ -42,16 +23,6 @@
   (setq initial-major-mode 'ruby-mode)
   (setq initial-scratch-message "# Ruby scratch \n\n")
 #+END_SRC
-** Theme
-#+BEGIN_SRC emacs-lisp
-  (my/installer 'ample-theme)
-  (load-theme 'ample t)
-  (set-face-attribute 'default nil :height 96)
-  (set-face-attribute 'fringe nil :background "#2d2d2d")
-  (set-face-attribute 'vertical-border nil :foreground (face-attribute 'fringe :background))
-  (add-to-list 'default-frame-alist '(height . 40))
-  (add-to-list 'default-frame-alist '(width . 90))
-#+END_SRC
 ** Font
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'default-frame-alist '(font . "Andale-Mono-10"))
@@ -61,145 +32,6 @@
 #+BEGIN_SRC emacs-lisp
   (setq scroll-step 1)
   (setq scroll-conservatively 10000)
-#+END_SRC
-** Fringe
-#+BEGIN_SRC emacs-lisp
-  (fringe-mode '(4 . 4))
-  (my/installer 'git-gutter)
-  (use-package git-gutter
-    :diminish git-gutter-mode
-    :init (global-git-gutter-mode +1))
-#+END_SRC
-** Chords
-#+BEGIN_SRC emacs-lisp
-  (my/installer 'key-chord)
-  (use-package key-chord
-    :init
-    (progn
-      (key-chord-mode 1)
-      (key-chord-define-global "yy" 'helm-show-kill-ring)
-      (key-chord-define-global "jj" 'ace-jump-char-mode)
-      (key-chord-define-global "jl" 'ace-jump-line-mode)
-      (key-chord-define-global "jb" 'ace-jump-mode-pop-mark)
-      (key-chord-define-global "jr" 'jump-to-register)
-      (key-chord-define-global ";;" 'my/expand-region)
-      (key-chord-define-global "uu" 'my/undo)
-      (key-chord-define-global "HH" 'my/hl)
-      (key-chord-define-global "UU" 'my/unhl)
-      (key-chord-define-global "MM" 'magit-status)))
-#+END_SRC
-** Help
-#+BEGIN_SRC emacs-lisp
-  (my/installer 'guide-key)
-  (use-package guide-key
-    :diminish guide-key-mode
-    :init
-    (progn
-      (guide-key-mode 1)
-      (setq guide-key/guide-key-sequence '("C-x" "C-c"))
-      (setq guide-key/idle-delay 1.5)
-      (setq guide-key/recursive-key-sequence-flag t)))
-#+END_SRC
-** Helm
-#+BEGIN_SRC emacs-lisp
-  (my/installer 'helm)
-  (use-package helm
-    :diminish helm-mode
-    :init
-    (progn
-      (helm-mode 1)
-      (require 'helm-config)
-      (setq helm-quick-update                     t
-            helm-split-window-in-side-p           t
-            helm-buffers-fuzzy-matching           t
-            helm-move-to-line-cycle-in-source     t
-            helm-ff-search-library-in-sexp        t
-            helm-scroll-amount                    8
-            helm-ff-file-name-history-use-recentf t))
-    :bind
-    ("C-x m" . helm-M-x))
-#+END_SRC
-** Swoop
-#+BEGIN_SRC emacs-lisp
-(my/installer 'helm-swoop)
-(use-package helm-swoop
-  :bind
-  ("C-s" . helm-swoop)
-  ("C-M-S" . helm-multi-swoop))
-#+END_SRC
-** Magit
-#+BEGIN_SRC emacs-lisp
-(my/installer 'magit)
-(use-package magit
-  :init
-  (setq magit-push-always-verify nil))
-#+END_SRC
-
-** Projectile
-#+BEGIN_SRC emacs-lisp
-  (my/installer 'projectile)
-  (use-package projectile
-    :init (projectile-global-mode t))
-
-  (my/installer 'helm-projectile)
-  (use-package helm-projectile
-    :init (helm-projectile-on))
-#+END_SRC
-** Org
-#+BEGIN_SRC emacs-lisp
-  (setq org-startup-indented t)
-  (setq org-src-fontify-natively t)
-  (setq org-src-tab-acts-natively t)
-#+END_SRC
-** Babel
-#+BEGIN_SRC emacs-lisp
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((ruby . t)
-     (sh . t)
-     (emacs-lisp . t)))
-#+END_SRC
-** JSON
-#+BEGIN_SRC emacs-lisp
-  (my/installer 'json-reformat)
-  (use-package json-reformat
-    :init (setq json-reformat:indent-width 2))
-#+END_SRC
-** YAML
-#+BEGIN_SRC emacs-lisp
-  (my/installer 'yaml-mode)
-  (use-package yaml-mode)
-#+END_SRC
-** Parens
-#+BEGIN_SRC emacs-lisp
-  (my/installer 'smartparens)
-  (use-package smartparens
-    :diminish smartparens-mode
-    :init
-    (progn
-      (require 'smartparens-config)
-      (require 'smartparens-ruby)
-      (smartparens-global-mode 1)
-      (show-smartparens-global-mode 1)))
-#+END_SRC
-** Auto complete
-#+BEGIN_SRC emacs-lisp
-  (require 'auto-complete)
-  (use-package auto-complete
-    :init
-    (progn
-      (ac-config-default)
-      (add-hook 'robe-mode-hook 'ac-robe-setup)))
-#+END_SRC
-** Expand region
-#+BEGIN_SRC emacs-lisp
-  (my/installer 'expand-region)
-  (use-package expand-region)
-#+END_SRC
-** Jump
-#+BEGIN_SRC emacs-lisp
-  (my/installer 'ace-jump-mode)
-  (use-package ace-jump-mode)
 #+END_SRC
 ** Terminal
 #+BEGIN_SRC emacs-lisp
@@ -221,31 +53,163 @@
      (?g . "~/vc-docs/grad.org")
      (?j . "~/vc-docs/johnson.org")))
 #+END_SRC
-
-** Undo
+** Packages
 #+BEGIN_SRC emacs-lisp
-  (my/installer 'undo-tree)
-  (use-package undo-tree
-    :diminish undo-tree-mode
-    :init (global-undo-tree-mode 1))
+  (defun my/installer (package)
+    "Install PACKAGE unless it's already installed."
+    (unless (package-installed-p package)
+      (progn
+        (package-install package)))
+    (require package))
 #+END_SRC
-** Hydra
+
+#+BEGIN_SRC emacs-lisp
+(my/installer 'use-package)
+#+END_SRC
+*** Ace jump
+#+BEGIN_SRC emacs-lisp
+  (my/installer 'ace-jump-mode)
+  (use-package ace-jump-mode)
+#+END_SRC
+*** Auto complete
+#+BEGIN_SRC emacs-lisp
+  (require 'auto-complete)
+  (use-package auto-complete
+    :init
+    (progn
+      (ac-config-default)
+      (add-hook 'robe-mode-hook 'ac-robe-setup)))
+#+END_SRC
+*** Babel
+#+BEGIN_SRC emacs-lisp
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((ruby . t)
+     (sh . t)
+     (emacs-lisp . t)))
+#+END_SRC
+*** Chords
+#+BEGIN_SRC emacs-lisp
+  (my/installer 'key-chord)
+  (use-package key-chord
+    :init
+    (progn
+      (key-chord-mode 1)
+      (key-chord-define-global "yy" 'helm-show-kill-ring)
+      (key-chord-define-global "jj" 'ace-jump-char-mode)
+      (key-chord-define-global "jl" 'ace-jump-line-mode)
+      (key-chord-define-global "jb" 'ace-jump-mode-pop-mark)
+      (key-chord-define-global "jr" 'jump-to-register)
+      (key-chord-define-global ";;" 'my/expand-region)
+      (key-chord-define-global "uu" 'my/undo)
+      (key-chord-define-global "HH" 'my/hl)
+      (key-chord-define-global "UU" 'my/unhl)
+      (key-chord-define-global "MM" 'magit-status)))
+#+END_SRC
+*** Cucumber
+#+BEGIN_SRC emacs-lisp
+  (my/installer 'feature-mode)
+  (use-package feature-mode
+    :init
+    (setq feature-cucumber-command "bundle exec cucumber -r features"))
+#+END_SRC
+*** Exec path
+#+BEGIN_SRC emacs-lisp
+  (my/installer 'exec-path-from-shell)
+  (when (memq window-system '(mac ns))
+    (exec-path-from-shell-initialize))
+#+END_SRC
+*** Expand region
+#+BEGIN_SRC emacs-lisp
+  (my/installer 'expand-region)
+  (use-package expand-region)
+#+END_SRC
+*** Gutter
+#+BEGIN_SRC emacs-lisp
+  (fringe-mode '(4 . 4))
+  (my/installer 'git-gutter)
+  (use-package git-gutter
+    :diminish git-gutter-mode
+    :init (global-git-gutter-mode +1))
+#+END_SRC
+*** Helm
+#+BEGIN_SRC emacs-lisp
+  (my/installer 'helm)
+  (use-package helm
+    :diminish helm-mode
+    :init
+    (progn
+      (helm-mode 1)
+      (require 'helm-config)
+      (setq helm-quick-update                     t
+            helm-split-window-in-side-p           t
+            helm-buffers-fuzzy-matching           t
+            helm-move-to-line-cycle-in-source     t
+            helm-ff-search-library-in-sexp        t
+            helm-scroll-amount                    8
+            helm-ff-file-name-history-use-recentf t))
+    :bind
+    ("C-x m" . helm-M-x))
+#+END_SRC
+*** Help
+#+BEGIN_SRC emacs-lisp
+  (my/installer 'guide-key)
+  (use-package guide-key
+    :diminish guide-key-mode
+    :init
+    (progn
+      (guide-key-mode 1)
+      (setq guide-key/guide-key-sequence '("C-x" "C-c"))
+      (setq guide-key/idle-delay 1.5)
+      (setq guide-key/recursive-key-sequence-flag t)))
+#+END_SRC
+*** Hydra
 #+BEGIN_SRC emacs-lisp
   (my/installer 'hydra)
 #+END_SRC
-** Ruby
+*** JSON
 #+BEGIN_SRC emacs-lisp
-  (my/installer 'robe)
-  (use-package robe
-    :init 
-    (add-hook 'ruby-mode-hook 'robe-mode))
+  (my/installer 'json-reformat)
+  (use-package json-reformat
+    :init (setq json-reformat:indent-width 2))
 #+END_SRC
-** Rubocop
+*** Magit
 #+BEGIN_SRC emacs-lisp
-(my/installer 'rubocop)
-(use-package rubocop)
+(my/installer 'magit)
+(use-package magit
+  :init
+  (setq magit-push-always-verify nil))
 #+END_SRC
-** RSpec
+*** Org
+#+BEGIN_SRC emacs-lisp
+  (setq org-startup-indented t)
+  (setq org-src-fontify-natively t)
+  (setq org-src-tab-acts-natively t)
+#+END_SRC
+*** Parens
+#+BEGIN_SRC emacs-lisp
+  (my/installer 'smartparens)
+  (use-package smartparens
+    :diminish smartparens-mode
+    :init
+    (progn
+      (require 'smartparens-config)
+      (require 'smartparens-ruby)
+      (smartparens-global-mode 1)
+      (show-smartparens-global-mode 1)))
+#+END_SRC
+
+*** Projectile
+#+BEGIN_SRC emacs-lisp
+  (my/installer 'projectile)
+  (use-package projectile
+    :init (projectile-global-mode t))
+
+  (my/installer 'helm-projectile)
+  (use-package helm-projectile
+    :init (helm-projectile-on))
+#+END_SRC
+*** RSpec
 #+BEGIN_SRC emacs-lisp
   (my/installer 'rspec-mode)
   (use-package rspec-mode
@@ -257,37 +221,57 @@
     :bind
     ("C-c , T" . rspec-find-spec-or-target-other-window))
 #+END_SRC
-** Cucumber
+*** Rubocop
 #+BEGIN_SRC emacs-lisp
-  (my/installer 'feature-mode)
-  (use-package feature-mode
-    :init
-    (setq feature-cucumber-command "bundle exec cucumber -r features"))
-#+END_SRC
-** Custom
-*** Terminal
-#+BEGIN_SRC emacs-lisp
-  (require 'term)
-  (defun my/bash ()
-    "Switch to or open a terminal."
-    (interactive)
-    (if (get-buffer "*bash*")
-        (switch-to-buffer "*bash*")
-      (ansi-term "/bin/bash" "bash")))
+(my/installer 'rubocop)
+(use-package rubocop)
 #+END_SRC
 *** Ruby
 #+BEGIN_SRC emacs-lisp
-  (defun my/binding.pry ()
-    "Insert binding.pry."
-    (interactive)
-    (insert-before-markers "require 'pry'; binding.pry"))
+  (my/installer 'robe)
+  (use-package robe
+    :init 
+    (add-hook 'ruby-mode-hook 'robe-mode))
 #+END_SRC
-
+*** Swoop
 #+BEGIN_SRC emacs-lisp
-  (defun my/pry () 
-    "Open a Pry REPL session."
+(my/installer 'helm-swoop)
+(use-package helm-swoop
+  :bind
+  ("C-s" . helm-swoop)
+  ("C-M-S" . helm-multi-swoop))
+#+END_SRC
+*** Theme
+#+BEGIN_SRC emacs-lisp
+  (my/installer 'ample-theme)
+  (load-theme 'ample t)
+  (set-face-attribute 'default nil :height 96)
+  (set-face-attribute 'fringe nil :background "#2d2d2d")
+  (set-face-attribute 'vertical-border nil :foreground (face-attribute 'fringe :background))
+  (add-to-list 'default-frame-alist '(height . 40))
+  (add-to-list 'default-frame-alist '(width . 90))
+#+END_SRC
+*** Undo
+#+BEGIN_SRC emacs-lisp
+  (my/installer 'undo-tree)
+  (use-package undo-tree
+    :diminish undo-tree-mode
+    :init (global-undo-tree-mode 1))
+#+END_SRC
+*** YAML
+#+BEGIN_SRC emacs-lisp
+  (my/installer 'yaml-mode)
+  (use-package yaml-mode)
+#+END_SRC
+** Custom
+*** Expand
+#+BEGIN_SRC emacs-lisp
+  (defun my/expand-region ()
+    "Expand region into hydra."
     (interactive)
-    (ansi-term "pry" "Pry"))
+    (progn
+      (er/expand-region 1)
+      (hydra/expand/body)))
 #+END_SRC
 *** Highlights
 #+BEGIN_SRC emacs-lisp
@@ -321,24 +305,6 @@
     ("m" helm-M-x "Command")
     ("q" keyboard-quit "Quit" :exit t))
 #+END_SRC
-*** Undo
-#+BEGIN_SRC emacs-lisp
-  (defun my/undo ()
-    "Undo last edit into hydra."
-    (interactive)
-    (progn
-      (undo-tree-undo)
-      (hydra/undo/body)))
-#+END_SRC
-*** Expand
-#+BEGIN_SRC emacs-lisp
-  (defun my/expand-region ()
-    "Expand region into hydra."
-    (interactive)
-    (progn
-      (er/expand-region 1)
-      (hydra/expand/body)))
-#+END_SRC
 *** KBDs
 #+BEGIN_SRC emacs-lisp
   (bind-key "C-x k" 'bury-buffer)
@@ -349,4 +315,37 @@
   (bind-key "C->" 'enlarge-window-horizontally)
   (bind-key "C-," 'shrink-window)
   (bind-key "C-." 'enlarge-window)
+#+END_SRC
+*** Ruby
+#+BEGIN_SRC emacs-lisp
+  (defun my/binding.pry ()
+    "Insert binding.pry."
+    (interactive)
+    (insert-before-markers "require 'pry'; binding.pry"))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/pry () 
+    "Open a Pry REPL session."
+    (interactive)
+    (ansi-term "pry" "Pry"))
+#+END_SRC
+*** Terminal
+#+BEGIN_SRC emacs-lisp
+  (require 'term)
+  (defun my/bash ()
+    "Switch to or open a terminal."
+    (interactive)
+    (if (get-buffer "*bash*")
+        (switch-to-buffer "*bash*")
+      (ansi-term "/bin/bash" "bash")))
+#+END_SRC
+*** Undo
+#+BEGIN_SRC emacs-lisp
+  (defun my/undo ()
+    "Undo last edit into hydra."
+    (interactive)
+    (progn
+      (undo-tree-undo)
+      (hydra/undo/body)))
 #+END_SRC
