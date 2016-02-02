@@ -35,6 +35,10 @@
 #+END_SRC
 ** Terminal
 #+BEGIN_SRC emacs-lisp
+(require 'term)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
 (defadvice term-handle-exit
     (after term-kill-buffer-on-exit activate)
   (let ((term-name (buffer-name)))
@@ -332,7 +336,6 @@
 #+END_SRC
 *** Terminal
 #+BEGIN_SRC emacs-lisp
-  (require 'term)
   (defun my/bash ()
     "Switch to or open a terminal."
     (interactive)
