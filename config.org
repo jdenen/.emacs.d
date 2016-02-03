@@ -104,6 +104,7 @@
       (key-chord-define-global "jl" 'ace-jump-line-mode)
       (key-chord-define-global "jb" 'ace-jump-mode-pop-mark)
       (key-chord-define-global "jr" 'jump-to-register)
+      (key-chord-define-global "jt" 'my/bash)
       (key-chord-define-global ";;" 'my/expand-region)
       (key-chord-define-global "uu" 'my/undo)
       (key-chord-define-global "HH" 'my/hl)
