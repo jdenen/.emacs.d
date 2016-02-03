@@ -68,11 +68,31 @@
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(my/installer 'use-package)
+  (my/installer 'use-package)
+  (my/installer 'ace-jump-mode)
+  (my/installer 'key-chord)
+  (my/installer 'feature-mode)
+  (my/installer 'hydra)
+  (my/installer 'guide-key)
+  (my/installer 'helm)
+  (my/installer 'git-gutter)
+  (my/installer 'expand-region)
+  (my/installer 'exec-path-from-shell)
+  (my/installer 'json-reformat)
+  (my/installer 'magit)
+  (my/installer 'smartparens)
+  (my/installer 'projectile)
+  (my/installer 'helm-projectile)
+  (my/installer 'robe)
+  (my/installer 'rubocop)
+  (my/installer 'rspec-mode)
+  (my/installer 'yaml-mode)
+  (my/installer 'undo-tree)
+  (my/installer 'helm-swoop)
+  (my/installer 'ample-theme)
 #+END_SRC
 *** Ace jump
 #+BEGIN_SRC emacs-lisp
-  (my/installer 'ace-jump-mode)
   (use-package ace-jump-mode)
 #+END_SRC
 *** Auto complete
@@ -94,7 +114,6 @@
 #+END_SRC
 *** Chords
 #+BEGIN_SRC emacs-lisp
-  (my/installer 'key-chord)
   (use-package key-chord
     :init
     (progn
@@ -113,33 +132,28 @@
 #+END_SRC
 *** Cucumber
 #+BEGIN_SRC emacs-lisp
-  (my/installer 'feature-mode)
   (use-package feature-mode
-    :init
-    (setq feature-cucumber-command "bundle exec cucumber -r features"))
+  :init
+  (setq feature-cucumber-command "bundle exec cucumber -r features"))
 #+END_SRC
 *** Exec path
 #+BEGIN_SRC emacs-lisp
-  (my/installer 'exec-path-from-shell)
   (when (memq window-system '(mac ns))
-    (exec-path-from-shell-initialize))
+  (exec-path-from-shell-initialize))
 #+END_SRC
 *** Expand region
 #+BEGIN_SRC emacs-lisp
-  (my/installer 'expand-region)
   (use-package expand-region)
 #+END_SRC
 *** Gutter
 #+BEGIN_SRC emacs-lisp
   (fringe-mode '(4 . 4))
-  (my/installer 'git-gutter)
   (use-package git-gutter
     :diminish git-gutter-mode
     :init (global-git-gutter-mode +1))
 #+END_SRC
 *** Helm
 #+BEGIN_SRC emacs-lisp
-  (my/installer 'helm)
   (use-package helm
     :diminish helm-mode
     :init
@@ -158,7 +172,6 @@
 #+END_SRC
 *** Help
 #+BEGIN_SRC emacs-lisp
-  (my/installer 'guide-key)
   (use-package guide-key
     :diminish guide-key-mode
     :init
@@ -170,17 +183,15 @@
 #+END_SRC
 *** Hydra
 #+BEGIN_SRC emacs-lisp
-  (my/installer 'hydra)
+  
 #+END_SRC
 *** JSON
 #+BEGIN_SRC emacs-lisp
-  (my/installer 'json-reformat)
   (use-package json-reformat
-    :init (setq json-reformat:indent-width 2))
+  :init (setq json-reformat:indent-width 2))
 #+END_SRC
 *** Magit
 #+BEGIN_SRC emacs-lisp
-(my/installer 'magit)
 (use-package magit
   :init
   (setq magit-push-always-verify nil))
@@ -193,62 +204,56 @@
 #+END_SRC
 *** Parens
 #+BEGIN_SRC emacs-lisp
-  (my/installer 'smartparens)
   (use-package smartparens
-    :diminish smartparens-mode
-    :init
-    (progn
-      (require 'smartparens-config)
-      (require 'smartparens-ruby)
-      (smartparens-global-mode 1)
-      (show-smartparens-global-mode 1)))
+  :diminish smartparens-mode
+  :init
+  (progn
+    (require 'smartparens-config)
+    (require 'smartparens-ruby)
+    (smartparens-global-mode 1)
+    (show-smartparens-global-mode 1)))
 #+END_SRC
 
 *** Projectile
 #+BEGIN_SRC emacs-lisp
-  (my/installer 'projectile)
   (use-package projectile
     :init (projectile-global-mode t))
+#+END_SRC
 
-  (my/installer 'helm-projectile)
+#+BEGIN_SRC emacs-lisp
   (use-package helm-projectile
     :init (helm-projectile-on))
 #+END_SRC
 *** RSpec
 #+BEGIN_SRC emacs-lisp
-  (my/installer 'rspec-mode)
   (use-package rspec-mode
-    :diminish rspec-mode
-    :init
-    (progn
-      (setq rspec-use-rake-when-possible nil)
-      (setq rspec-command-options "--format progress"))
-    :bind
-    ("C-c , T" . rspec-find-spec-or-target-other-window))
+  :diminish rspec-mode
+  :init
+  (progn
+    (setq rspec-use-rake-when-possible nil)
+    (setq rspec-command-options "--format progress"))
+  :bind
+  ("C-c , T" . rspec-find-spec-or-target-other-window))
 #+END_SRC
 *** Rubocop
 #+BEGIN_SRC emacs-lisp
-(my/installer 'rubocop)
-(use-package rubocop)
+  (use-package rubocop)
 #+END_SRC
 *** Ruby
 #+BEGIN_SRC emacs-lisp
-  (my/installer 'robe)
   (use-package robe
     :init 
     (add-hook 'ruby-mode-hook 'robe-mode))
 #+END_SRC
 *** Swoop
 #+BEGIN_SRC emacs-lisp
-(my/installer 'helm-swoop)
-(use-package helm-swoop
-  :bind
-  ("C-s" . helm-swoop)
-  ("C-M-S" . helm-multi-swoop))
+  (use-package helm-swoop
+    :bind
+    ("C-s" . helm-swoop)
+    ("C-M-S" . helm-multi-swoop))
 #+END_SRC
 *** Theme
 #+BEGIN_SRC emacs-lisp
-  (my/installer 'ample-theme)
   (load-theme 'ample t)
   (set-face-attribute 'default nil :height 96)
   (set-face-attribute 'fringe nil :background "#2d2d2d")
@@ -258,14 +263,12 @@
 #+END_SRC
 *** Undo
 #+BEGIN_SRC emacs-lisp
-  (my/installer 'undo-tree)
   (use-package undo-tree
     :diminish undo-tree-mode
     :init (global-undo-tree-mode 1))
 #+END_SRC
 *** YAML
 #+BEGIN_SRC emacs-lisp
-  (my/installer 'yaml-mode)
   (use-package yaml-mode)
 #+END_SRC
 ** Custom
