@@ -202,6 +202,12 @@
   (setq org-src-fontify-natively t)
   (setq org-src-tab-acts-natively t)
 #+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-capture-templates
+        '(("d" "Defect" entry (file+olp "~/vc-docs/grad.org" "IxD" "Defects")
+           "* TODO %^{summary} %t\n %?")))
+#+END_SRC
 *** Parens
 #+BEGIN_SRC emacs-lisp
   (use-package smartparens
