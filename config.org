@@ -124,6 +124,8 @@
       (key-chord-define-global "jb" 'ace-jump-mode-pop-mark)
       (key-chord-define-global "jr" 'jump-to-register)
       (key-chord-define-global "jt" 'my/bash)
+      (key-chord-define-global "jw" 'ace-jump-word-mode)
+      (key-chord-define-global "BB" 'my/binding.pry)
       (key-chord-define-global ";;" 'my/expand-region)
       (key-chord-define-global "uu" 'my/undo)
       (key-chord-define-global "HH" 'my/hl)
@@ -330,6 +332,7 @@
   (bind-key "C->" 'enlarge-window-horizontally)
   (bind-key "C-," 'shrink-window)
   (bind-key "C-." 'enlarge-window)
+  (bind-key "C-c c" 'org-capture)
 #+END_SRC
 *** Ruby
 #+BEGIN_SRC emacs-lisp
