@@ -237,6 +237,7 @@
   :init
   (progn
     (setq rspec-use-rake-when-possible nil)
+    (add-to-list 'rspec-primary-source-dirs "factories")
     (setq rspec-command-options "--format progress"))
   :bind
   ("C-c , T" . rspec-find-spec-or-target-other-window))
