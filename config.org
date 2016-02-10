@@ -1,3 +1,4 @@
+
 * init.org
 ** About Me
 #+BEGIN_SRC emacs-lisp
@@ -55,6 +56,7 @@
      (?b . "~/.bashrc")
      (?c . "~/vc-docs/cscc.org")
      (?g . "~/vc-docs/grad.org")
+     (?d . "~/vc-docs/defects.org")
      (?j . "~/vc-docs/johnson.org")))
 #+END_SRC
 ** Packages
@@ -203,11 +205,12 @@
   (setq org-startup-indented t)
   (setq org-src-fontify-natively t)
   (setq org-src-tab-acts-natively t)
+  (setq org-log-done 'time)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
   (setq org-capture-templates
-        '(("d" "Defect" entry (file+olp "~/vc-docs/grad.org" "IxD" "Defects")
+        '(("d" "Defect" entry (file+olp "~/vc-docs/defects.org" "IxD")
            "* TODO %^{summary} %t\n %?")))
 #+END_SRC
 *** Parens
