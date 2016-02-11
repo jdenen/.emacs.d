@@ -89,6 +89,7 @@
   (my/installer 'rubocop)
   (my/installer 'rspec-mode)
   (my/installer 'yaml-mode)
+  (my/installer 'yard-mode)
   (my/installer 'undo-tree)
   (my/installer 'helm-swoop)
   (my/installer 'ample-theme)
@@ -258,6 +259,12 @@
   (use-package robe
     :init 
     (add-hook 'ruby-mode-hook 'robe-mode))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package yard-mode
+    :diminish yard-mode
+    :init (add-hook 'ruby-mode-hook 'yard-mode))
 #+END_SRC
 *** Swoop
 #+BEGIN_SRC emacs-lisp
