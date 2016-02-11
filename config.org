@@ -213,7 +213,7 @@
 
 #+BEGIN_SRC emacs-lisp
   (setq org-capture-templates
-        '(("d" "Defect" entry (file+olp "~/vc-docs/defects.org" "IxD")
+        '(("d" "Defect" entry (file+olp "~/vc-docs/defects.org" "New")
            "* TODO %^{summary} %t\n %?")))
 #+END_SRC
 *** Parens
