@@ -127,6 +127,7 @@
       (key-chord-define-global "jb" 'ace-jump-mode-pop-mark)
       (key-chord-define-global "jr" 'jump-to-register)
       (key-chord-define-global "jt" 'my/bash)
+      (key-chord-define-global "jp" 'my/pry)
       (key-chord-define-global "jw" 'ace-jump-word-mode)
       (key-chord-define-global "BB" 'my/binding.pry)
       (key-chord-define-global ";;" 'my/expand-region)
@@ -353,23 +354,28 @@
     (interactive)
     (insert-before-markers "require 'pry'; binding.pry"))
 #+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-  (defun my/pry () 
-    "Open a Pry REPL session."
-    (interactive)
-    (if (get-buffer "*Pry*")
-        (switch-to-buffer "*Pry*")
-      (ansi-term "pry" "Pry")))
-#+END_SRC
 *** Terminal
 #+BEGIN_SRC emacs-lisp
+  (defun my/term-finder (tname cmd)
+    "Switch to or open a term buffer."
+    (let ((term-name (concat "*" tname "*")))
+      (if (get-buffer term-name)
+          (switch-to-buffer term-name)
+        (ansi-term cmd tname))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
   (defun my/bash ()
-    "Switch to or open a terminal."
+    "Open terminal to bash."
     (interactive)
-    (if (get-buffer "*bash*")
-        (switch-to-buffer "*bash*")
-      (ansi-term "/bin/bash" "bash")))
+    (my/term-finder "bash" "/bin/bash"))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/pry ()
+    "Open terminal to Pry."
+    (interactive)
+    (my/term-finder "pry" "Pry"))
 #+END_SRC
 *** Undo
 #+BEGIN_SRC emacs-lisp
