@@ -346,6 +346,8 @@
   (bind-key "C-," 'shrink-window)
   (bind-key "C-." 'enlarge-window)
   (bind-key "C-c c" 'org-capture)
+  (bind-key "s-b" 'backward-sexp)
+  (bind-key "s-f" 'forward-sexp)
 #+END_SRC
 *** Ruby
 #+BEGIN_SRC emacs-lisp
