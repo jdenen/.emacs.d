@@ -70,7 +70,7 @@
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (my/installer 'use-package)
+    (my/installer 'use-package)
   (my/installer 'ace-jump-mode)
   (my/installer 'key-chord)
   (my/installer 'feature-mode)
@@ -93,6 +93,7 @@
   (my/installer 'undo-tree)
   (my/installer 'helm-swoop)
   (my/installer 'ample-theme)
+  (my/installer 'groovy-mode)
 #+END_SRC
 *** Ace jump
 #+BEGIN_SRC emacs-lisp
@@ -150,6 +151,10 @@
 *** Expand region
 #+BEGIN_SRC emacs-lisp
   (use-package expand-region)
+#+END_SRC
+*** Groovy
+#+BEGIN_SRC emacs-lisp
+  (use-package groovy-mode)
 #+END_SRC
 *** Gutter
 #+BEGIN_SRC emacs-lisp
