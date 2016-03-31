@@ -70,7 +70,8 @@
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-    (my/installer 'use-package)
+  (my/installer 'use-package)
+  (my/installer 'smart-comment)
   (my/installer 'ace-jump-mode)
   (my/installer 'key-chord)
   (my/installer 'feature-mode)
@@ -271,6 +272,12 @@
   (use-package yard-mode
     :diminish yard-mode
     :init (add-hook 'ruby-mode-hook 'yard-mode))
+#+END_SRC
+*** Smart Comment
+#+BEGIN_SRC emacs-lisp
+(use-package smart-comment
+  :bind
+  ("M-;" . smart-comment))
 #+END_SRC
 *** Swoop
 #+BEGIN_SRC emacs-lisp
