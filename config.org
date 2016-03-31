@@ -78,6 +78,7 @@
   (my/installer 'hydra)
   (my/installer 'guide-key)
   (my/installer 'helm)
+  (my/installer 'helm-ag)
   (my/installer 'git-gutter)
   (my/installer 'expand-region)
   (my/installer 'exec-path-from-shell)
@@ -183,6 +184,10 @@
     :bind
     ("C-x m" . helm-M-x)
     ("C-c m" . helm-mini))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package helm-ag)
 #+END_SRC
 *** Help
 #+BEGIN_SRC emacs-lisp
