@@ -174,14 +174,14 @@
       (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
       (define-key helm-map (kbd "C-z") 'helm-select-action)
       (setq helm-quick-update                     t
-            helm-split-window-in-side-p           t
             helm-buffers-fuzzy-matching           t
             helm-move-to-line-cycle-in-source     t
             helm-ff-search-library-in-sexp        t
             helm-scroll-amount                    8
             helm-ff-file-name-history-use-recentf t))
     :bind
-    ("C-x m" . helm-M-x))
+    ("C-x m" . helm-M-x)
+    ("C-c m" . helm-mini))
 #+END_SRC
 *** Help
 #+BEGIN_SRC emacs-lisp
