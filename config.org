@@ -92,6 +92,7 @@
   (my/installer 'rspec-mode)
   (my/installer 'yaml-mode)
   (my/installer 'yard-mode)
+  (my/installer 'yasnippet)
   (my/installer 'undo-tree)
   (my/installer 'helm-swoop)
   (my/installer 'ample-theme)
@@ -309,6 +310,14 @@
 *** YAML
 #+BEGIN_SRC emacs-lisp
   (use-package yaml-mode)
+#+END_SRC
+*** YASnippet
+#+BEGIN_SRC emacs-lisp
+  (use-package yasnippet
+    :init 
+    (progn
+      (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+      (yas-global-mode 1)))
 #+END_SRC
 ** Custom
 *** Expand
