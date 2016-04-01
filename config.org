@@ -317,7 +317,8 @@
     :init 
     (progn
       (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
-      (yas-global-mode 1)))
+      (yas-reload-all)
+      (add-hook 'ruby-mode-hook 'yas-minor-mode)))
 #+END_SRC
 ** Custom
 *** Expand
