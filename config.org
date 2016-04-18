@@ -138,6 +138,7 @@
       (key-chord-define-global "uu" 'my/undo)
       (key-chord-define-global "HH" 'my/hl)
       (key-chord-define-global "UU" 'my/unhl)
+      (key-chord-define-global "GG" 'my/gutter)
       (key-chord-define-global "MM" 'magit-status)))
 #+END_SRC
 *** Cucumber
@@ -330,6 +331,13 @@
       (er/expand-region 1)
       (hydra/expand/body)))
 #+END_SRC
+*** Gutter
+#+BEGIN_SRC emacs-lisp
+  (defun my/gutter ()
+    "Open git-gutter hydra"
+    (interactive)
+    (hydra/gutter/body))
+#+END_SRC
 *** Highlights
 #+BEGIN_SRC emacs-lisp
 (defun my/hl ()
@@ -360,6 +368,17 @@
     ("w" kill-region "Kill")
     ("y" yank "Yank")
     ("m" helm-M-x "Command")
+    ("q" keyboard-quit "Quit" :exit t))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (defhydra hydra/gutter ()
+    "Git"
+    ("n" git-gutter:next-hunk "Next")
+    ("p" git-gutter:previous-hunk "Prev")
+    ("s" git-gutter:stage-hunk "Stage")
+    ("r" git-gutter:revert-hunk "Revert")
+    ("u" git-gutter:update-all-windows "Update")
     ("q" keyboard-quit "Quit" :exit t))
 #+END_SRC
 *** KBDs
