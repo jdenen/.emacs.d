@@ -83,6 +83,7 @@
   (my/installer 'expand-region)
   (my/installer 'exec-path-from-shell)
   (my/installer 'json-reformat)
+  (my/installer 'quiet)
   (my/installer 'magit)
   (my/installer 'smartparens)
   (my/installer 'projectile)
@@ -251,6 +252,11 @@
 #+BEGIN_SRC emacs-lisp
   (use-package helm-projectile
     :init (helm-projectile-on))
+#+END_SRC
+*** Quiet
+#+BEGIN_SRC emacs-lisp
+  (use-package quiet
+    :init (setq quiet-timer 30))
 #+END_SRC
 *** RSpec
 #+BEGIN_SRC emacs-lisp
