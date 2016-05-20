@@ -90,6 +90,7 @@
   (my/installer 'projectile)
   (my/installer 'helm-projectile)
   (my/installer 'robe)
+  (my/installer 'groovy-mode)
   (my/installer 'rubocop)
   (my/installer 'rspec-mode)
   (my/installer 'yaml-mode)
