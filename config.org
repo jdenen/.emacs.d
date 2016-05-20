@@ -22,13 +22,13 @@
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (setq initial-major-mode 'ruby-mode)
-  (setq initial-scratch-message "# Ruby scratch \n\n")
+  (setq initial-major-mode 'sh-mode)
+  (setq initial-scratch-message "# /bin/bash scratch \n\n")
 #+END_SRC
 ** Font
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'default-frame-alist '(font . "Andale-Mono-10"))
-  (set-face-attribute 'default t :font "Andale-Mono-10")
+  (add-to-list 'default-frame-alist '(font . "Andale-Mono-12"))
+  (set-face-attribute 'default t :font "Andale-Mono-12")
 #+END_SRC
 ** Scrolling
 #+BEGIN_SRC emacs-lisp
