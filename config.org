@@ -13,6 +13,7 @@
   (tool-bar-mode 0)
   (menu-bar-mode 0)
   (scroll-bar-mode 0)
+  (setq tramp-default-method "ssh")
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
