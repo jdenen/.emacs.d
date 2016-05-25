@@ -1,4 +1,3 @@
-
 * init.org
 ** About Me
 #+BEGIN_SRC emacs-lisp
@@ -300,8 +299,9 @@
 #+BEGIN_SRC emacs-lisp
   (use-package helm-swoop
     :bind
-    ("C-s" . helm-swoop)
-    ("C-M-S" . helm-multi-swoop))
+    ("C-s" . helm-swoop-without-pre-input)
+    ("C-r" . helm-swoop)
+    ("C-M-s" . helm-multi-swoop-org))
 #+END_SRC
 *** Theme
 #+BEGIN_SRC emacs-lisp
