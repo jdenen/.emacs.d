@@ -97,6 +97,7 @@
   (my/installer 'helm-swoop)
   (my/installer 'ample-theme)
   (my/installer 'groovy-mode)
+  (my/installer 'twittering-mode)
 #+END_SRC
 *** Ace jump
 #+BEGIN_SRC emacs-lisp
@@ -311,6 +312,14 @@
   (set-face-attribute 'vertical-border nil :foreground (face-attribute 'fringe :background))
   (add-to-list 'default-frame-alist '(height . 40))
   (add-to-list 'default-frame-alist '(width . 90))
+#+END_SRC
+*** Twitter
+#+BEGIN_SRC emacs-lisp
+    (use-package twittering-mode
+      :init
+      (progn
+        (setq twittering-icon-mode t)
+        (setq twittering-use-master-password t)))
 #+END_SRC
 *** Undo
 #+BEGIN_SRC emacs-lisp
