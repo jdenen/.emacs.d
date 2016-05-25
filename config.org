@@ -238,6 +238,8 @@
            (file "~/.emacs.d/templates/note.orgcaptmpl"))
           ("c" "Code" entry (file+datetree "~/vc-docs/scratch.org")
            (file "~/.emacs.d/templates/code.orgcaptmpl"))
+          ("l" "Load" entry (file+datetree "~/vc-docs/scratch.org")
+           (file "~/.emacs.d/templates/load.orgcaptmpl"))
           ("t" "Task" entry (file+datetree "~/vc-docs/scratch.org")
            (file "~/.emacs.d/templates/task.orgcaptmpl"))))
 #+END_SRC
