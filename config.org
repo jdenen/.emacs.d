@@ -229,7 +229,8 @@
 #+BEGIN_SRC emacs-lisp
   (setq org-agenda-start-with-log-mode t)
   (setq org-agenda-start-with-follow-mode t)
-  (setq org-agenda-use-time-grid nil)
+  (setq org-agenda-use-time-grid t)
+  (setq org-agenda-include-all-todo t)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
