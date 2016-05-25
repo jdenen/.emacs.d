@@ -55,9 +55,7 @@
      (set-register (car r) (cons 'file (cdr r))))
    '((?i . "~/.emacs.d/config.org")
      (?b . "~/.bashrc")
-     (?c . "~/vc-docs/cscc.org")
-     (?g . "~/vc-docs/grad.org")
-     (?d . "~/vc-docs/defects.org")
+     (?s . "~/vc-docs/scratch.org")
      (?j . "~/vc-docs/johnson.org")))
 #+END_SRC
 ** Packages
@@ -230,8 +228,12 @@
 
 #+BEGIN_SRC emacs-lisp
   (setq org-capture-templates
-        '(("d" "Defect" entry (file+olp "~/vc-docs/defects.org" "New")
-           "* TODO %^{summary} %t\n %?")))
+        '(("n" "Note" entry (file+datetree "~/vc-docs/scratch.org")
+           (file "~/.emacs.d/templates/note.orgcaptmpl"))
+          ("c" "Code" entry (file+datetree "~/vc-docs/scratch.org")
+           (file "~/.emacs.d/templates/code.orgcaptmpl"))
+          ("t" "Task" entry (file+datetree "~/vc-docs/scratch.org")
+           (file "~/.emacs.d/templates/task.orgcaptmpl"))))
 #+END_SRC
 *** Parens
 #+BEGIN_SRC emacs-lisp
