@@ -132,7 +132,7 @@
       (key-chord-define-global "jb" 'ace-jump-mode-pop-mark)
       (key-chord-define-global "jr" 'jump-to-register)
       (key-chord-define-global "jt" 'my/bash)
-      (key-chord-define-global "jp" 'my/pry)
+      (key-chord-define-global "jg" 'org-agenda-list)
       (key-chord-define-global "jw" 'ace-jump-word-mode)
       (key-chord-define-global "BB" 'my/binding.pry)
       (key-chord-define-global ";;" 'my/expand-region)
@@ -224,6 +224,12 @@
   (setq org-src-fontify-natively t)
   (setq org-src-tab-acts-natively t)
   (setq org-log-done 'time)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-agenda-start-with-log-mode t)
+  (setq org-agenda-start-with-follow-mode t)
+  (setq org-agenda-use-time-grid nil)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
