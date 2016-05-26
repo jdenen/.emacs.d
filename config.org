@@ -90,6 +90,7 @@
   (my/installer 'use-package)
   (my/installer 'smart-comment)
   (my/installer 'ace-jump-mode)
+  (my/installer 'ace-window)
   (my/installer 'key-chord)
   (my/installer 'feature-mode)
   (my/installer 'hydra)
@@ -121,6 +122,22 @@
 *** Ace jump
 #+BEGIN_SRC emacs-lisp
   (use-package ace-jump-mode)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  ;; Dispatch actions:
+  ;;   x Delete window
+  ;;   m Swap window
+  ;;   n Previous window
+  ;;   v Split vertically
+  ;;   b Split horizontally
+  ;;   o Delete others
+  ;;   i Maximize window
+  (use-package ace-window
+    :init
+    (setq aw-dispatch-always t)
+    :bind
+    ("C-x o" . ace-window))
 #+END_SRC
 *** Auto complete
 #+BEGIN_SRC emacs-lisp
