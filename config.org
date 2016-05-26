@@ -12,7 +12,6 @@
   (tool-bar-mode 0)
   (menu-bar-mode 0)
   (scroll-bar-mode 0)
-  (setq tramp-default-method "ssh")
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -46,6 +45,26 @@
     (progn
       (bury-buffer)
       (kill-buffer term-name))))
+#+END_SRC
+** Tramp
+#+BEGIN_SRC emacs-lisp
+  (setq tramp-default-method "ssh")
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/remote-shell (user host)
+    "SSH into remote HOST shell as USER"
+    (let ((default-directory (concat "/ssh:" user "@" host ":/")))
+      (shell)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (defun cas/ssh (host)
+    "Prompt for host and SSH into it"
+    (interactive
+     (list
+      (read-string "Hostname: ")))
+    (my/remote-shell "jqd29" host))
 #+END_SRC
 ** Registers
 #+BEGIN_SRC emacs-lisp
