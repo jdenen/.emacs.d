@@ -1,4 +1,5 @@
 * TODO [%] %^{Release} %^{Environment} %^g
+DEADLINE: %^{Due}t
 - [ ] Binary%?
 - [ ] Document
 - [ ] Finding
