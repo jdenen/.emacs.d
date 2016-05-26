@@ -442,6 +442,19 @@
   (bind-key "s-b" 'backward-sexp)
   (bind-key "s-f" 'forward-sexp)
 #+END_SRC
+*** Pin
+#+BEGIN_SRC emacs-lisp
+  (defun my/pin-window ()
+    "Toggle whether current window is dedicated or not."
+    (interactive)
+    (message
+     (if (let (window (get-buffer-window (current-buffer)))
+           (set-window-dedicated-p window
+                                   (not (window-dedicated-p window))))
+         "Pinning '%s' window"
+       "Unpinning '%s' window")
+     (current-buffer)))
+#+END_SRC
 *** Ruby
 #+BEGIN_SRC emacs-lisp
   (defun my/binding.pry ()
