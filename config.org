@@ -462,3 +462,7 @@
       (undo-tree-undo)
       (hydra/undo/body)))
 #+END_SRC
+** Server
+#+BEGIN_SRC emacs-lisp
+(server-mode 1)
+#+END_SRC
