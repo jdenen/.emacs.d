@@ -107,6 +107,7 @@
   (my/installer 'projectile)
   (my/installer 'helm-projectile)
   (my/installer 'robe)
+  (my/installer 'gradle-mode)
   (my/installer 'groovy-mode)
   (my/installer 'rubocop)
   (my/installer 'rspec-mode)
@@ -196,6 +197,12 @@
 *** Groovy
 #+BEGIN_SRC emacs-lisp
   (use-package groovy-mode)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package gradle-mode
+    :init
+    (add-hook 'groovy-mode-hook 'gradle-mode))
 #+END_SRC
 *** Gutter
 #+BEGIN_SRC emacs-lisp
