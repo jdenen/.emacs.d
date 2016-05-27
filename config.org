@@ -35,16 +35,16 @@
 #+END_SRC
 ** Terminal
 #+BEGIN_SRC emacs-lisp
-(require 'term)
+  (require 'term)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(defadvice term-handle-exit
-    (after term-kill-buffer-on-exit activate)
-  (let ((term-name (buffer-name)))
-    (progn
-      (bury-buffer)
-      (kill-buffer term-name))))
+  (defadvice term-handle-exit
+      (after term-kill-buffer-on-exit activate)
+    (let ((term-name (buffer-name)))
+      (progn
+        (bury-buffer)
+        (kill-buffer term-name))))
 #+END_SRC
 ** Tramp
 #+BEGIN_SRC emacs-lisp
@@ -181,13 +181,13 @@
 *** Cucumber
 #+BEGIN_SRC emacs-lisp
   (use-package feature-mode
-  :init
-  (setq feature-cucumber-command "bundle exec cucumber -r features"))
+    :init
+    (setq feature-cucumber-command "bundle exec cucumber -r features"))
 #+END_SRC
 *** Exec path
 #+BEGIN_SRC emacs-lisp
   (when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
+    (exec-path-from-shell-initialize))
 #+END_SRC
 *** Expand region
 #+BEGIN_SRC emacs-lisp
@@ -226,7 +226,7 @@
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(use-package helm-ag)
+  (use-package helm-ag)
 #+END_SRC
 *** Help
 #+BEGIN_SRC emacs-lisp
@@ -239,10 +239,6 @@
       (setq guide-key/idle-delay 1.5)
       (setq guide-key/recursive-key-sequence-flag t)))
 #+END_SRC
-*** Hydra
-#+BEGIN_SRC emacs-lisp
-  
-#+END_SRC
 *** JSON
 #+BEGIN_SRC emacs-lisp
   (use-package json-reformat
@@ -250,9 +246,9 @@
 #+END_SRC
 *** Magit
 #+BEGIN_SRC emacs-lisp
-(use-package magit
-  :init
-  (setq magit-push-always-verify nil))
+  (use-package magit
+    :init
+    (setq magit-push-always-verify nil))
 #+END_SRC
 *** Org
 #+BEGIN_SRC emacs-lisp
@@ -283,13 +279,13 @@
 *** Parens
 #+BEGIN_SRC emacs-lisp
   (use-package smartparens
-  :diminish smartparens-mode
-  :init
-  (progn
-    (require 'smartparens-config)
-    (require 'smartparens-ruby)
-    (smartparens-global-mode 1)
-    (show-smartparens-global-mode 1)))
+    :diminish smartparens-mode
+    :init
+    (progn
+      (require 'smartparens-config)
+      (require 'smartparens-ruby)
+      (smartparens-global-mode 1)
+      (show-smartparens-global-mode 1)))
 #+END_SRC
 
 *** Projectile
@@ -310,14 +306,14 @@
 *** RSpec
 #+BEGIN_SRC emacs-lisp
   (use-package rspec-mode
-  :diminish rspec-mode
-  :init
-  (progn
-    (setq rspec-use-rake-when-possible nil)
-    (add-to-list 'rspec-primary-source-dirs "factories")
-    (setq rspec-command-options "--format progress"))
-  :bind
-  ("C-c , T" . rspec-find-spec-or-target-other-window))
+    :diminish rspec-mode
+    :init
+    (progn
+      (setq rspec-use-rake-when-possible nil)
+      (add-to-list 'rspec-primary-source-dirs "factories")
+      (setq rspec-command-options "--format progress"))
+    :bind
+    ("C-c , T" . rspec-find-spec-or-target-other-window))
 #+END_SRC
 *** Rubocop
 #+BEGIN_SRC emacs-lisp
@@ -337,9 +333,9 @@
 #+END_SRC
 *** Smart Comment
 #+BEGIN_SRC emacs-lisp
-(use-package smart-comment
-  :bind
-  ("M-;" . smart-comment))
+  (use-package smart-comment
+    :bind
+    ("M-;" . smart-comment))
 #+END_SRC
 *** Swoop
 #+BEGIN_SRC emacs-lisp
@@ -360,11 +356,11 @@
 #+END_SRC
 *** Twitter
 #+BEGIN_SRC emacs-lisp
-    (use-package twittering-mode
-      :init
-      (progn
-        (setq twittering-icon-mode t)
-        (setq twittering-use-master-password t)))
+  (use-package twittering-mode
+    :init
+    (progn
+      (setq twittering-icon-mode t)
+      (setq twittering-use-master-password t)))
 #+END_SRC
 *** Undo
 #+BEGIN_SRC emacs-lisp
@@ -404,16 +400,16 @@
 #+END_SRC
 *** Highlights
 #+BEGIN_SRC emacs-lisp
-(defun my/hl ()
-  "Highlight word at point."
-  (interactive)
-  (setq my/hl-phrase (thing-at-point 'word))
-  (highlight-phrase my/hl-phrase))
+  (defun my/hl ()
+    "Highlight word at point."
+    (interactive)
+    (setq my/hl-phrase (thing-at-point 'word))
+    (highlight-phrase my/hl-phrase))
 
-(defun my/unhl ()
-  "Unhighlight previously highlighted word."
-  (interactive)
-  (unhighlight-regexp my/hl-phrase))
+  (defun my/unhl ()
+    "Unhighlight previously highlighted word."
+    (interactive)
+    (unhighlight-regexp my/hl-phrase))
 #+END_SRC
 *** Hydras
 #+BEGIN_SRC emacs-lisp
@@ -460,9 +456,6 @@
   (bind-key "s-f" 'forward-sexp)
 #+END_SRC
 *** Pinup
-#+BEGIN_SRC emacs-lisp
-#+END_SRC
-
 #+BEGIN_SRC emacs-lisp
   (require 'cl)
 
@@ -541,5 +534,5 @@
 #+END_SRC
 ** Server
 #+BEGIN_SRC emacs-lisp
-(server-mode 1)
+  (server-mode 1)
 #+END_SRC
