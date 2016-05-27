@@ -246,7 +246,7 @@
 *** JSON
 #+BEGIN_SRC emacs-lisp
   (use-package json-reformat
-  :init (setq json-reformat:indent-width 2))
+    :init (setq json-reformat:indent-width 2))
 #+END_SRC
 *** Magit
 #+BEGIN_SRC emacs-lisp
@@ -459,18 +459,46 @@
   (bind-key "s-b" 'backward-sexp)
   (bind-key "s-f" 'forward-sexp)
 #+END_SRC
-*** Pin
+*** Pinup
 #+BEGIN_SRC emacs-lisp
-  (defun my/pin-window ()
-    "Toggle whether current window is dedicated or not."
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (require 'cl)
+
+  (defun pinup-window ()
+    "Toggle whether the current window is pinned or not.
+
+  Pinned windows are not killed by `pinup-kill-other-windows' and they are dedicated.
+  See `set-window-dedicated-p' about dedicated windows."
     (interactive)
     (message
-     (if (let (window (get-buffer-window (current-buffer)))
+     (if (let (window (pinup--get-current-buffer-window))
            (set-window-dedicated-p window
                                    (not (window-dedicated-p window))))
          "Pinning '%s' window"
        "Unpinning '%s' window")
      (current-buffer)))
+
+  (defun pinup-kill-other-windows ()
+    "Kill non `current-buffer' windows that have not been pinned with `pinup-window'."
+    (interactive)
+    (loop for window in (pinup--list-visible-windows)
+          do (unless (window-dedicated-p window)
+               (unless (eq (pinup--get-current-buffer-window) window)
+                 (delete-window window)))))
+
+  (defun pinup--get-current-buffer-window ()
+    "Return window for the `current-buffer'."
+    (get-buffer-window (current-buffer)))
+
+  (defun pinup--list-visible-windows ()
+    "Return list of windows."
+    (apply #'append (remove nil
+                            (mapcar
+                             '(lambda (buf)
+                                (get-buffer-window-list buf))
+                             (buffer-list)))))
 #+END_SRC
 *** Ruby
 #+BEGIN_SRC emacs-lisp
