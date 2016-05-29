@@ -1,10 +1,20 @@
-* init.org
-** About Me
+* Setup
+
+Configuring Emacs packages with =use-package= makes it so much simpler. Let's start with 
+that.
+
 #+BEGIN_SRC emacs-lisp
-  (setq user-full-name "Johnson Denen"
-        user-mail-address "johnson.denen@gmail.com")
+  (unless (package-installed-p 'use-package)
+    (progn
+      (package-refresh-contents)
+      (package-install 'use-package)))
+  (require 'use-package)
 #+END_SRC
-** Startup
+
+* Look and feel
+
+Next, we'll setup Emacs' look and feel. Start by removing unnecessary visual elements.
+
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-screen t)
   (setq inhibit-startup-message t)
@@ -14,31 +24,30 @@
   (scroll-bar-mode 0)
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-  (fset 'yes-or-no-p 'y-or-n-p)
-  (setq backup-directory-alist '(("." . "~/tmp")))
-#+END_SRC
+Configure =ample= theme, fonts, and scrolling.
 
 #+BEGIN_SRC emacs-lisp
-  (setq initial-major-mode 'sh-mode)
-  (setq initial-scratch-message "# /bin/bash scratch \n\n")
+  (use-package ample-theme
+    :ensure t
+    :init (load-theme 'ample t)
+    :config (progn
+              (set-face-attribute 'default nil :height 96)
+              (set-face-attribute 'fringe nil :background "#2d2d2d")
+              (set-face-attribute 'vertical-border nil :foreground (face-attribute 'fringe :background))
+              (add-to-list 'default-frame-alist '(height . 40))
+              (add-to-list 'default-frame-alist '(width . 90))
+              (add-to-list 'default-frame-alist '(font . "Andale-Mono-12"))
+              (set-face-attribute 'default t :font "Andale-Mono-12")
+              (setq scroll-step 1)
+              (setq scroll-conservatively 10000)))
 #+END_SRC
-** Font
-#+BEGIN_SRC emacs-lisp
-  (add-to-list 'default-frame-alist '(font . "Andale-Mono-12"))
-  (set-face-attribute 'default t :font "Andale-Mono-12")
-#+END_SRC
-** Scrolling
-#+BEGIN_SRC emacs-lisp
-  (setq scroll-step 1)
-  (setq scroll-conservatively 10000)
-#+END_SRC
-** Terminal
+
+*** Terminal
+
+My =ansi-term= buffers should die on terminal exit.
+
 #+BEGIN_SRC emacs-lisp
   (require 'term)
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
   (defadvice term-handle-exit
       (after term-kill-buffer-on-exit activate)
     (let ((term-name (buffer-name)))
@@ -46,231 +55,52 @@
         (bury-buffer)
         (kill-buffer term-name))))
 #+END_SRC
-** Tramp
-#+BEGIN_SRC emacs-lisp
-  (setq tramp-default-method "ssh")
-#+END_SRC
+
+*** Scratch mode
+
+We'll start Emacs into a =sh-mode= scratch buffer, setting the initial message 
+to reflect this change.
 
 #+BEGIN_SRC emacs-lisp
-  (defun my/remote-shell (user host)
-    "SSH into remote HOST shell as USER"
-    (let ((default-directory (concat "/ssh:" user "@" host ":/")))
-      (shell)))
+  (setq initial-major-mode 'sh-mode)
+  (setq initial-scratch-message "# /bin/bash scratch \n\n")
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-  (defun cas/ssh (host)
-    "Prompt for host and SSH into it"
-    (interactive
-     (list
-      (read-string "Hostname: ")))
-    (my/remote-shell "jqd29" host))
-#+END_SRC
-** Registers
-#+BEGIN_SRC emacs-lisp
-  (mapcar
-   (lambda (r)
-     (set-register (car r) (cons 'file (cdr r))))
-   '((?i . "~/.emacs.d/config.org")
-     (?b . "~/.bashrc")
-     (?s . "~/vc-docs/scratch.org")
-     (?j . "~/vc-docs/johnson.org")))
-#+END_SRC
-** Packages
-#+BEGIN_SRC emacs-lisp
-  (defun my/installer (package)
-    "Install PACKAGE unless it's already installed."
-    (unless (package-installed-p package)
-      (progn
-        (package-install package)))
-    (require package))
-#+END_SRC
+*** Me
+
+Some Emacs packages might want to know who I am.
 
 #+BEGIN_SRC emacs-lisp
-  (my/installer 'use-package)
-  (my/installer 'smart-comment)
-  (my/installer 'ace-jump-mode)
-  (my/installer 'ace-window)
-  (my/installer 'key-chord)
-  (my/installer 'feature-mode)
-  (my/installer 'hydra)
-  (my/installer 'guide-key)
-  (my/installer 'helm)
-  (my/installer 'helm-ag)
-  (my/installer 'git-gutter)
-  (my/installer 'expand-region)
-  (my/installer 'exec-path-from-shell)
-  (my/installer 'json-reformat)
-  (my/installer 'quiet)
-  (my/installer 'magit)
-  (my/installer 'smartparens)
-  (my/installer 'projectile)
-  (my/installer 'helm-projectile)
-  (my/installer 'robe)
-  (my/installer 'gradle-mode)
-  (my/installer 'groovy-mode)
-  (my/installer 'rubocop)
-  (my/installer 'rspec-mode)
-  (my/installer 'yaml-mode)
-  (my/installer 'yard-mode)
-  (my/installer 'yasnippet)
-  (my/installer 'undo-tree)
-  (my/installer 'helm-swoop)
-  (my/installer 'ample-theme)
-  (my/installer 'groovy-mode)
-  (my/installer 'twittering-mode)
-#+END_SRC
-*** Ace jump
-#+BEGIN_SRC emacs-lisp
-  (use-package ace-jump-mode)
+(setq user-full-name "Johnson Denen"
+        user-mail-address "johnson.denen@gmail.com")
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-  ;; Dispatch actions:
-  ;;   x Delete window
-  ;;   m Swap window
-  ;;   n Previous window
-  ;;   v Split vertically
-  ;;   b Split horizontally
-  ;;   o Delete others
-  ;;   i Maximize window
-  (use-package ace-window
-    :init
-    (setq aw-dispatch-always t)
-    :bind
-    ("C-x o" . ace-window))
-#+END_SRC
-*** Auto complete
-#+BEGIN_SRC emacs-lisp
-  (my/installer 'auto-complete)
-  (use-package auto-complete
-    :init
-    (progn
-      (ac-config-default)
-      (add-hook 'robe-mode-hook 'ac-robe-setup)))
-#+END_SRC
-*** Babel
-#+BEGIN_SRC emacs-lisp
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((ruby . t)
-     (sh . t)
-     (emacs-lisp . t)))
-#+END_SRC
-*** Chords
-#+BEGIN_SRC emacs-lisp
-  (use-package key-chord
-    :init
-    (progn
-      (key-chord-mode 1)
-      (key-chord-define-global "yy" 'helm-show-kill-ring)
-      (key-chord-define-global "jj" 'ace-jump-char-mode)
-      (key-chord-define-global "jl" 'ace-jump-line-mode)
-      (key-chord-define-global "jb" 'ace-jump-mode-pop-mark)
-      (key-chord-define-global "jr" 'jump-to-register)
-      (key-chord-define-global "jt" 'my/bash)
-      (key-chord-define-global "jg" 'org-agenda-list)
-      (key-chord-define-global "jw" 'ace-jump-word-mode)
-      (key-chord-define-global "BB" 'my/binding.pry)
-      (key-chord-define-global ";;" 'my/expand-region)
-      (key-chord-define-global "uu" 'my/undo)
-      (key-chord-define-global "HH" 'my/hl)
-      (key-chord-define-global "UU" 'my/unhl)
-      (key-chord-define-global "GG" 'my/gutter)
-      (key-chord-define-global "MM" 'magit-status)))
-#+END_SRC
-*** Cucumber
-#+BEGIN_SRC emacs-lisp
-  (use-package feature-mode
-    :init
-    (setq feature-cucumber-command "bundle exec cucumber -r features"))
-#+END_SRC
-*** Exec path
-#+BEGIN_SRC emacs-lisp
-  (when (memq window-system '(mac ns))
-    (exec-path-from-shell-initialize))
-#+END_SRC
-*** Expand region
-#+BEGIN_SRC emacs-lisp
-  (use-package expand-region)
-#+END_SRC
-*** Groovy
-#+BEGIN_SRC emacs-lisp
-  (use-package groovy-mode)
-#+END_SRC
+*** OSX
+
+This is a fix for =ansi-term= issues on OSX. Without this, term modes don't have 
+access to the =PATH= environment variable.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package gradle-mode
-    :init
-    (add-hook 'groovy-mode-hook 'gradle-mode))
-#+END_SRC
-*** Gutter
-#+BEGIN_SRC emacs-lisp
-  (fringe-mode '(4 . 4))
-  (use-package git-gutter
-    :diminish git-gutter-mode
-    :init (global-git-gutter-mode +1))
-#+END_SRC
-*** Helm
-#+BEGIN_SRC emacs-lisp
-  (use-package helm
-    :diminish helm-mode
-    :init
-    (progn
-      (helm-mode 1)
-      (require 'helm-config)
-      (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-      (define-key helm-map (kbd "C-z") 'helm-select-action)
-      (setq helm-quick-update                     t
-            helm-buffers-fuzzy-matching           t
-            helm-move-to-line-cycle-in-source     t
-            helm-ff-search-library-in-sexp        t
-            helm-scroll-amount                    8
-            helm-ff-file-name-history-use-recentf t))
-    :bind
-    ("C-x m" . helm-M-x)
-    ("C-c m" . helm-mini))
+  (use-package exec-path-from-shell
+    :ensure t
+    :init 
+    (when (memq window-system '(mac ns))
+      (exec-path-from-shell-initialize)))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-  (use-package helm-ag)
-#+END_SRC
-*** Help
-#+BEGIN_SRC emacs-lisp
-  (use-package guide-key
-    :diminish guide-key-mode
-    :init
-    (progn
-      (guide-key-mode 1)
-      (setq guide-key/guide-key-sequence '("C-x" "C-c"))
-      (setq guide-key/idle-delay 1.5)
-      (setq guide-key/recursive-key-sequence-flag t)))
-#+END_SRC
-*** JSON
-#+BEGIN_SRC emacs-lisp
-  (use-package json-reformat
-    :init (setq json-reformat:indent-width 2))
-#+END_SRC
-*** Magit
-#+BEGIN_SRC emacs-lisp
-  (use-package magit
-    :init
-    (setq magit-push-always-verify nil))
-#+END_SRC
-*** Org
+* Org
+
+I use =org-mode= for anything and everything I can, including this config file.
+
 #+BEGIN_SRC emacs-lisp
   (setq org-startup-indented t)
   (setq org-src-fontify-natively t)
-  (setq org-src-tab-acts-natively t)
-  (setq org-log-done 'time)
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-  (setq org-agenda-start-with-log-mode t)
-  (setq org-agenda-start-with-follow-mode t)
-  (setq org-agenda-use-time-grid t)
-  (setq org-agenda-include-all-todo t)
-#+END_SRC
+*** Capture
+
+Notes, todos, code snippets, etc. are gathered with =org-capture=. I use one =org= file, 
+a =datetree= structure, and a few templates to annotate my life.
 
 #+BEGIN_SRC emacs-lisp
   (setq org-capture-templates
@@ -283,149 +113,332 @@
           ("t" "Task" entry (file+datetree "~/vc-docs/scratch.org")
            (file "~/.emacs.d/templates/task.orgcaptmpl"))))
 #+END_SRC
-*** Parens
-#+BEGIN_SRC emacs-lisp
-  (use-package smartparens
-    :diminish smartparens-mode
-    :init
-    (progn
-      (require 'smartparens-config)
-      (require 'smartparens-ruby)
-      (smartparens-global-mode 1)
-      (show-smartparens-global-mode 1)))
-#+END_SRC
 
-*** Projectile
-#+BEGIN_SRC emacs-lisp
-  (use-package projectile
-    :init (projectile-global-mode t))
-#+END_SRC
+***** Babel
+
+I want captured code to have proper syntax highlighting, indentation, and 
+commenting.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package helm-projectile
-    :init (helm-projectile-on))
-#+END_SRC
-*** Quiet
-#+BEGIN_SRC emacs-lisp
-  (use-package quiet
-    :init (setq quiet-timer 30))
-#+END_SRC
-*** RSpec
-#+BEGIN_SRC emacs-lisp
-  (use-package rspec-mode
-    :diminish rspec-mode
-    :init
-    (progn
-      (setq rspec-use-rake-when-possible nil)
-      (add-to-list 'rspec-primary-source-dirs "factories")
-      (setq rspec-command-options "--format progress"))
-    :bind
-    ("C-c , T" . rspec-find-spec-or-target-other-window))
-#+END_SRC
-*** Rubocop
-#+BEGIN_SRC emacs-lisp
-  (use-package rubocop)
-#+END_SRC
-*** Ruby
-#+BEGIN_SRC emacs-lisp
-  (use-package robe
-    :init 
-    (add-hook 'ruby-mode-hook 'robe-mode))
+  (setq org-src-tab-acts-natively t)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((ruby . t)
+     (sh . t)
+     (emacs-lisp . t)))
 #+END_SRC
 
+***** Bindings
+
 #+BEGIN_SRC emacs-lisp
-  (use-package yard-mode
-    :diminish yard-mode
-    :init (add-hook 'ruby-mode-hook 'yard-mode))
+  (bind-key "C-c c" 'org-capture)
 #+END_SRC
-*** Smart Comment
+
+*** Agenda
+
+My notes and tasks are no good to me without an easy way to process them. I use 
+=org-agenda= to do that.
+
 #+BEGIN_SRC emacs-lisp
-  (use-package smart-comment
-    :bind
-    ("M-;" . smart-comment))
+  (setq org-agenda-start-with-log-mode t)
+  (setq org-agenda-use-time-grid t)
+  (setq org-agenda-include-all-todo t)
 #+END_SRC
-*** Swoop
+
+Completed tasks should be logged with their completion time.
+
 #+BEGIN_SRC emacs-lisp
-  (use-package helm-swoop
-    :bind
-    ("C-s" . helm-swoop-without-pre-input)
-    ("C-r" . helm-swoop)
-    ("C-M-s" . helm-multi-swoop-org))
+(setq org-log-done 'time)
 #+END_SRC
-*** Theme
+
+***** Bindings
+
 #+BEGIN_SRC emacs-lisp
-  (load-theme 'ample t)
-  (set-face-attribute 'default nil :height 96)
-  (set-face-attribute 'fringe nil :background "#2d2d2d")
-  (set-face-attribute 'vertical-border nil :foreground (face-attribute 'fringe :background))
-  (add-to-list 'default-frame-alist '(height . 40))
-  (add-to-list 'default-frame-alist '(width . 90))
+  (bind-key "C-c a" 'org-agenda-list)
 #+END_SRC
-*** Twitter
+
+* Tramp
+
+Ops work requires a lot of SSH. I use =tramp= to open remote files.
+
 #+BEGIN_SRC emacs-lisp
-  (use-package twittering-mode
-    :init
-    (progn
-      (setq twittering-icon-mode t)
-      (setq twittering-use-master-password t)))
+  (setq tramp-default-method "ssh")
 #+END_SRC
-*** Undo
+
+*** Shell
+
+Instead of opening =ansi-term= and issuing an =ssh= command, I use this function 
+to open =shell= to a remote host.
+
 #+BEGIN_SRC emacs-lisp
-  (use-package undo-tree
-    :diminish undo-tree-mode
-    :init (global-undo-tree-mode 1))
+  (defun my/remote-shell (user host)
+    "SSH into remote HOST shell as USER"
+    (let ((default-directory (concat "/ssh:" user "@" host ":/")))
+      (shell)))
 #+END_SRC
-*** YAML
+
+* Hydra
+
+I group logical actions together with =hydra=. This reduces keystrokes to complete my 
+common workflows.
+
 #+BEGIN_SRC emacs-lisp
-  (use-package yaml-mode)
+  (use-package hydra
+    :ensure t)
 #+END_SRC
-*** YASnippet
+
+* Keychords
+
+I mostly re-use the same functions. Mapping these to keystrokes with =key-chord= makes my 
+life easier.
+
 #+BEGIN_SRC emacs-lisp
-  (use-package yasnippet
-    :init 
-    (progn
-      (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
-      (yas-reload-all)
-      (add-hook 'ruby-mode-hook 'yas-minor-mode)))
+  (use-package key-chord
+    :ensure t
+    :init (key-chord-mode 1))
 #+END_SRC
-** Custom
-*** Expand
+
+* Registers
+
+I'm in the same few files much more than others. Mostly, I'm tweaking bash and Emacs 
+configuration or jumping to my =org-agenda= file. To access them quickly, I add them 
+to a register.
+
 #+BEGIN_SRC emacs-lisp
-  (defun my/expand-region ()
-    "Expand region into hydra."
-    (interactive)
-    (progn
-      (er/expand-region 1)
-      (hydra/expand/body)))
+  (mapcar
+   (lambda (r)
+     (set-register (car r) (cons 'file (cdr r))))
+   '((?i . "~/.emacs.d/config.org")
+     (?b . "~/.bashrc")
+     (?s . "~/vc-docs/scratch.org")
+     (?j . "~/vc-docs/johnson.org")))
 #+END_SRC
-*** Gutter
+
+*** Bindings
+
+#+BEGIN_SRC emacs-lisp
+  (key-chord-define-global "jr" 'jump-to-register)
+#+END_SRC
+
+* Magit
+
+If my life is annotated with =org-capture=, formatted in =org-mode=, and managed with 
+=org-agenda=, then its history is stored in Git. And no piece of software does Git better 
+than =magit=.
+
+#+BEGIN_SRC emacs-lisp
+    (use-package magit
+      :ensure t
+      :init (setq magit-push-always-verify nil)
+      :config (key-chord-define-global "MM" 'magit-status))
+#+END_SRC
+
+*** Gutters
+
+I like to see my changes in the buffer's gutter. I use =git-gutter= to show, navigate, and 
+manage those changes.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package git-gutter
+    :ensure t
+    :diminish git-gutter-mode
+    :init (progn
+            (global-git-gutter-mode +1)
+            (fringe-mode '(4 . 4)))
+    :config (key-chord-define-global "GG" 'my/gutter))
+#+END_SRC
+
+***** Hydra
 #+BEGIN_SRC emacs-lisp
   (defun my/gutter ()
     "Open git-gutter hydra"
     (interactive)
     (hydra/gutter/body))
-#+END_SRC
-*** Highlights
-#+BEGIN_SRC emacs-lisp
-  (defun my/hl ()
-    "Highlight word at point."
-    (interactive)
-    (setq my/hl-phrase (thing-at-point 'word))
-    (highlight-phrase my/hl-phrase))
 
-  (defun my/unhl ()
-    "Unhighlight previously highlighted word."
-    (interactive)
-    (unhighlight-regexp my/hl-phrase))
-#+END_SRC
-*** Hydras
-#+BEGIN_SRC emacs-lisp
-  (defhydra hydra/undo ()
-    "Undo"
-    ("u" undo-tree-undo "Undo")
-    ("r" undo-tree-redo "Redo")
+  (defhydra hydra/gutter ()
+    "Git"
+    ("n" git-gutter:next-hunk "Next")
+    ("p" git-gutter:previous-hunk "Prev")
+    ("s" git-gutter:stage-hunk "Stage")
+    ("r" git-gutter:revert-hunk "Revert")
+    ("u" git-gutter:update-all-windows "Update")
     ("q" keyboard-quit "Quit" :exit t))
 #+END_SRC
+
+* Projectile
+
+Git projects are a snap to navigate and manage with =projectile=. Its default keybindings 
+work for me too.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :ensure t
+    :init (projectile-global-mode t))
+#+END_SRC
+
+* Helm
+
+Navigating buffers and windows with =helm= is slick. I use =helm-M-x= to navigate functions 
+and =helm-mini= for buffers and files.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package helm
+    :ensure t
+    :diminish helm-mode
+    :init (progn
+            (helm-mode 1)
+            (require 'helm-config))
+    :config (progn
+              (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+              (define-key helm-map (kbd "C-z") 'helm-select-action)
+              (setq helm-quick-update                     t
+                    helm-buffers-fuzzy-matching           t
+                    helm-move-to-line-cycle-in-source     t
+                    helm-ff-search-library-in-sexp        t
+                    helm-scroll-amount                    8
+                    helm-ff-file-name-history-use-recentf t)
+              (key-chord-define-global "yy" 'helm-show-kill-ring))
+    :bind
+    ("C-x m" . helm-M-x)
+    ("C-c m" . helm-mini))
+#+END_SRC
+
+*** Swoop
+
+Searches with =helm-swoop= make multiline editing easier. I default to 
+=helm-swoop-without-pre-input= becuase I often swoop after opening a file.
+
+The =helm-multi-swoop-org= function works perfectly when I want to find a captured 
+note or task from a non-org buffer.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package helm-swoop
+    :ensure t
+    :bind
+    ("C-s" . helm-swoop-without-pre-input)
+    ("C-r" . helm-swoop)
+    ("C-M-s" . helm-multi-swoop-org))
+#+END_SRC
+
+*** Ag
+
+I use =helm-projectile-ag= for searching files in a Git project and =helm-ag= for 
+searches outside of version control.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package helm-ag
+    :ensure t)
+#+END_SRC
+
+*** Projectile
+
+I love =projectile= and I love =helm=, so using them together makes sense.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package helm-projectile
+    :ensure t
+    :init (helm-projectile-on))
+#+END_SRC
+
+* Guides
+
+Emacs has a ton of keybindings and remembering them all is a chore. I use =guide-key= 
+to remind me. A helpful window pops open after 1.5 seconds of idleness mid-keystroke. 
+
+I only use it for =C-c= and =C-x= keybindings.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package guide-key
+    :ensure t
+    :diminish guide-key-mode
+    :init (guide-key-mode 1)
+    :config (progn
+              (guide-key-mode 1)
+              (setq guide-key/guide-key-sequence '("C-x" "C-c"))
+              (setq guide-key/idle-delay 1.5)
+              (setq guide-key/recursive-key-sequence-flag t)))
+#+END_SRC
+
+* Buffer management
+
+I use =ace-jump-mode= mostly for jumping to the beginning of words. But jumping to a char is 
+necessary when a word is interpreted unintuitively. And popping back to where I came from 
+makes buffer navigation easy, so I bind all three of these functions to keychords.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ace-jump-mode
+    :ensure t
+    :config (progn
+              (key-chord-define-global "jj" 'ace-jump-char-mode)
+              (key-chord-define-global "jw" 'ace-jump-word-mode)
+              (key-chord-define-global "jb" 'ace-jump-mode-pop-mark)))
+#+END_SRC
+
+***** Bindings
+
+#+BEGIN_SRC emacs-lisp
+  (bind-key "C-x k" 'bury-buffer)
+  (bind-key "C-x C-k" 'kill-this-buffer)
+#+END_SRC
+
+* Window management
+
+Despite its similiar name, =ace-window= is more a window management package than the navigation 
+package that =ace-jump-mode= is. As long as =aw-dispatch-always= is set to =t=, I can kill, 
+maximize, swap, and switch to windows with =C-x o=.
+
+#+BEGIN_SRC emacs-lisp
+  ;; Dispatch actions:
+  ;;   x Delete window
+  ;;   m Swap window
+  ;;   n Previous window
+  ;;   v Split vertically
+  ;;   b Split horizontally
+  ;;   o Delete others
+  ;;   i Maximize window
+  (use-package ace-window
+    :ensure t
+    :init (setq aw-dispatch-always t)
+    :bind ("C-x o" . ace-window))
+#+END_SRC
+
+***** Bindings
+
+#+BEGIN_SRC emacs-lisp
+  (bind-key "C-+" 'text-scale-increase)
+  (bind-key "C--" 'text-scale-decrease)
+  (bind-key "C-<" 'shrink-window-horizontally)
+  (bind-key "C->" 'enlarge-window-horizontally)
+  (bind-key "C-," 'shrink-window)
+  (bind-key "C-." 'enlarge-window)
+#+END_SRC
+
+* Region management
+
+I capture regions with =expand-region=. But I never expand to a region without purpose, so 
+I attach my expansion to a =hydra=. This makes it so much more useful.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package expand-region
+    :ensure t
+    :config (progn
+              (defun my/expand-region ()
+                "Expand region into hydra."
+                (interactive)
+                (progn
+                  (er/expand-region 1)
+                  (hydra/expand/body)))
+              (key-chord-define-global ";;" 'my/expand-region)))
+#+END_SRC
+
+***** Bindings
+
+#+BEGIN_SRC emacs-lisp
+  (bind-key "s-b" 'backward-sexp)
+  (bind-key "s-f" 'forward-sexp)
+#+END_SRC
+
+*** Hydra
 
 #+BEGIN_SRC emacs-lisp
   (defhydra hydra/expand ()
@@ -438,104 +451,179 @@
     ("q" keyboard-quit "Quit" :exit t))
 #+END_SRC
 
+* Mistake management
+
+When you write a lot of code, you make a lot of typos. I use =undo-tree= to manage them. 
+
+I use a =hydra= to string undo commands without re-entering the keystroke.
+
 #+BEGIN_SRC emacs-lisp
-  (defhydra hydra/gutter ()
-    "Git"
-    ("n" git-gutter:next-hunk "Next")
-    ("p" git-gutter:previous-hunk "Prev")
-    ("s" git-gutter:stage-hunk "Stage")
-    ("r" git-gutter:revert-hunk "Revert")
-    ("u" git-gutter:update-all-windows "Update")
+  (use-package undo-tree
+    :ensure t
+    :diminish undo-tree-mode
+    :init (global-undo-tree-mode 1)
+    :config (progn
+              (defun my/undo ()
+                "Undo last edit into hydra."
+                (interactive)
+                (progn
+                  (undo-tree-undo)
+                  (hydra/undo/body)))
+              (key-chord-define-global "uu" 'my/undo)))
+#+END_SRC
+
+*** Hyrda
+
+#+BEGIN_SRC emacs-lisp
+  (defhydra hydra/undo ()
+    "Undo"
+    ("u" undo-tree-undo "Undo")
+    ("r" undo-tree-redo "Redo")
     ("q" keyboard-quit "Quit" :exit t))
 #+END_SRC
-*** KBDs
+
+* Smart parentheses
+
+Using Emacs, I write a decent amount of lisp. Having =smartparents= for that alone is worth 
+the install, but its Ruby mode is great too.
+
 #+BEGIN_SRC emacs-lisp
-  (bind-key "C-x k" 'bury-buffer)
-  (bind-key "C-x C-k" 'kill-this-buffer)
-  (bind-key "C-+" 'text-scale-increase)
-  (bind-key "C--" 'text-scale-decrease)
-  (bind-key "C-<" 'shrink-window-horizontally)
-  (bind-key "C->" 'enlarge-window-horizontally)
-  (bind-key "C-," 'shrink-window)
-  (bind-key "C-." 'enlarge-window)
-  (bind-key "C-c c" 'org-capture)
-  (bind-key "s-b" 'backward-sexp)
-  (bind-key "s-f" 'forward-sexp)
-#+END_SRC
-*** Pinup
-#+BEGIN_SRC emacs-lisp
-  (require 'cl)
-
-  (defun pinup-window ()
-    "Toggle whether the current window is pinned or not.
-
-  Pinned windows are not killed by `pinup-kill-other-windows' and they are dedicated.
-  See `set-window-dedicated-p' about dedicated windows."
-    (interactive)
-    (message
-     (if (let (window (pinup--get-current-buffer-window))
-           (set-window-dedicated-p window
-                                   (not (window-dedicated-p window))))
-         "Pinning '%s' window"
-       "Unpinning '%s' window")
-     (current-buffer)))
-
-  (defun pinup-kill-other-windows ()
-    "Kill non `current-buffer' windows that have not been pinned with `pinup-window'."
-    (interactive)
-    (loop for window in (pinup--list-visible-windows)
-          do (unless (window-dedicated-p window)
-               (unless (eq (pinup--get-current-buffer-window) window)
-                 (delete-window window)))))
-
-  (defun pinup--get-current-buffer-window ()
-    "Return window for the `current-buffer'."
-    (get-buffer-window (current-buffer)))
-
-  (defun pinup--list-visible-windows ()
-    "Return list of windows."
-    (apply #'append (remove nil
-                            (mapcar
-                             '(lambda (buf)
-                                (get-buffer-window-list buf))
-                             (buffer-list)))))
-#+END_SRC
-*** Ruby
-#+BEGIN_SRC emacs-lisp
-  (defun my/binding.pry ()
-    "Insert binding.pry."
-    (interactive)
-    (insert-before-markers "require 'pry'; binding.pry"))
-#+END_SRC
-*** Terminal
-#+BEGIN_SRC emacs-lisp
-  (defun my/term-finder (tname cmd)
-    "Switch to or open a term buffer."
-    (let ((term-name (concat "*" tname "*")))
-      (if (get-buffer term-name)
-          (switch-to-buffer term-name)
-        (ansi-term cmd tname))))
+  (use-package smartparens
+    :ensure t
+    :diminish smartparens-mode
+    :init (progn
+            (require 'smartparens-config)
+            (require 'smartparens-ruby)
+            (smartparens-global-mode 1)
+            (show-smartparens-global-mode 1)))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-  (defun my/bash ()
-    "Open terminal to bash."
-    (interactive)
-    (my/term-finder "bash" "/bin/bash"))
-#+END_SRC
+* Smart commenting
+
+I always hated that =M-;= added a comment to the end of the line, no matter the position from 
+which you called it. Fixed with =smart-comment=, which provides sane commenting configuration.
 
 #+BEGIN_SRC emacs-lisp
-  (defun my/pry ()
-    "Open terminal to Pry."
-    (interactive)
-    (my/term-finder "pry" "Pry"))
+  (use-package smart-comment
+    :ensure t
+    :bind ("M-;" . smart-comment))
 #+END_SRC
-*** Undo
+
+* JSON, YAML, Markdown
+
+While I prefer all my text to be of the =org= persuasion, it's hard to avoid working with 
+these three formats in my day-to-day. I just add their major-mode packages with little 
+configuration.
+
 #+BEGIN_SRC emacs-lisp
-  (defun my/undo ()
-    "Undo last edit into hydra."
-    (interactive)
-    (progn
-      (undo-tree-undo)
-      (hydra/undo/body)))
+  (use-package json-reformat
+    :ensure t
+    :init (setq json-reformat:indent-width 2))
+
+  (use-package markdown-mode
+    :ensure t)
+
+  (use-package yaml-mode
+    :ensure t)
+#+END_SRC
+
+* Acceptance critera
+
+I try to avoid Cucumber at all costs, but I do believe in acceptance critera. That usually 
+means Gherkin, so I install =feature-mode= for syntax highlighting.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package feature-mode
+    :ensure t)
+#+END_SRC
+
+* Ruby
+
+The =robe= package adds pretty decent code navigation and documentation for Ruby. I ensure 
+it loads with a =ruby-mode-hook=.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package yard-mode
+    :ensure t
+    :diminish yard-mode
+    :init (add-hook 'ruby-mode-hook 'yard-mode))
+#+END_SRC
+
+***** Autocomplete
+
+The =robe= package provides autocompletion, but I think =auto-complete= makes it 
+feature complete.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package auto-complete
+    :ensure t
+    :init (progn
+            (ac-config-default)
+            (add-hook 'robe-mode-hook 'ac-robe-setup)))
+#+END_SRC
+
+*** RSpec
+
+I test drive all my Ruby code, and =rspec-mode= adds a bunch of useful functions for that.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package rspec-mode
+    :ensure t
+    :diminish rspec-mode
+    :init (progn
+            (setq rspec-use-rake-when-possible nil)
+            (setq rspec-command-options "--format progress"))
+    :bind ("C-c , T" . rspec-find-spec-or-target-other-window))
+#+END_SRC
+
+*** Rubocop
+
+I try to adhere to Ruby community standards. Rubocop helps.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package rubocop
+    :ensure t)
+#+END_SRC
+
+* Groovy
+
+I work with Jenkins, which means I work with Groovy. I add =groovy-mode= without configuration 
+for this.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package groovy-mode
+    :ensure t)
+#+END_SRC
+
+*** Gradle
+
+Running tasks with =gradle-mode= makes my work in Groovy scripting easier.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package gradle-mode
+    :ensure t
+    :init (add-hook 'groovy-mode-hook 'gradle-mode))
+#+END_SRC
+
+* Twitter
+
+I like twitter. I like Emacs. I like tweeting from Emacs.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package twittering-mode
+    :ensure t
+    :init (progn
+            (setq twittering-icon-mode t)
+            (setq twittering-use-master-password t)))
+#+END_SRC
+
+* Disconnect
+
+As much as I like twitter, sometimes I need to disconnect and focus. I added =quiet= to 
+cut me off from the world (wide web) when needed.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package quiet
+    :ensure t
+    :init (setq quiet-timer 30))
 #+END_SRC
