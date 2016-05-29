@@ -1,0 +1,7 @@
+* TODO Follow up with %f %^g
+%F
+DEADLINE: %^{Due}t
+
+#+BEGIN_SRC %^{Language}
+%i
+#+END_SRC
