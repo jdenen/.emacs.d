@@ -11,6 +11,16 @@ that.
   (require 'use-package)
 #+END_SRC
 
+*** Try
+
+I play with a bunch of packages without integrating them into my configuration. Using 
+=try= to make throwing them away is wonderful.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package try
+    :ensure t)
+#+END_SRC
+
 * Look and feel
 
 Next, we'll setup Emacs' look and feel. Start by removing unnecessary visual elements.
