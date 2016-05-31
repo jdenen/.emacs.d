@@ -102,11 +102,16 @@ access to the =PATH= environment variable.
 
 * Org
 
-I use =org-mode= for anything and everything I can, including this config file.
+I use =org-mode= for anything and everything I can, including this config file. I added 
+=org-bullets= for a better looking =org-mode=.
 
 #+BEGIN_SRC emacs-lisp
-  (setq org-startup-indented t)
-  (setq org-src-fontify-natively t)
+  (use-package org-bullets
+    :ensure t
+    :init (add-hook 'org-mode-hook 'org-bullets-mode)
+    :config (progn
+              (setq org-startup-indented t)
+              (setq org-src-fontify-natively t)))
 #+END_SRC
 
 *** Capture
