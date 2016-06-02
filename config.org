@@ -80,11 +80,18 @@ to reflect this change.
 
 *** Me
 
-Some Emacs packages might want to know who I am.
+Becasue some Emacs packages might want to know who I am:
 
 #+BEGIN_SRC emacs-lisp
 (setq user-full-name "Johnson Denen"
         user-mail-address "johnson.denen@gmail.com")
+#+END_SRC
+
+I have work-and-personally-specific functions defined in a non-public file, so 
+load that too.
+
+#+BEGIN_SRC emacs-lisp
+  (load "~/vc-docs/defs.el")
 #+END_SRC
 
 *** OSX
