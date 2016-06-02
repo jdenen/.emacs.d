@@ -164,9 +164,10 @@ My notes and tasks are no good to me without an easy way to process them. I use
 =org-agenda= to do that.
 
 #+BEGIN_SRC emacs-lisp
-  (setq org-agenda-start-with-log-mode t)
-  (setq org-agenda-use-time-grid t)
-  (setq org-agenda-include-all-todo t)
+  (setq org-agenda-start-with-log-mode t
+        org-agenda-use-time-grid       t
+        org-agenda-include-all-todo    t
+        org-agenda-include-diary       t)
 #+END_SRC
 
 Completed tasks should be logged with their completion time.
@@ -187,6 +188,14 @@ repository to the load path and toggle the minor mode.
   (add-to-list 'load-path "~/Code/me/pinup")
   (require 'pinup)
   (pinup-mode t)
+#+END_SRC
+
+***** Diary
+
+I keep a diary file to track recurring appointments, birthdays, etc.
+
+#+BEGIN_SRC emacs-lisp
+(setq diary-file "~/vc-docs/diary")
 #+END_SRC
 
 ***** Bindings
