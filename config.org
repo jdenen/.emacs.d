@@ -168,6 +168,20 @@ Completed tasks should be logged with their completion time.
 (setq org-log-done 'time)
 #+END_SRC
 
+***** Pinup
+
+I want to constantly display the agenda buffer in a dedicated window, but I 
+wanted to be able to minimize, restore, and jump to that window easily. 
+
+I wrote a minor-mode (=pinup=) to fullfill my need. Here, I add my development  
+repository to the load path and toggle the minor mode.
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'load-path "~/Code/me/pinup")
+  (require 'pinup)
+  (pinup-mode t)
+#+END_SRC
+
 ***** Bindings
 
 #+BEGIN_SRC emacs-lisp
