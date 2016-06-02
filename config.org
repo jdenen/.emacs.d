@@ -191,8 +191,12 @@ repository to the load path and toggle the minor mode.
 
 ***** Bindings
 
+If I have a pinned window, I don't want to delete it with a careless =C-x 1=, 
+so I bind the keystroke to =pinup-delete-other-windows=.
+
 #+BEGIN_SRC emacs-lisp
   (bind-key "C-c a" 'org-agenda-list)
+  (bind-key "C-x 1" 'pinup-delete-other-windows)
 #+END_SRC
 
 * Tramp
