@@ -173,7 +173,7 @@ My notes and tasks are no good to me without an easy way to process them. I use
 Completed tasks should be logged with their completion time.
 
 #+BEGIN_SRC emacs-lisp
-(setq org-log-done 'time)
+  (setq org-log-done 'time)
 #+END_SRC
 
 ***** Pinup
@@ -389,25 +389,6 @@ I love =projectile= and I love =helm=, so using them together makes sense.
   (use-package helm-projectile
     :ensure t
     :init (helm-projectile-on))
-#+END_SRC
-
-* Guides
-
-Emacs has a ton of keybindings and remembering them all is a chore. I use =guide-key= 
-to remind me. A helpful window pops open after 1.5 seconds of idleness mid-keystroke. 
-
-I only use it for =C-c= and =C-x= keybindings.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package guide-key
-    :ensure t
-    :diminish guide-key-mode
-    :init (guide-key-mode 1)
-    :config (progn
-              (guide-key-mode 1)
-              (setq guide-key/guide-key-sequence '("C-x" "C-c"))
-              (setq guide-key/idle-delay 1.5)
-              (setq guide-key/recursive-key-sequence-flag t)))
 #+END_SRC
 
 * Buffer management
