@@ -132,6 +132,8 @@ a =datetree= structure, and a few templates to annotate my life.
            (file "~/.emacs.d/templates/note.orgcaptmpl"))
           ("c" "Code" entry (file+datetree "~/vc-docs/scratch.org")
            (file "~/.emacs.d/templates/code.orgcaptmpl"))
+          ("a" "Appt" entry (file+datetree "~/vc-docs/scratch.org")
+           (file "~/.emacs.d/templates/appt.orgcaptmpl"))
           ("r" "Refactor" entry (file+datetree "~/vc-docs/scratch.org")
            (file "~/.emacs.d/templates/refactor.orgcaptmpl"))
           ("t" "Task" entry (file+datetree "~/vc-docs/scratch.org")
