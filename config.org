@@ -582,6 +582,15 @@ means Gherkin, so I install =feature-mode= for syntax highlighting.
     :ensure t)
 #+END_SRC
 
+* Docker
+
+I interact with a number of docker containers and Dockerfiles.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package dockerfile-mode
+    :ensure t)
+#+END_SRC
+
 * Emacs Lisp
 
 I enjoy writing Lisp code, and I want to do more of it.
