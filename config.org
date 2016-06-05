@@ -42,16 +42,16 @@ Configure =ample= theme, fonts, and scrolling.
   (use-package ample-theme
     :ensure t
     :init (load-theme 'ample t)
-    :config (progn
-              (set-face-attribute 'default nil :height 96)
-              (set-face-attribute 'fringe nil :background "#2d2d2d")
-              (set-face-attribute 'vertical-border nil :foreground (face-attribute 'fringe :background))
-              (add-to-list 'default-frame-alist '(height . 40))
-              (add-to-list 'default-frame-alist '(width . 90))
-              (add-to-list 'default-frame-alist '(font . "Andale-Mono-12"))
-              (set-face-attribute 'default t :font "Andale-Mono-12")
-              (setq scroll-step 1)
-              (setq scroll-conservatively 10000)))
+    :config 
+    (set-face-attribute 'default nil :height 96)
+    (set-face-attribute 'fringe nil :background "#2d2d2d")
+    (set-face-attribute 'vertical-border nil :foreground (face-attribute 'fringe :background))
+    (add-to-list 'default-frame-alist '(height . 40))
+    (add-to-list 'default-frame-alist '(width . 90))
+    (add-to-list 'default-frame-alist '(font . "Andale-Mono-12"))
+    (set-face-attribute 'default t :font "Andale-Mono-12")
+    (setq scroll-step 1)
+    (setq scroll-conservatively 10000))
 #+END_SRC
 
 *** Terminal
@@ -116,9 +116,9 @@ I use =org-mode= for anything and everything I can, including this config file. 
   (use-package org-bullets
     :ensure t
     :init (add-hook 'org-mode-hook 'org-bullets-mode)
-    :config (progn
-              (setq org-startup-indented t)
-              (setq org-src-fontify-natively t)))
+    :config 
+    (setq org-startup-indented t)
+    (setq org-src-fontify-natively t))
 #+END_SRC
 
 *** Capture
@@ -341,16 +341,16 @@ and =helm-mini= for buffers and files.
     :init (progn
             (helm-mode 1)
             (require 'helm-config))
-    :config (progn
-              (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-              (define-key helm-map (kbd "C-z") 'helm-select-action)
-              (setq helm-quick-update                     t
-                    helm-buffers-fuzzy-matching           t
-                    helm-move-to-line-cycle-in-source     t
-                    helm-ff-search-library-in-sexp        t
-                    helm-scroll-amount                    8
-                    helm-ff-file-name-history-use-recentf t)
-              (key-chord-define-global "yy" 'helm-show-kill-ring))
+    :config 
+    (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+    (define-key helm-map (kbd "C-z") 'helm-select-action)
+    (setq helm-quick-update                     t
+          helm-buffers-fuzzy-matching           t
+          helm-move-to-line-cycle-in-source     t
+          helm-ff-search-library-in-sexp        t
+          helm-scroll-amount                    8
+          helm-ff-file-name-history-use-recentf t)
+    (key-chord-define-global "yy" 'helm-show-kill-ring)
     :bind
     ("C-x m" . helm-M-x)
     ("C-c m" . helm-mini))
@@ -402,10 +402,10 @@ makes buffer navigation easy, so I bind all three of these functions to keychord
 #+BEGIN_SRC emacs-lisp
   (use-package ace-jump-mode
     :ensure t
-    :config (progn
-              (key-chord-define-global "jj" 'ace-jump-char-mode)
-              (key-chord-define-global "jw" 'ace-jump-word-mode)
-              (key-chord-define-global "jb" 'ace-jump-mode-pop-mark)))
+    :config 
+    (key-chord-define-global "jj" 'ace-jump-char-mode)
+    (key-chord-define-global "jw" 'ace-jump-word-mode)
+    (key-chord-define-global "jb" 'ace-jump-mode-pop-mark))
 #+END_SRC
 
 ***** Bindings
@@ -455,14 +455,14 @@ I attach my expansion to a =hydra=. This makes it so much more useful.
 #+BEGIN_SRC emacs-lisp
   (use-package expand-region
     :ensure t
-    :config (progn
-              (defun my/expand-region ()
-                "Expand region into hydra."
-                (interactive)
-                (progn
-                  (er/expand-region 1)
-                  (hydra/expand/body)))
-              (key-chord-define-global ";;" 'my/expand-region)))
+    :config 
+    (defun my/expand-region ()
+      "Expand region into hydra."
+      (interactive)
+      (progn
+        (er/expand-region 1)
+        (hydra/expand/body)))
+    (key-chord-define-global ";;" 'my/expand-region))
 #+END_SRC
 
 ***** Bindings
@@ -496,14 +496,14 @@ I use a =hydra= to string undo commands without re-entering the keystroke.
     :ensure t
     :diminish undo-tree-mode
     :init (global-undo-tree-mode 1)
-    :config (progn
-              (defun my/undo ()
-                "Undo last edit into hydra."
-                (interactive)
-                (progn
-                  (undo-tree-undo)
-                  (hydra/undo/body)))
-              (key-chord-define-global "uu" 'my/undo)))
+    :config 
+    (defun my/undo ()
+      "Undo last edit into hydra."
+      (interactive)
+      (progn
+        (undo-tree-undo)
+        (hydra/undo/body)))
+    (key-chord-define-global "uu" 'my/undo))
 #+END_SRC
 
 *** Hyrda
