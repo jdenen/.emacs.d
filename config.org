@@ -194,9 +194,13 @@ I wrote a minor-mode (=pinup=) to fullfill my need. Here, I add my development
 repository to the load path and toggle the minor mode.
 
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'load-path "~/Code/me/pinup")
-  (require 'pinup)
-  (pinup-mode t)
+  (use-package pinup
+    :load-path "~/Code/me/pinup"
+    :init 
+    (require 'pinup)
+    :config
+    (pinup-mode t)
+    (setq pinup-pinned-default-width 80))
 #+END_SRC
 
 ***** Diary
