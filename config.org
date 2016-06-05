@@ -146,12 +146,19 @@ I want captured code to have proper syntax highlighting, indentation, and
 commenting.
 
 #+BEGIN_SRC emacs-lisp
-  (setq org-src-tab-acts-natively t)
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((ruby . t)
-     (sh . t)
-     (emacs-lisp . t)))
+    (setq org-src-tab-acts-natively t)
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((ruby . t)
+       (sh . t)
+       (emacs-lisp . t)
+       (clojure . t)
+       (js . t)
+       (lisp . t)
+       (perl . t)
+       (python . t)
+       (scala . t)
+       (sql . t)))
 #+END_SRC
 
 ***** Bindings
