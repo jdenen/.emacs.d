@@ -221,6 +221,19 @@ so I bind the keystroke to =pinup-delete-other-windows=.
   (bind-key "C-x 1" 'pinup-delete-other-windows)
 #+END_SRC
 
+*** Elfeed
+
+I use =org-mode= to configure my RSS reader with =elfeed-org=.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package elfeed-org
+    :ensure t
+    :init 
+    (elfeed-org)
+    :config
+    (setq rmh-elfeed-org-files (list "~/vc-docs/feeds.org")))
+#+END_SRC
+
 * Tramp
 
 Ops work requires a lot of SSH. I use =tramp= to open remote files.
@@ -365,6 +378,21 @@ and =helm-mini= for buffers and files.
     :bind
     ("C-x m" . helm-M-x)
     ("C-c m" . helm-mini))
+#+END_SRC
+
+*** Fuzzy
+
+Make =helm= searching fuzzier with =helm-fuzzier=.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package helm-fuzzier
+    :ensure t
+    :init
+    (helm-fuzzier-mode t)
+    :config
+    (setq helm-M-x-fuzzy-match        t
+          helm-projectile-fuzzy-match t
+          helm-buffers-fuzzy-match    t))
 #+END_SRC
 
 *** Swoop
