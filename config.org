@@ -54,6 +54,12 @@ Configure =ample= theme, fonts, and scrolling.
     (setq scroll-conservatively 10000))
 #+END_SRC
 
+Turn on line numbers for pairing.
+
+#+BEGIN_SRC emacs-lisp
+  (linum-mode t)
+#+END_SRC
+
 *** Terminal
 
 My =ansi-term= buffers should die on terminal exit.
@@ -322,7 +328,9 @@ manage those changes.
     :init (progn
             (global-git-gutter-mode +1)
             (fringe-mode '(4 . 4)))
-    :config (key-chord-define-global "GG" 'my/gutter))
+    :config 
+    (setq git-gutter:linum-enabled t)
+    (key-chord-define-global "GG" 'my/gutter))
 #+END_SRC
 
 ***** Hydra
