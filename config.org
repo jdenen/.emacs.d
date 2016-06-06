@@ -726,3 +726,12 @@ cut me off from the world (wide web) when needed.
     :ensure t
     :init (setq quiet-timer 30))
 #+END_SRC
+
+* HTTP
+
+I use the =know-your-http-well= package to quickly look up the meaning of status codes.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package know-your-http-well
+    :ensure t)
+#+END_SRC
