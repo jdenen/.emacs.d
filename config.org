@@ -330,19 +330,27 @@ than =magit=.
 
 *** Gutters
 
-I like to see my changes in the buffer's gutter. I use =git-gutter= to show, navigate, and 
-manage those changes.
+I like to see my changes in the buffer's gutter. I use =diff-hl= to show those changes.
+
+# #+BEGIN_SRC emacs-lisp
+#   (use-package git-gutter
+#     :ensure t
+#     :diminish git-gutter-mode
+#     :init (progn
+#             (global-git-gutter-mode +1)
+#             (fringe-mode '(4 . 4)))
+#     :config 
+#     (setq git-gutter:linum-enabled t)
+#     (key-chord-define-global "GG" 'my/gutter))
+# #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (use-package git-gutter
+  (use-package diff-hl
     :ensure t
-    :diminish git-gutter-mode
-    :init (progn
-            (global-git-gutter-mode +1)
-            (fringe-mode '(4 . 4)))
-    :config 
-    (setq git-gutter:linum-enabled t)
-    (key-chord-define-global "GG" 'my/gutter))
+    :init
+    (diff-hl-mode)
+    :config
+    (global-diff-hl-mode t))
 #+END_SRC
 
 ***** Hydra
