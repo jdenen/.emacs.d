@@ -44,7 +44,6 @@ Configure =ample= theme, fonts, and scrolling.
     :init (load-theme 'ample t)
     :config 
     (set-face-attribute 'default nil :height 96)
-    (set-face-attribute 'fringe nil :background "#2d2d2d")
     (set-face-attribute 'vertical-border nil :foreground (face-attribute 'fringe :background))
     (add-to-list 'default-frame-alist '(height . 40))
     (add-to-list 'default-frame-alist '(width . 90))
@@ -54,20 +53,36 @@ Configure =ample= theme, fonts, and scrolling.
     (setq scroll-conservatively 10000))
 #+END_SRC
 
-Turn on line numbers for pairing.
+*** Fringe
+
+Show line numbers and a 1 pixel fringe.
 
 #+BEGIN_SRC emacs-lisp
-  (global-linum-mode t)
+  (global-linum-mode 1)
+  (fringe-mode 1)
+  (set-face-attribute 'fringe nil :background "#2d2d2d")
 #+END_SRC
 
-Turn line numbers off for =org-agenda=.
+Line numbers are useful for pairing, but I like to toggle them off.
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/line-numbers ()
+    "Toggle line number mode globally."
+    (interactive)
+    (if linum-mode
+        (global-linum-mode -1)
+      (global-linum-mode)))
+  (key-chord-define-global "l;" 'my/line-numbers)
+#+END_SRC
+
+Line numbers should never show in the =org-agenda=.
 
 #+BEGIN_SRC emacs-lisp
   (defun my/agenda-linum-fn ()
     "Remove line numbers from `org-agenda'."
     (linum-mode -1))
-
   (add-hook 'org-agenda-mode-hook 'my/agenda-linum-fn)
+  (add-hook 'global-linum-mode-hook 'my/agenda-linum-fn)
 #+END_SRC
 
 *** Terminal
