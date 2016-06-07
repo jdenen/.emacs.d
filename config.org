@@ -55,34 +55,18 @@ Configure =ample= theme, fonts, and scrolling.
 
 *** Fringe
 
-Show line numbers and a 1 pixel fringe.
+Show a 1 pixel fringe.
 
 #+BEGIN_SRC emacs-lisp
-  (global-linum-mode 1)
   (fringe-mode 1)
   (set-face-attribute 'fringe nil :background "#2d2d2d")
 #+END_SRC
 
-Line numbers are useful for pairing, but I like to toggle them off.
+Line numbers are useful for pairing, but I like them off by default. Here's 
+a keychord to toggle them on/off.
 
 #+BEGIN_SRC emacs-lisp
-  (defun my/line-numbers ()
-    "Toggle line number mode globally."
-    (interactive)
-    (if linum-mode
-        (global-linum-mode -1)
-      (global-linum-mode)))
-  (key-chord-define-global "l;" 'my/line-numbers)
-#+END_SRC
-
-Line numbers should never show in the =org-agenda=.
-
-#+BEGIN_SRC emacs-lisp
-  (defun my/agenda-linum-fn ()
-    "Remove line numbers from `org-agenda'."
-    (linum-mode -1))
-  (add-hook 'org-agenda-mode-hook 'my/agenda-linum-fn)
-  (add-hook 'global-linum-mode-hook 'my/agenda-linum-fn)
+  (key-chord-define-global "l;" 'linum-mode)
 #+END_SRC
 
 *** Terminal
