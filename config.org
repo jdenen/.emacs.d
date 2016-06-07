@@ -57,7 +57,17 @@ Configure =ample= theme, fonts, and scrolling.
 Turn on line numbers for pairing.
 
 #+BEGIN_SRC emacs-lisp
-  (linum-mode t)
+  (global-linum-mode t)
+#+END_SRC
+
+Turn line numbers off for =org-agenda=.
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/agenda-linum-fn ()
+    "Remove line numbers from `org-agenda'."
+    (linum-mode -1))
+
+  (add-hook 'org-agenda-mode-hook 'my/agenda-linum-fn)
 #+END_SRC
 
 *** Terminal
