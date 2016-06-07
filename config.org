@@ -111,7 +111,7 @@ to reflect this change.
 
 *** Me
 
-Becasue some Emacs packages might want to know who I am:
+Because some Emacs packages might want to know who I am:
 
 #+BEGIN_SRC emacs-lisp
 (setq user-full-name "Johnson Denen"
