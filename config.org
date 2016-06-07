@@ -216,7 +216,9 @@ repository to the load path and toggle the minor mode.
     (require 'pinup)
     :config
     (pinup-mode t)
-    (setq pinup-pinned-default-width 80))
+    (setq pinup-pinned-default-width     80
+          pinup-default-pinned-buffer    'org-agenda-list
+          pinup-minimize-on-other-window t))
 #+END_SRC
 
 ***** Diary
