@@ -407,21 +407,6 @@ and =helm-mini= for buffers and files.
     ("C-c m" . helm-mini))
 #+END_SRC
 
-*** Fuzzy
-
-Make =helm= searching fuzzier with =helm-fuzzier=.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package helm-fuzzier
-    :ensure t
-    :init
-    (helm-fuzzier-mode t)
-    :config
-    (setq helm-M-x-fuzzy-match        t
-          helm-projectile-fuzzy-match t
-          helm-buffers-fuzzy-match    t))
-#+END_SRC
-
 *** Swoop
 
 Searches with =helm-swoop= make multiline editing easier. I default to 
