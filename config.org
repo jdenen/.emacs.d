@@ -238,6 +238,10 @@ so I bind the keystroke to =pinup-delete-other-windows=.
   (bind-key "C-x 1" 'pinup-delete-other-windows)
 #+END_SRC
 
+* Reading
+
+I try to do all my internet reading via Emacs with these packages.
+
 *** Elfeed
 
 I use =org-mode= to configure my RSS reader with =elfeed-org=.
@@ -249,6 +253,13 @@ I use =org-mode= to configure my RSS reader with =elfeed-org=.
     (elfeed-org)
     :config
     (setq rmh-elfeed-org-files (list "~/vc-docs/feeds.org")))
+#+END_SRC
+
+*** hackernews
+
+#+BEGIN_SRC emacs-lisp
+  (use-package hackernews
+    :ensure t)
 #+END_SRC
 
 * Tramp
