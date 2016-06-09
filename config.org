@@ -293,56 +293,52 @@ file.
 *** SCP
 
 Often, I need to copy a remote file I'm currently working on via =tramp= to another 
-server (or back to my local machine). But I can copy a different file or a directory 
-with these functions too.
-
-**** TODO Turn these into their own package
+server (or back to my local machine). With these functions, I can also copy-and-rename 
+or choose other files to copy.
 
 #+BEGIN_SRC emacs-lisp
-  (defun scp-current-file ()
+  (defun cp-current-file ()
     "Move current buffer file."
     (interactive)
-    (shell-command (scp--cmd 'buffer-file-name)))
+    (copy-file (buffer-file-name)
+               (call-interactively 'cp--dir)))
 
-  (defun scp-other-file ()
+  (defun cp-current-file-and-rename ()
+    "Move current buffer file and rename it."
+    (interactive)
+    (copy-file (buffer-file-name)
+               (call-interactively 'cp--file)))
+
+  (defun cp-other-file ()
     "Move a file."
     (interactive)
-    (shell-command (scp--cmd 'scp--file t)))
+    (copy-file (call-interactively 'cp--file)
+               (call-interactively 'cp--dir)))
 
-  (defun scp-directory ()
-    "Move the contents of a directory."
+  (defun cp-other-file-and-rename ()
+    "Move a file and rename it."
     (interactive)
-    (shell-command (scp--cmd 'scp--dir t)))
+    (copy-file (call-interactively 'cp--file)
+               (call-interactively 'cp--file)))
 
-  (defun scp--cmd (fn &optional active)
-    "Construct scp command from FN and `scp--target'.
+  (defun cp-current-directory ()
+    "Move current directory."
+    (interactive)
+    (copy-directory default-directory (call-interactively 'cp--dir) t t))
 
-  If ACTIVE is non-nil, invoke FN interactively. Otherwise, use `funcall'."
-    (let ((subject (if active
-                       (call-interactively fn)
-                     (funcall fn))))
-      (concat "scp " subject " " (call-interactively 'scp--target))))
-
-  (defun scp--file (file)
+  (defun cp--file (file)
     "Prompt for FILE and return its filepath."
     (interactive
      (list
       (read-file-name "File: ")))
     (expand-file-name file))
 
-  (defun scp--dir (dir)
-    "Prompt for DIR and return its absolute path."
+  (defun cp--dir (dir)
+    "Prompt for TARGDIR and return its absolute path."
     (interactive
      (list
-      (read-directory-name "Dir: ")))
-    (concat "-r " (expand-file-name dir)))
-
-  (defun scp--target (targ)
-    "Prompt for and return TARG."
-    (interactive
-     (list
-      (read-string "Target dir: ")))
-    targ)
+      (read-directory-name "Target dir: ")))
+    (expand-file-name dir))
 #+END_SRC
 
 * Hydra
