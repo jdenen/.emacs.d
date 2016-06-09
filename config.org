@@ -415,7 +415,8 @@ and =helm-mini= for buffers and files.
     (key-chord-define-global "yy" 'helm-show-kill-ring)
     :bind
     ("C-x m" . helm-M-x)
-    ("C-c m" . helm-mini))
+    ("C-c m" . helm-mini)
+    ("C-x b" . helm-mini))
 #+END_SRC
 
 *** Swoop
