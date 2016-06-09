@@ -270,16 +270,24 @@ Ops work requires a lot of SSH. I use =tramp= to open remote files.
   (setq tramp-default-method "ssh")
 #+END_SRC
 
+Because tramp makes life so easy, I open a ton of remote files and shell 
+buffers. I want to destroy them just as easily.
+
+#+BEGIN_SRC emacs-lisp
+  (bind-key "C-c k" 'tramp-cleanup-all-buffers)
+#+END_SRC
+
 *** Shell
 
 Instead of opening =ansi-term= and issuing an =ssh= command, I use this function 
-to open =shell= to a remote host.
+to open =shell= to a remote host. I keep server specific information in a private 
+file.
 
 #+BEGIN_SRC emacs-lisp
   (defun my/remote-shell (user host)
     "SSH into remote HOST shell as USER"
     (let ((default-directory (concat "/ssh:" user "@" host ":/")))
-      (shell)))
+      (shell (concat "*" host "*"))))
 #+END_SRC
 
 * Hydra
