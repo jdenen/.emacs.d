@@ -290,6 +290,61 @@ file.
       (shell (concat "*" host "*"))))
 #+END_SRC
 
+*** SCP
+
+Often, I need to copy a remote file I'm currently working on via =tramp= to another 
+server (or back to my local machine). But I can copy a different file or a directory 
+with these functions too.
+
+**** TODO Turn these into their own package
+
+#+BEGIN_SRC emacs-lisp
+  (defun scp-current-file ()
+    "Move current buffer file."
+    (interactive)
+    (shell-command (scp--cmd 'buffer-file-name)))
+
+  (defun scp-other-file ()
+    "Move a file."
+    (interactive)
+    (shell-command (scp--cmd 'scp--file t)))
+
+  (defun scp-directory ()
+    "Move the contents of a directory."
+    (interactive)
+    (shell-command (scp--cmd 'scp--dir t)))
+
+  (defun scp--cmd (fn &optional active)
+    "Construct scp command from FN and `scp--target'.
+
+  If ACTIVE is non-nil, invoke FN interactively. Otherwise, use `funcall'."
+    (let ((subject (if active
+                       (call-interactively fn)
+                     (funcall fn))))
+      (concat "scp " subject " " (call-interactively 'scp--target))))
+
+  (defun scp--file (file)
+    "Prompt for FILE and return its filepath."
+    (interactive
+     (list
+      (read-file-name "File: ")))
+    (expand-file-name file))
+
+  (defun scp--dir (dir)
+    "Prompt for DIR and return its absolute path."
+    (interactive
+     (list
+      (read-directory-name "Dir: ")))
+    (concat "-r " (expand-file-name dir)))
+
+  (defun scp--target (targ)
+    "Prompt for and return TARG."
+    (interactive
+     (list
+      (read-string "Target dir: ")))
+    targ)
+#+END_SRC
+
 * Hydra
 
 I group logical actions together with =hydra=. This reduces keystrokes to complete my 
