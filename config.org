@@ -475,7 +475,8 @@ and =helm-mini= for buffers and files.
     :bind
     ("C-x m" . helm-M-x)
     ("C-c m" . helm-mini)
-    ("C-x b" . helm-mini))
+    ("C-x b" . helm-mini)
+    ("C-x 4 b" . helm-mini))
 #+END_SRC
 
 *** Swoop
