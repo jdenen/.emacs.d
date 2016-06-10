@@ -761,8 +761,8 @@ I try to adhere to Ruby community standards. Rubocop helps.
 
 * Groovy
 
-I work with Jenkins, which means I work with Groovy. I add =groovy-mode= without configuration 
-for this.
+I work with Jenkins, which means I work with Groovy. I add =groovy-mode= without 
+configuration for this.
 
 #+BEGIN_SRC emacs-lisp
   (use-package groovy-mode
@@ -777,6 +777,18 @@ Running tasks with =gradle-mode= makes my work in Groovy scripting easier.
   (use-package gradle-mode
     :ensure t
     :init (add-hook 'groovy-mode-hook 'gradle-mode))
+#+END_SRC
+
+*** Tabs
+
+For whatever reason, I have issues with tabs over spaces in =groovy-mode=. I add a hook 
+here to remove this problem.
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/tab-hook ()
+    (setq indent-tabs-mode nil))
+
+  (add-hook 'groovy-mode-hook 'my/tab-hook)
 #+END_SRC
 
 * Twitter
