@@ -85,12 +85,12 @@ My =ansi-term= buffers should die on terminal exit.
 
 *** Scratch mode
 
-We'll start Emacs into a =sh-mode= scratch buffer, setting the initial message 
-to reflect this change.
+We'll start Emacs into a =sh-mode= scratch buffer, but remove the buffer 
+message since I change its mode often enough for it to be confusing.
 
 #+BEGIN_SRC emacs-lisp
   (setq initial-major-mode 'sh-mode)
-  (setq initial-scratch-message "# /bin/bash scratch \n\n")
+  (setq initial-scratch-message nil)
 #+END_SRC
 
 *** Me
