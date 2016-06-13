@@ -122,6 +122,17 @@ access to the =PATH= environment variable.
       (exec-path-from-shell-initialize)))
 #+END_SRC
 
+*** System
+
+I monitor my local system with =symon=.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package symon
+    :ensure t
+    :init
+    (symon-mode t))
+#+END_SRC
+
 * Org
 
 I use =org-mode= for anything and everything I can, including this config file. I added 
