@@ -778,7 +778,14 @@ configuration for this.
 
 #+BEGIN_SRC emacs-lisp
   (use-package groovy-mode
-    :ensure t)
+    :ensure t
+    :config
+    (defun my/groovy ()
+      "Wraps `run-groovy' so it opens the correct groovy."
+      (interactive)
+      (universal-argument)
+      (run-groovy "/Users/johnson/.sdkman/candidates/groovy/current/bin/groovysh --color=false"))
+    (bind-key (kbd "C-c g") 'my/groovy))
 #+END_SRC
 
 *** Gradle
