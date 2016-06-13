@@ -83,6 +83,15 @@ My =ansi-term= buffers should die on terminal exit.
         (kill-buffer term-name))))
 #+END_SRC
 
+I always use =/bin/bash= for my =ansi-term= buffers, so I don't want it to prompt me.
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/ansi ()
+    "Open a terminal buffer."
+    (interactive)
+    (ansi-term "/bin/bash" "terminal"))
+#+END_SRC
+
 *** Scratch mode
 
 We'll start Emacs into a =sh-mode= scratch buffer, but remove the buffer 
