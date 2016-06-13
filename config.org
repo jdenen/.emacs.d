@@ -130,6 +130,7 @@ I monitor my local system with =symon=.
   (use-package symon
     :ensure t
     :init
+    (setq symon-monitors '(symon-darwin-memory-monitor symon-darwin-cpu-monitor))
     (symon-mode t))
 #+END_SRC
 
