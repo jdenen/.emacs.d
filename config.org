@@ -257,6 +257,7 @@ so I bind the keystroke to =pinup-delete-other-windows=.
 #+BEGIN_SRC emacs-lisp
   (bind-key "C-c a" 'org-agenda-list)
   (bind-key "C-x 1" 'pinup-delete-other-windows)
+  (bind-key "C-c o" 'pinup-other-window)
 #+END_SRC
 
 * Reading
