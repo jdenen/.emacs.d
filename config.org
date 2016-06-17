@@ -170,10 +170,28 @@ a =datetree= structure, and a few templates to annotate my life.
            (file "~/.emacs.d/templates/code.orgcaptmpl"))
           ("a" "Appt" entry (file+datetree "~/vc-docs/scratch.org")
            (file "~/.emacs.d/templates/appt.orgcaptmpl"))
+          ("i" "Interrupt" entry (file+datetree "~/vc-docs/scratch.org")
+           (file "~/.emacs.d/templates/interrupt.orgcaptmpl"))
           ("r" "Refactor" entry (file+datetree "~/vc-docs/scratch.org")
            (file "~/.emacs.d/templates/refactor.orgcaptmpl"))
           ("t" "Task" entry (file+datetree "~/vc-docs/scratch.org")
            (file "~/.emacs.d/templates/task.orgcaptmpl"))))
+#+END_SRC
+
+Some of my capture templates require custom functions.
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/org-interrupted-task ()
+    "Capture interrupted task data."
+    (let ((task (if org-clock-current-task
+                    (concat " " 
+                            org-clock-current-task 
+                            " ("
+                            (int-to-string (org-clock-get-clocked-time)) 
+                            "m)") ;; task-name (52m)
+                  " None")))
+      (org-clock-out nil t)
+      task))
 #+END_SRC
 
 ***** Babel
@@ -200,7 +218,7 @@ commenting.
 ***** Bindings
 
 #+BEGIN_SRC emacs-lisp
-  (bind-key "C-c c" 'org-capture)
+  (bind-key "C-c c" 'helm-org-capture-templates)
 #+END_SRC
 
 *** Agenda
