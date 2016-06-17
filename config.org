@@ -348,6 +348,11 @@ or choose other files to copy.
     (interactive)
     (copy-directory default-directory (call-interactively 'cp--dir) t t))
 
+  (defun cp-other-directory ()
+    "Move a directory."
+    (interactive)
+    (copy-directory (call-interactively 'cp--dir) (call-interactively 'cp--dir) t t))
+
   (defun cp--file (file)
     "Prompt for FILE and return its filepath."
     (interactive
