@@ -53,6 +53,25 @@ Configure =ample= theme, fonts, and scrolling.
     (setq scroll-conservatively 10000))
 #+END_SRC
 
+*** Powerline
+
+I'm using =telephone-line= to configure my powerline.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package telephone-line
+    :ensure t
+    :init
+    (telephone-line-mode t)
+    :config
+    (setq telephone-line-rhs
+          '((nil    . (telephone-line-misc-info-segment))
+            (accent . (telephone-line-major-mode-segment))))
+    (setq telephone-line-lhs
+          '((accent . (telephone-line-vc-segment
+                       telephone-line-buffer-segment))
+            (nil    . (telephone-line-minor-mode-segment)))))
+#+END_SRC
+
 *** Fringe
 
 Show a 1 pixel fringe.
