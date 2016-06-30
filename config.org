@@ -566,6 +566,8 @@ note or task from a non-org buffer.
 #+BEGIN_SRC emacs-lisp
   (use-package helm-swoop
     :ensure t
+    :config
+    (setq helm-swoop-split-with-multiple-windows t)
     :bind
     ("C-s" . helm-swoop-without-pre-input)
     ("C-r" . helm-swoop)
