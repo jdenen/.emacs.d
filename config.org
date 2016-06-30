@@ -338,6 +338,12 @@ buffers. I want to destroy them just as easily.
   (bind-key "C-c k" 'tramp-cleanup-all-buffers)
 #+END_SRC
 
+When I open a remote =shell= over =tramp=, I export =EDITOR= to it via [[https://github.com/magit/with-editor][with-editor]].
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'shell-mode-hook 'with-editor-export-editor)
+#+END_SRC
+
 *** Shell
 
 Instead of opening =ansi-term= and issuing an =ssh= command, I use this function 
