@@ -349,6 +349,12 @@ file.
     "SSH into remote HOST shell as USER"
     (let ((default-directory (concat "/ssh:" user "@" host ":/")))
       (shell (concat "*" host "*"))))
+
+  (defun my/home-shell ()
+    "Open shell at $HOME on my local machine."
+    (interactive)
+    (let ((default-directory "~"))
+      (shell "*local*")))
 #+END_SRC
 
 *** SCP
