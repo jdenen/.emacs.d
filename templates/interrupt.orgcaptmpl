@@ -1,4 +1,4 @@
-* %^{Summary} %(org-set-tags-to ":switch:")
+* TODO %^{Summary} %(org-set-tags-to ":switch:")
 %T
 _Task_: %(my/org-interrupted-task)
 _Path_: %F
