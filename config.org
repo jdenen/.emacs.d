@@ -301,6 +301,29 @@ so I bind the keystroke to =pinup-delete-other-windows=.
   (bind-key "C-c o" 'pinup-other-window)
 #+END_SRC
 
+*** Snippets
+
+I use =yankpad= to define my snippets with =org=.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package yankpad
+    :ensure t
+    :init 
+    (setq yankpad-file "~/vc-docs/yankpad.org")
+    :bind
+    ("C-c y" . yankpad-map))
+#+END_SRC
+
+=yankpad= is dependent on =yasnippet= for expansion, so install that too.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package yasnippet
+    :ensure t
+    :config
+    (add-hook 'ruby-mode-hook #'yas-minor-mode)
+    (add-to-list 'warning-suppress-types '(yasnippet backquote-change)))
+#+END_SRC
+
 * Reading
 
 I try to do all my internet reading via Emacs with these packages.
@@ -454,6 +477,7 @@ to a register.
      (set-register (car r) (cons 'file (cdr r))))
    '((?i . "~/.emacs.d/config.org")
      (?b . "~/.bashrc")
+     (?y . "~/vc-docs/yankpad.org")
      (?s . "~/vc-docs/scratch.org")
      (?j . "~/vc-docs/johnson.org")))
 #+END_SRC
