@@ -114,11 +114,13 @@ I always use =/bin/bash= for my =ansi-term= buffers, so I don't want it to promp
 *** Scratch mode
 
 We'll start Emacs into a =sh-mode= scratch buffer, but remove the buffer 
-message since I change its mode often enough for it to be confusing.
+message since I change its mode often enough for it to be confusing. Add a =sh-mode=
+hook for =flycheck= to lint my bash scripting too.
 
 #+BEGIN_SRC emacs-lisp
-  (setq initial-major-mode 'sh-mode)
   (setq initial-scratch-message nil)
+  (setq initial-major-mode 'sh-mode)
+  (add-hook 'sh-mode-hook 'flycheck-mode)
 #+END_SRC
 
 *** Me
