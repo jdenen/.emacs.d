@@ -926,6 +926,7 @@ I like twitter. I like Emacs. I like tweeting from Emacs.
     :config
     (setq twittering-icon-mode t)
     (setq twittering-use-master-password t)
+    (key-chord-define twittering-mode-map "nr" 'twittering-native-retweet)
     :bind
     ("C-c t" . twittering-update-status-from-pop-up-buffer))
 #+END_SRC
