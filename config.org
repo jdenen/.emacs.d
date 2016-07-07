@@ -583,12 +583,16 @@ and =helm-mini= for buffers and files.
           helm-buffers-fuzzy-matching           t
           helm-move-to-line-cycle-in-source     t
           helm-ff-search-library-in-sexp        t
+          helm-ff-skip-boring-files             t
+          helm-ff-file-name-history-use-recentf t
+          helm-candidate-number-limit           100
           helm-scroll-amount                    8
-          helm-ff-file-name-history-use-recentf t)
+          helm-locate-command                   "mdfind -name %s %s") ; Mac only
     (add-to-list 'helm-boring-buffer-regexp-list (rx "magit:") (rx "*helm"))
     (key-chord-define-global "yy" 'helm-show-kill-ring)
     :bind
     ("C-x m" . helm-M-x)
+    ("C-x f" . helm-for-files)
     ("C-c m" . helm-mini)
     ("C-x b" . helm-mini)
     ("C-x 4 b" . helm-mini))
