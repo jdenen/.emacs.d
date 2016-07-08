@@ -322,17 +322,14 @@ I use =yankpad= to define my snippets with =org=.
 
 I try to do all my internet reading via Emacs with these packages.
 
-*** Elfeed
+*** GNUs
 
-I use =org-mode= to configure my RSS reader with =elfeed-org=.
+I use =gnus= to manage RSS feeds and watch mailing lists.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package elfeed-org
-    :ensure t
-    :init 
-    (elfeed-org)
-    :config
-    (setq rmh-elfeed-org-files (list "~/vc-docs/feeds.org")))
+  (setq gnus-use-full-window nil
+        gnus-nntp-server     nil
+        gnus-select-method   '(nntp "news.gmane.org"))
 #+END_SRC
 
 *** hackernews
