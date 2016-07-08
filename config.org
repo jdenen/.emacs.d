@@ -270,6 +270,9 @@ wanted to be able to minimize, restore, and jump to that window easily.
 I wrote a minor-mode (=pinup=) to fullfill my need. Here, I add my development  
 repository to the load path and toggle the minor mode.
 
+And since I don't want to close my pinned window with =C-x 1=, I bind it to 
+=pinup-delete-other-windows=.
+
 #+BEGIN_SRC emacs-lisp
   (use-package pinup
     :load-path "~/Code/me/pinup"
@@ -279,7 +282,9 @@ repository to the load path and toggle the minor mode.
     (pinup-mode t)
     (setq pinup-pinned-default-width     80
           pinup-default-pinned-buffer    'org-agenda-list
-          pinup-minimize-on-other-window t))
+          pinup-minimize-on-other-window t)
+    :bind
+    ("C-x 1" . pinup-delete-other-windows))
 #+END_SRC
 
 ***** Diary
@@ -288,17 +293,6 @@ I keep a diary file to track recurring appointments, birthdays, etc.
 
 #+BEGIN_SRC emacs-lisp
 (setq diary-file "~/vc-docs/diary")
-#+END_SRC
-
-***** Bindings
-
-If I have a pinned window, I don't want to delete it with a careless =C-x 1=, 
-so I bind the keystroke to =pinup-delete-other-windows=.
-
-#+BEGIN_SRC emacs-lisp
-  (bind-key "C-c a" 'org-agenda-list)
-  (bind-key "C-x 1" 'pinup-delete-other-windows)
-  (bind-key "C-c o" 'pinup-other-window)
 #+END_SRC
 
 *** Snippets
