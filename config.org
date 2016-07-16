@@ -154,7 +154,8 @@ access to the =PATH= environment variable.
 
 *** System
 
-I monitor my local system with =symon=.
+I monitor my local system with =symon=, but I only want to watch CPU and memory
+usage.
 
 #+BEGIN_SRC emacs-lisp
   (use-package symon
@@ -527,23 +528,6 @@ I like to see my changes in the buffer's gutter. I use =diff-hl= to show those c
     (global-diff-hl-mode t))
 #+END_SRC
 
-***** Hydra
-#+BEGIN_SRC emacs-lisp
-  (defun my/gutter ()
-    "Open git-gutter hydra"
-    (interactive)
-    (hydra/gutter/body))
-
-  (defhydra hydra/gutter ()
-    "Git"
-    ("n" git-gutter:next-hunk "Next")
-    ("p" git-gutter:previous-hunk "Prev")
-    ("s" git-gutter:stage-hunk "Stage")
-    ("r" git-gutter:revert-hunk "Revert")
-    ("u" git-gutter:update-all-windows "Update")
-    ("q" keyboard-quit "Quit" :exit t))
-#+END_SRC
-
 * Projectile
 
 Git projects are a snap to navigate and manage with =projectile=. Its default keybindings 
@@ -592,7 +576,7 @@ and =helm-mini= for buffers and files.
 *** Swoop
 
 Searches with =helm-swoop= make multiline editing easier. I default to 
-=helm-swoop-without-pre-input= becuase I often swoop after opening a file.
+=helm-swoop-without-pre-input= because I often swoop after opening a file.
 
 The =helm-multi-swoop-org= function works perfectly when I want to find a captured 
 note or task from a non-org buffer.
