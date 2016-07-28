@@ -188,16 +188,8 @@ a =datetree= structure, and a few templates to annotate my life.
   (setq org-capture-templates
         '(("n" "Note" entry (file+datetree "~/vc-docs/scratch.org")
            (file "~/.emacs.d/templates/note.orgcaptmpl"))
-          ("c" "Code" entry (file+datetree "~/vc-docs/scratch.org")
-           (file "~/.emacs.d/templates/code.orgcaptmpl"))
-          ("a" "Appt" entry (file+datetree "~/vc-docs/scratch.org")
-           (file "~/.emacs.d/templates/appt.orgcaptmpl"))
-          ("r" "Article" entry (file+datetree "~/vc-docs/scratch.org")
-           (file "~/.emacs.d/templates/article.orgcaptmpl"))
-          ("i" "Interrupt" entry (file+datetree "~/vc-docs/scratch.org")
-           (file "~/.emacs.d/templates/interrupt.orgcaptmpl"))
-          ("f" "Refactor" entry (file+datetree "~/vc-docs/scratch.org")
-           (file "~/.emacs.d/templates/refactor.orgcaptmpl"))
+          ("d" "Todo" entry (file+datetree "~/vc-docs/scratch.org")
+           (file "~/.emacs.d/templates/todo.orgcaptmpl"))
           ("t" "Task" entry (file+datetree "~/vc-docs/scratch.org")
            (file "~/.emacs.d/templates/task.orgcaptmpl"))))
 #+END_SRC
@@ -943,5 +935,12 @@ I've assembled some random functions to make my life better.
     (end-of-line)
     (newline-and-indent))
 
-  (key-chord-define-global "qo" 'new-line-below)
+  (bind-key "S-<return>" 'new-line-below)
+  (bind-key "S-<return>" 'new-line-below org-mode-map)
+#+END_SRC
+
+*** bury-other-buffer
+
+#+BEGIN_SRC emacs-lisp
+
 #+END_SRC
