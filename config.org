@@ -508,18 +508,6 @@ I've recently discovered this package thanks to Emacs GIFs (@emacs_gifs) on twit
 
 I like to see my changes in the buffer's gutter. I use =diff-hl= to show those changes.
 
-# #+BEGIN_SRC emacs-lisp
-#   (use-package git-gutter
-#     :ensure t
-#     :diminish git-gutter-mode
-#     :init (progn
-#             (global-git-gutter-mode +1)
-#             (fringe-mode '(4 . 4)))
-#     :config 
-#     (setq git-gutter:linum-enabled t)
-#     (key-chord-define-global "GG" 'my/gutter))
-# #+END_SRC
-
 #+BEGIN_SRC emacs-lisp
   (use-package diff-hl
     :ensure t
