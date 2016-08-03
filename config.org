@@ -472,7 +472,7 @@ to a register.
   (key-chord-define-global "jr" 'jump-to-register)
 #+END_SRC
 
-* Magit
+* git
 
 If my life is annotated with =org-capture=, formatted in =org-mode=, and managed with 
 =org-agenda=, then its history is stored in Git. And no piece of software does Git better 
@@ -493,6 +493,15 @@ A bunch of projects I work on use the Git Flow model, so install a plugin for =m
     :ensure t
     :init
     (add-hook 'magit-mode-hook 'turn-on-magit-gitflow))
+#+END_SRC
+
+*** timemachine
+
+I've recently discovered this package thanks to Emacs GIFs (@emacs_gifs) on twitter.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package git-timemachine
+    :ensure t)
 #+END_SRC
 
 *** Gutters
