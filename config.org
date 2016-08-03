@@ -922,6 +922,18 @@ I use the =know-your-http-well= package to quickly look up the meaning of status
     :ensure t)
 #+END_SRC
 
+* Diffing
+
+#+BEGIN_SRC emacs-lisp
+  (use-package vdiff
+    :ensure t
+    :config
+    (setq vdiff-lock-scrolling t)
+    (define-key vdiff-mode-map (kbd "C-c d") vdiff-mode-prefix-map)
+    :bind
+    ("C-c d" . vdiff-files))
+#+END_SRC
+
 * Misc
 
 I've assembled some random functions to make my life better.
@@ -937,10 +949,4 @@ I've assembled some random functions to make my life better.
 
   (bind-key "S-<return>" 'new-line-below)
   (bind-key "S-<return>" 'new-line-below org-mode-map)
-#+END_SRC
-
-*** bury-other-buffer
-
-#+BEGIN_SRC emacs-lisp
-
 #+END_SRC
