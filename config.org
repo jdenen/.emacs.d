@@ -186,12 +186,14 @@ a =datetree= structure, and a few templates to annotate my life.
 
 #+BEGIN_SRC emacs-lisp
   (setq org-capture-templates
-        '(("n" "Note" entry (file+datetree "~/vc-docs/scratch.org")
+        '(("n" "Note" entry (file+datetree "~/vc-docs/scratch.org")  ;; No action, no deadline
            (file "~/.emacs.d/templates/note.orgcaptmpl"))
-          ("d" "Todo" entry (file+datetree "~/vc-docs/scratch.org")
+          ("d" "Todo" entry (file+datetree "~/vc-docs/scratch.org")  ;; Action, no deadline
            (file "~/.emacs.d/templates/todo.orgcaptmpl"))
-          ("t" "Task" entry (file+datetree "~/vc-docs/scratch.org")
-           (file "~/.emacs.d/templates/task.orgcaptmpl"))))
+          ("t" "Task" entry (file+datetree "~/vc-docs/scratch.org")  ;; Action, deadline
+           (file "~/.emacs.d/templates/task.orgcaptmpl"))
+          ("a" "Appt" entry (file+datetree "~/vc-docs/scratch.org")  ;; No action, deadline
+           (file "~/.emacs.d/templates/appt.orgcaptmpl"))))
 #+END_SRC
 
 Some of my capture templates require custom functions.
