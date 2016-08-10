@@ -474,7 +474,7 @@ to a register.
   (key-chord-define-global "jr" 'jump-to-register)
 #+END_SRC
 
-* git
+* Git
 
 If my life is annotated with =org-capture=, formatted in =org-mode=, and managed with 
 =org-agenda=, then its history is stored in Git. And no piece of software does Git better 
@@ -692,6 +692,7 @@ I attach my expansion to a =hydra=. This makes it so much more useful.
     ("w" kill-region "Kill")
     ("y" yank "Yank")
     ("m" helm-M-x "Command")
+    ("v" vimish-fold "Fold")
     ("q" keyboard-quit "Quit" :exit t))
 #+END_SRC
 
@@ -931,6 +932,16 @@ I use the =know-your-http-well= package to quickly look up the meaning of status
     (define-key vdiff-mode-map (kbd "C-c d") vdiff-mode-prefix-map)
     :bind
     ("C-c d" . vdiff-files))
+#+END_SRC
+
+* Folding
+
+#+BEGIN_SRC emacs-lisp
+  (use-package vimish-fold
+    :ensure t
+    :bind
+    ("C-c v" . vimish-fold-delete)
+    ("C-c V" . vimish-fold-delete-all))
 #+END_SRC
 
 * Misc
