@@ -659,20 +659,34 @@ maximize, swap, and switch to windows with =C-x o=.
 
 * Region management
 
-I capture regions with =expand-region=. But I never expand to a region without purpose, so 
-I attach my expansion to a =hydra=. This makes it so much more useful.
+I can capture regions (=expand-region=) and sexps (=mark-sexp=) for =hydra= use.
 
 #+BEGIN_SRC emacs-lisp
   (use-package expand-region
-    :ensure t
-    :config 
-    (defun my/expand-region ()
-      "Expand region into hydra."
-      (interactive)
-      (progn
-        (er/expand-region 1)
-        (hydra/expand/body)))
-    (key-chord-define-global ";;" 'my/expand-region))
+    :ensure t)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/expand-region ()
+    "Expand region into hydra."
+    (interactive)
+    (my/expand-into-hydra 'er/expand-region 1))
+
+  (defun my/expand-sexp ()
+    "Expand by sexp into hydra."
+    (interactive)
+    (my/expand-into-hydra 'mark-sexp))
+
+  (defun my/expand-into-hydra (expander &optional args)
+    "Expand region by EXPANDER function and open `hydra/expand'."
+    (progn
+      (funcall expander args)
+      (hydra/expand/body)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (key-chord-define-global ";;" 'my/expand-region)
+  (key-chord-define-global "::" 'my/expand-sexp)
 #+END_SRC
 
 ***** Bindings
@@ -687,8 +701,9 @@ I attach my expansion to a =hydra=. This makes it so much more useful.
 #+BEGIN_SRC emacs-lisp
   (defhydra hydra/expand ()
     "Expand"
-    ("x" er/expand-region "Expand")
+    ("x" er/expand-region "Expand region")
     ("c" er/contract-region "Contract")
+    ("s" mark-sexp "Expand sexp")
     ("w" kill-region "Kill")
     ("y" yank "Yank")
     ("m" helm-M-x "Command")
