@@ -364,7 +364,7 @@ file.
 #+BEGIN_SRC emacs-lisp
   (defun my/remote-shell (user host)
     "SSH into remote HOST shell as USER"
-    (let ((default-directory (concat "/ssh:" user "@" host ":/")))
+    (let ((default-directory (concat "/ssh:" user "@" host ":/home/" user)))
       (shell (concat "*" host "*"))))
 
   (defun my/home-shell ()
