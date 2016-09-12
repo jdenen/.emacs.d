@@ -784,7 +784,9 @@ configuration.
     :ensure t)
 
   (use-package yaml-mode
-    :ensure t)
+    :ensure t
+    :config
+    (add-hook 'yaml-mode-hook 'flycheck-mode))
 #+END_SRC
 
 * Acceptance critera
