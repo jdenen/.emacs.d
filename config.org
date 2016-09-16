@@ -309,8 +309,7 @@ I use =yankpad= to define my snippets with =org=.
   (use-package yasnippet
     :ensure t
     :config
-    (add-hook 'ruby-mode-hook #'yas-minor-mode)
-    (add-to-list 'warning-suppress-types '(yasnippet backquote-change)))
+    (add-hook 'ruby-mode-hook #'yas-minor-mode))
 #+END_SRC
 
 * Reading
@@ -367,11 +366,13 @@ file.
     (let ((default-directory (concat "/ssh:" user "@" host ":/home/" user)))
       (shell (concat "*" host "*"))))
 
-  (defun my/home-shell ()
+  (defun my/local-shell ()
     "Open shell at $HOME on my local machine."
     (interactive)
     (let ((default-directory "~"))
       (shell "*local*")))
+
+  (key-chord-define-global "jt" 'eshell)
 #+END_SRC
 
 *** SCP
