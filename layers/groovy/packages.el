@@ -43,7 +43,7 @@
         "cr" 'groovy/gradle-clean-build
         "ct" 'gradle-execute
         "ta" 'gradle-test
-        "ts" 'gradle-test
+        "tb" 'groovy/gradle-test-buffer
         "tt" 'gradle-single-test))))
 
 ;;; packages.el ends here

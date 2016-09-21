@@ -17,3 +17,8 @@
   "Execute gradle clean build command."
   (interactive)
   (gradle-execute "clean build"))
+
+(defun groovy/gradle-test-buffer ()
+  "Execute gradle test command against buffer tests."
+  (interactive)
+  (gradle-single-test (file-name-base (buffer-file-name))))
