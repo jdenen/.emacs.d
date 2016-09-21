@@ -40,6 +40,7 @@
         "sr" 'groovy-send-region
         "sR" 'groovy-send-region-and-go
         "cc" 'gradle-build
+        "cr" 'groovy/gradle-clean-build
         "ct" 'gradle-execute
         "ta" 'gradle-test
         "ts" 'gradle-test
