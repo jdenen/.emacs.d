@@ -9,10 +9,6 @@
 ;;
 ;;; License: GPLv3
 
-;;; Commentary:
-
-;;; Code:
-
 (defun groovy/gradle-clean-build ()
   "Execute gradle clean build command."
   (interactive)

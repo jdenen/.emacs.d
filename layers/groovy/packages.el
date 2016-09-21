@@ -9,10 +9,6 @@
 ;;
 ;;; License: GPLv3
 
-;;; Commentary:
-
-;;; Code:
-
 (defconst groovy-packages
   '(
     gradle-mode
