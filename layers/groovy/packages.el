@@ -39,10 +39,10 @@
         "sF" 'groovy-send-definition-and-go
         "sr" 'groovy-send-region
         "sR" 'groovy-send-region-and-go
-        "cc" 'groovy/gradle-build
-        "ct" 'groovy/gradle-task
-        "ta" 'groovy/gradle-test
-        "ts" 'groovy/gradle-test
-        "tt" 'groovy/gradle-single-test))))
+        "cc" 'gradle-build
+        "ct" 'gradle-execute
+        "ta" 'gradle-test
+        "ts" 'gradle-test
+        "tt" 'gradle-single-test))))
 
 ;;; packages.el ends here
