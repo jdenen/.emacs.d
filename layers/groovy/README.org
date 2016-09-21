@@ -1,0 +1,42 @@
+#+TITLE: groovy layer
+#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="../css/readtheorg.css" />
+
+#+CAPTION: logo
+
+# The maximum height of the logo should be 200 pixels.
+[[img/groovy.png]]
+
+* Table of Contents                                        :TOC_4_org:noexport:
+ - [[Description][Description]]
+ - [[Install][Install]]
+ - [[Key bindings][Key bindings]]
+
+* Description
+  This layer provides support for the Groovy language with the following features:
+  - interactive REPL (inf-groovy)
+  - build/task tool (gradle)
+
+* Install
+To use this contribution add it to your =~/.spacemacs=
+
+#+begin_src emacs-lisp
+  (setq-default dotspacemacs-configuration-layers '(groovy))
+#+end_src
+
+* Key bindings
+
+| Key Binding     | Description                            |
+|-----------------+----------------------------------------|
+| ~<SPC> m c c~   | Build with gradle                      |
+| ~<SPC> m c t~   | Execute a task with gradle             |
+| ~<SPC> m s i~   | Start REPL process                     |
+| ~<SPC> m s f~   | Send a definition to REPL process      |
+| ~<SPC> m s F~   | Send definition and go to REPL process |
+| ~<SPC> m s r~   | Send a region to REPL process          |
+| ~<SPC> m s R~   | Send region and go to REPL process     |
+| ~<SPC> m s k~   | Send last sexp to REPL process         |
+| ~<SPC> m t a~   | Run all tests with gradle              |
+| ~<SPC> m t s~   | Run all tests with gradle              |
+| ~<SPC> m t t~   | Run a single test with gradle          |
+
+
