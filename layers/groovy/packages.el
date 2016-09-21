@@ -29,7 +29,6 @@
     :config
     (progn
       (add-hook 'groovy-mode-hook 'gradle-mode)
-      (add-hook 'groovy-mode-hook 'groovy//inf-groovy-home-hook)
       (spacemacs/declare-prefix-for-mode 'groovy-mode "ms" "send")
       (spacemacs/declare-prefix-for-mode 'groovy-mode "mc" "build")
       (spacemacs/declare-prefix-for-mode 'groovy-mode "mt" "test")

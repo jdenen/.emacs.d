@@ -13,16 +13,8 @@
 
 ;;; Code:
 
-(defvar groovy-path-to-groovy-home nil
-  "Absolute path to a Groovy.")
-
 (defvar groovy-gradle-daemon nil
   "Execute gradle tasks with --daemon flag if non-nil.")
-
-(defun groovy//inf-groovy-home-hook ()
-  "Set `groovy-home'."
-  (if groovy-path-to-groovy-home
-      (setq groovy-home groovy-path-to-groovy-home)))
 
 (defun groovy//gradle (task)
   "Execute gradle TASK.
@@ -31,7 +23,7 @@ Execute TASK with --daemon flag if `groovy-gradle-daemon' is non-nil."
   (let ((gradle-task (if groovy-gradle-daemon
                          (concat "gradle-" task "--daemon")
                        (concat "gradle-" task))))
-    (call-interactively (intern gradle-task))))
+    (call-interactively '(intern gradle-task))))
 
 (defun groovy/gradle-build ()
   "Execute gradle build task."
