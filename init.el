@@ -212,7 +212,7 @@ values."
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers t
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    ;; (default nil)
    dotspacemacs-smartparens-strict-mode nil
@@ -257,9 +257,22 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (setq groovy-home "/home/jqd29/.sdkman/candidates/groovy/current")
   (setq gradle-executable-path "/home/jqd29/.sdkman/candidates/gradle/current/bin/gradle")
-  (global-linum-mode t)
   (setq gnus-use-full-window nil)
   (load "~/vc-docs/defs.el"))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (ample-zen-theme dockerfile-mode ruby-tools ruby-test-mode pcre2el rubocop rspec-mode robe rbenv bundler inf-ruby yaml-mode xterm-color ws-butler window-numbering which-key volatile-highlights use-package toc-org spacemacs-theme spaceline smooth-scrolling smeargle shell-pop reveal-in-osx-finder restart-emacs rainbow-delimiters quelpa popwin persp-mode pbcopy paradox page-break-lines osx-trash orgit org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets multi-term move-text magit-gitflow macrostep launchctl info+ indent-guide ido-vertical-mode htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-ag groovy-mode gradle-mode gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger flx-ido fill-column-indicator expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-args evil-anzu eval-sexp-fu eshell-prompt-extras esh-help elisp-slime-nav define-word clean-aindent-mode buffer-move bracketed-paste auto-highlight-symbol auto-compile ample-theme aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
