@@ -25,6 +25,9 @@ values."
      yaml
      org
      osx
+     (ruby :variables
+           ruby-test-runner 'rspec
+           ruby-version-manager 'rbenv)
      (shell :variables
             shell-default-position 'bottom
             shell-default-height 50
