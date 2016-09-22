@@ -18,6 +18,7 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(better-defaults
+     dockerfile
      emacs-lisp
      git
      gnus
@@ -41,6 +42,7 @@ values."
    dotspacemacs-excluded-packages '(lorem-ipsum
                                     desktop
                                     fancy-battery
+                                    smeargle
                                     google-translate
                                     helm-themes
                                     golden-ratio
@@ -50,6 +52,8 @@ values."
                                     neotree
                                     linum-relative
                                     pcre2el
+                                    rvm
+                                    chruby
                                     vi-tilde-fringe)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
