@@ -11,6 +11,7 @@
 
 (defconst groovy-packages
   '(
+    flycheck
     gradle-mode
     groovy-mode
     ))
@@ -41,5 +42,8 @@
         "ta" 'gradle-test
         "tb" 'groovy/gradle-test-buffer
         "tt" 'gradle-single-test))))
+
+(defun groovy/post-init-flycheck ()
+  (spacemacs/add-flycheck-hook 'groovy-mode-hook))
 
 ;;; packages.el ends here
