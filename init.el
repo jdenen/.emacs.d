@@ -37,7 +37,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(ample-theme)
+   dotspacemacs-additional-packages '(ample-theme yard-mode)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(lorem-ipsum
                                     desktop
@@ -255,10 +255,12 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  (setq groovy-home "/home/jqd29/.sdkman/candidates/groovy/current")
-  (setq gradle-executable-path "/home/jqd29/.sdkman/candidates/gradle/current/bin/gradle")
   (setq gnus-use-full-window nil)
-  (load "~/vc-docs/defs.el"))
+  (setq rspec-command-options nil)
+  (add-hook 'ruby-mode-hook 'yard-mode)
+  (load "~/vc-docs/defs.el")
+  (spacemacs/set-leader-keys
+    "oo" 'cas/openstack))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
