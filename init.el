@@ -260,8 +260,10 @@ you should place your code here."
   (setq rspec-command-options nil)
   (add-hook 'ruby-mode-hook 'yard-mode)
   (load "~/vc-docs/defs.el")
+  (add-hook 'shell-mode-hook 'with-editor-export-editor)
   (spacemacs/set-leader-keys
-    "oo" 'cas/openstack))
+    "oo" 'cas/openstack
+    "ok" 'tramp-cleanup-all-buffers))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
