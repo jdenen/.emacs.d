@@ -316,6 +316,21 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (setq org-agenda-files               '("~/vc-docs/scratch.org")
+        org-agenda-start-with-log-mode t
+        org-agenda-use-time-grid       t
+        org-agenda-include-all-todo    t
+        org-agenda-include-diary       t
+        diary-file                     "~/vc-docs/diary"
+        org-log-done                   'time
+        org-capture-templates          '(("n" "Note" entry (file+datetree "~/vc-docs/scratch.org")  ;; No action, no deadline
+                                          (file "~/.emacs.d/templates/note.orgcaptmpl"))
+                                         ("d" "Todo" entry (file+datetree "~/vc-docs/scratch.org")  ;; Action, no deadline
+                                          (file "~/.emacs.d/templates/todo.orgcaptmpl"))
+                                         ("t" "Task" entry (file+datetree "~/vc-docs/scratch.org")  ;; Action, deadline
+                                          (file "~/.emacs.d/templates/task.orgcaptmpl"))
+                                         ("a" "Appt" entry (file+datetree "~/vc-docs/scratch.org")  ;; No action, deadline
+                                          (file "~/.emacs.d/templates/appt.orgcaptmpl"))))
   (setq rspec-command-options nil)
   (add-hook 'ruby-mode-hook 'yard-mode)
   (load "~/vc-docs/defs.el")
