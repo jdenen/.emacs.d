@@ -324,18 +324,25 @@ you should place your code here."
         diary-file                     "~/vc-docs/diary"
         org-log-done                   'time
         org-capture-templates          '(("n" "Note" entry (file+datetree "~/vc-docs/scratch.org")  ;; No action, no deadline
-                                          (file "~/.emacs.d/templates/note.orgcaptmpl"))
+                                          (file "~/.spacemacs.d/templates/note.orgcaptmpl"))
                                          ("d" "Todo" entry (file+datetree "~/vc-docs/scratch.org")  ;; Action, no deadline
-                                          (file "~/.emacs.d/templates/todo.orgcaptmpl"))
+                                          (file "~/.spacemacs.d/templates/todo.orgcaptmpl"))
                                          ("t" "Task" entry (file+datetree "~/vc-docs/scratch.org")  ;; Action, deadline
-                                          (file "~/.emacs.d/templates/task.orgcaptmpl"))
+                                          (file "~/.spacemacs.d/templates/task.orgcaptmpl"))
                                          ("a" "Appt" entry (file+datetree "~/vc-docs/scratch.org")  ;; No action, deadline
-                                          (file "~/.emacs.d/templates/appt.orgcaptmpl"))))
+                                          (file "~/.spacemacs.d/templates/appt.orgcaptmpl"))))
+  (mapcar
+   (lambda (r)
+     (set-register (car r) (cons 'file (cdr r))))
+   '((?b . "~/.bashrc")
+     (?s . "~/vc-docs/scratch.org")
+     (?j . "~/vc-docs/johnson.org")))
   (setq rspec-command-options nil)
   (add-hook 'ruby-mode-hook 'yard-mode)
   (load "~/vc-docs/defs.el")
   (add-hook 'shell-mode-hook 'with-editor-export-editor)
   (spacemacs/set-leader-keys
+    "or" 'jump-to-register
     "oo" 'cas/openstack
     "ok" 'tramp-cleanup-all-buffers)
   )
