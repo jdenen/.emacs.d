@@ -323,6 +323,8 @@ you should place your code here."
         org-agenda-include-diary       t
         diary-file                     "~/vc-docs/diary"
         org-log-done                   'time
+        org-todo-keywords              '((sequence "TODO(t)" "WIP(w)" "|" "DONE(d)")
+                                         (sequence "BLOCK(b)" "|" "CANCEL"))
         org-capture-templates          '(("n" "Note" entry (file+datetree "~/vc-docs/scratch.org")  ;; No action, no deadline
                                           (file "~/.spacemacs.d/templates/note.orgcaptmpl"))
                                          ("d" "Todo" entry (file+datetree "~/vc-docs/scratch.org")  ;; Action, no deadline
@@ -331,6 +333,7 @@ you should place your code here."
                                           (file "~/.spacemacs.d/templates/task.orgcaptmpl"))
                                          ("a" "Appt" entry (file+datetree "~/vc-docs/scratch.org")  ;; No action, deadline
                                           (file "~/.spacemacs.d/templates/appt.orgcaptmpl"))))
+
   (mapcar
    (lambda (r)
      (set-register (car r) (cons 'file (cdr r))))
