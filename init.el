@@ -341,7 +341,11 @@ you should place your code here."
      (?s . "~/vc-docs/scratch.org")
      (?j . "~/vc-docs/johnson.org")))
   (setq rspec-command-options nil)
+  (setq js-indent-level  2
+        js2-basic-offset 2)
   (add-hook 'ruby-mode-hook 'yard-mode)
+  (add-hook 'after-init-hook 'inf-ruby-switch-setup)
+  (add-to-list 'auto-mode-alist '("Jenkinsfile" . groovy-mode))
   (load "~/vc-docs/defs.el")
   (add-hook 'shell-mode-hook 'with-editor-export-editor)
   (spacemacs/set-leader-keys
