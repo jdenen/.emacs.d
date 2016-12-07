@@ -36,6 +36,7 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+     auto-completion
      better-defaults
      docker
      emacs-lisp
@@ -46,12 +47,13 @@ values."
      markdown
      org
      osx
+     ranger
      (ruby :variables
            ruby-test-runner 'rspec
            ruby-version-manager 'rbenv)
      (shell :variables
             shell-default-height 50
-            shell-default-shell 'multi-term)
+            shell-default-shell 'shell)
      syntax-checking
      yaml
      )
@@ -59,7 +61,12 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(ample-theme yard-mode vdiff)
+   dotspacemacs-additional-packages '(ample-theme
+                                      hackernews
+                                      gist
+                                      yard-mode
+                                      vdiff
+                                      feature-mode)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
