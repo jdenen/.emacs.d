@@ -64,6 +64,7 @@ values."
    dotspacemacs-additional-packages '(ample-theme
                                       hackernews
                                       gist
+                                      try
                                       yard-mode
                                       vdiff
                                       feature-mode)
