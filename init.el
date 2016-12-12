@@ -356,6 +356,7 @@ you should place your code here."
   (load "~/vc-docs/defs.el")
   (add-hook 'shell-mode-hook 'with-editor-export-editor)
   (spacemacs/set-leader-keys
+    "fE" 'sudo-open-file
     "or" 'jump-to-register
     "oo" 'cas/openstack
     "ok" 'tramp-cleanup-all-buffers)
