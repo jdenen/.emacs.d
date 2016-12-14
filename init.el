@@ -64,8 +64,8 @@ values."
    dotspacemacs-additional-packages '(ample-theme
                                       groovy-imports
                                       hackernews
+                                      copy-as-format
                                       gist
-                                      try
                                       yard-mode
                                       vdiff
                                       feature-mode)
