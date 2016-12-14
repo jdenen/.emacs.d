@@ -62,6 +62,7 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(ample-theme
+                                      groovy-imports
                                       hackernews
                                       gist
                                       try
@@ -361,7 +362,12 @@ you should place your code here."
     "or" 'jump-to-register
     "oo" 'cas/openstack
     "ok" 'tramp-cleanup-all-buffers)
-  )
+
+  ;; groovy-imports configuration
+  (add-hook 'groovy-mode-hook 'groovy-imports-scan-file)
+  (spacemacs/declare-prefix-for-mode 'groovy-mode "mi" "import")
+  (spacemacs/set-leader-keys-for-major-mode 'groovy-mode
+    "id" 'groovy-imports-add-import-dwim))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
