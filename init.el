@@ -375,7 +375,12 @@ you should place your code here."
   (add-hook 'groovy-mode-hook 'groovy-imports-scan-file)
   (spacemacs/declare-prefix-for-mode 'groovy-mode "mi" "import")
   (spacemacs/set-leader-keys-for-major-mode 'groovy-mode
-    "id" 'groovy-imports-add-import-dwim))
+    "id" 'groovy-imports-add-import-dwim)
+
+  ;; dockerfile configuration
+  (spacemacs/declare-prefix-for-mode 'dockerfile-mode "mb" "build")
+  (spacemacs/set-leader-keys-for-major-mode 'dockerfile-mode
+    "bb" 'dockerfile-build-buffer))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
