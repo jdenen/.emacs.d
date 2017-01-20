@@ -38,6 +38,7 @@ values."
      ;; ----------------------------------------------------------------
      auto-completion
      better-defaults
+     command-log
      docker
      emacs-lisp
      git
