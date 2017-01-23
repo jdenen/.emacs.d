@@ -366,6 +366,11 @@ you should place your code here."
   (add-to-list 'auto-mode-alist '("Jenkinsfile" . groovy-mode))
   (load "~/vc-docs/defs.el")
   (add-hook 'shell-mode-hook 'with-editor-export-editor)
+  (org-babel-do-load-languages
+   'org-babel-load-languages '((ruby . t)
+                               (groovy . t)
+                               (shell . t)
+                               (emacs-lisp . t)))
   (spacemacs/set-leader-keys
     "fE" 'sudo-open-file
     "or" 'jump-to-register
@@ -385,3 +390,24 @@ you should place your code here."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("ad950f1b1bf65682e390f3547d479fd35d8c66cafa2b8aa28179d78122faa947" "4ab95b35f7720043592b49d890003874aa1954a3cf299edde13657c6a9182d85" "5d0e08476cdbee257cec52d48d1d19950049ff93a398c3ceacbcd6981c517694" default)))
+ '(evil-want-Y-yank-to-eol nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)
