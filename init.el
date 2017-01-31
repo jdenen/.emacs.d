@@ -372,10 +372,11 @@ you should place your code here."
                                (shell . t)
                                (emacs-lisp . t)))
   (spacemacs/set-leader-keys
-    "fE" 'sudo-open-file
-    "or" 'jump-to-register
-    "oo" 'cas/openstack
-    "ok" 'tramp-cleanup-all-buffers)
+    "fE"  'sudo-open-file
+    "aoa" 'org-agenda-and-todos
+    "or"  'jump-to-register
+    "oo"  'cas/openstack
+    "ok"  'tramp-cleanup-all-buffers)
 
   ;; groovy-imports configuration
   (add-hook 'groovy-mode-hook 'groovy-imports-scan-file)
