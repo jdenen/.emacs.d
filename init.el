@@ -334,6 +334,8 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (load "~/vc-docs/defs.el")
+
   (setq org-agenda-files               '("~/vc-docs/scratch.org")
         org-agenda-start-with-log-mode t
         org-agenda-use-time-grid       t
@@ -358,14 +360,18 @@ you should place your code here."
    '((?b . "~/.bashrc")
      (?s . "~/vc-docs/scratch.org")
      (?j . "~/vc-docs/johnson.org")))
+
   (setq rspec-command-options nil)
   (setq js-indent-level  2
         js2-basic-offset 2)
+
   (add-hook 'ruby-mode-hook 'yard-mode)
   (add-hook 'after-init-hook 'inf-ruby-switch-setup)
-  (add-to-list 'auto-mode-alist '("Jenkinsfile" . groovy-mode))
-  (load "~/vc-docs/defs.el")
+  (add-hook 'groovy-mode-hook 'groovy-imports-scan-file)
   (add-hook 'shell-mode-hook 'with-editor-export-editor)
+  (add-hook 'term-mode-hook 'with-editor-export-editor)
+  (add-hook 'eshell-mode-hook 'with-editor-export-editor)
+
   (org-babel-do-load-languages
    'org-babel-load-languages '((ruby . t)
                                (groovy . t)
@@ -378,13 +384,13 @@ you should place your code here."
     "oo"  'cas/openstack
     "ok"  'tramp-cleanup-all-buffers)
 
-  ;; groovy-imports configuration
-  (add-hook 'groovy-mode-hook 'groovy-imports-scan-file)
+  ;; groovy
+  (add-to-list 'auto-mode-alist '("Jenkinsfile" . groovy-mode))
   (spacemacs/declare-prefix-for-mode 'groovy-mode "mi" "import")
   (spacemacs/set-leader-keys-for-major-mode 'groovy-mode
     "id" 'groovy-imports-add-import-dwim)
 
-  ;; dockerfile configuration
+  ;; dockerfile
   (spacemacs/declare-prefix-for-mode 'dockerfile-mode "mb" "build")
   (spacemacs/set-leader-keys-for-major-mode 'dockerfile-mode
     "bb" 'dockerfile-build-buffer))
